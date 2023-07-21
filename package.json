@@ -18,5 +18,5 @@
         "express": "latest"
     },
     "readme": "./README.md",
-    "workspaces"
+    "workspaces":
 }
