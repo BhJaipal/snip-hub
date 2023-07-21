@@ -7,6 +7,7 @@
     "description": "Coddinghub with Express JS",
     "os": ["android"],
     "repository": {
-        "url": "https://github.com/BhJaipal/Express-and-Coddinghub"
+        "url": "https://github.com/BhJaipal/Express-and-Coddinghub",
+        
     }
 }
