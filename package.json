@@ -14,6 +14,6 @@
         "arrowParens": "always"
     },
     "devDependencies": {
-        ""
+        "debug": ""
     }
 }
