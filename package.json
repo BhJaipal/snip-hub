@@ -8,6 +8,6 @@
     "os": ["android"],
     "repository": {
         "url": "https://github.com/BhJaipal/Express-and-Coddinghub",
-        
+        "type": ""
     }
 }
