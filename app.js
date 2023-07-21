@@ -1,4 +1,4 @@
 let express = require("express");
-let debug= require("debug")("")
+let debug= require("debug")("server")
 
 let app= express();
