@@ -17,5 +17,6 @@
         "debug": "latest",
         "express": "latest"
     },
-    "readme": "./README.md"
+    "readme": "./README.md",
+    
 }
