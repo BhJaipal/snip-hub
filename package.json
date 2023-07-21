@@ -11,6 +11,7 @@
     },
     "version": "1.0.0",
     "prettier":{
-        "arrowParens": "always"
+        "arrowParens": "always",
+        
     }
 }
