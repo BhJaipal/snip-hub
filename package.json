@@ -15,6 +15,6 @@
     },
     "devDependencies": {
         "debug": "latest",
-        "express": ""
+        "express": "latest"
     }
 }
