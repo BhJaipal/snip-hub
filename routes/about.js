@@ -2,4 +2,6 @@ let express = require("express");
 let path= require("path");
 
 let router = express.Router();
-router.get("/", (req, res) => {})
+router.get("/", (req, res) => {
+    
+})
