@@ -1,2 +1,2 @@
 let express = require("express");
-let path= require("pat")
+let path= require("path")
