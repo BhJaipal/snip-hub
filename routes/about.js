@@ -3,5 +3,5 @@ let path= require("path");
 
 let router = express.Router();
 router.get("/", (req, res) => {
-    res.sendFile(pat)
+    res.sendFile(path.join)
 })
