@@ -1,0 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300&display=swap');
+body{background-color: #000; font-family: sans-serif; overflow-y: scroll} #body{margin: 5px 5px 5px 5px; background-color: #333;}
+#autocomplete{margin-left: 50px; margin-top: 20px;}
+span.hljs-comment{color: green}
+span.hljs-params{color: skyblue;}
+span.hljs-meta{color: dodgerblue;}
+span.hljs-built_in{color: palegoldenrod}
+span.hljs-keyword{color: dodgerblue}
+span.hljs-type{color: dodgerblue}
+span.hljs-title{color: palegoldenrod;}
+span.variable{color: lightskyblue}
+span.hljs-variable.language_{color: deepskyblue;}
+span.hljs-number{color: palegreen;}
+span.hljs-title.class_{color: lightseagreen;}
+span.hljs-title.function_{color: palegoldenrod;}
+span.hljs-string{color: sandybrown}
+pre> code{font-weight: bold;color: white; overflow-x: scroll; display: block; font-family: "Fira code"}
+.code-block{background-color: #444;height: 60px; display: block;}
+.accordion{margin: 30px;}
+#accordion-py{display: none;}
+#accordion-js{display: none;}
+.demoHeaders {margin-top: 2em;}
+h3{text-align: center; color: white}
+#dialog-link {padding: .4em 1em .4em 20px;text-decoration: none;position: relative;}
+#dialog-link span.ui-icon {margin: 0 5px 0 0;position: absolute;left: .2em;top: 50%;margin-top: -8px;}
+#icons {margin: 0;padding: 0;}
+#icons li {margin: 2px;position: relative;padding: 4px 0;cursor: pointer;float: left;list-style: none;}
+#icons span.ui-icon {float: left;margin: 0 4px;}
+.fakewindowcontain .ui-widget-overlay {position: absolute;}
+select {width: 200px;}
+div.ui-helper-hidden-accessible{display: none;}
+
+#loading{
+  margin-top: 300px;
+  margin-left: 175px;
+  width: 48px;
+  height: 48px;
+  border: 5px solid #3498db;
+  border-radius: 50%;
+  border-bottom-color: transparent;
+  box-sizing: border-box;
+  animation: rotate 1s linear infinite
+}
+
+@keyframes rotate {
+  0% {transform: rotate(0deg);}
+  100% {transform: rotate(360deg);}
+}

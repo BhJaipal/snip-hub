@@ -1,0 +1,19 @@
+{
+  "name": "express-and-codinghub",
+  "version": "1.0.0",
+  "description": "Express with Coding Hub ",
+  "main": "server.ts",
+  "scripts": {
+    "start": "ts-node server.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "BhJaipal/Express-and-CodingHub"
+  },
+  "author": "Jaipal",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
