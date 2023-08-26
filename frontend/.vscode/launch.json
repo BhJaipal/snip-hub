@@ -1,7 +1,8 @@
 {
     "configurations": [
         {
-            "name": "Start Dev server"
+            "name": "Start Dev server",
+            
         }
     ]
 }
