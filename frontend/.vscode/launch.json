@@ -2,7 +2,7 @@
     "configurations": [
         {
             "name": "Start Dev server",
-            "django": false
+            
         }
     ]
 }
