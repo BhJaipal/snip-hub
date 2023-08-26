@@ -1,0 +1,19 @@
+{
+    "configurations": [
+        {
+            "command": "vite",
+            "name": "npm run dev",
+            "type": "node-terminal"
+        },
+        {
+            "command": "vite-tsc && vite build",
+            "name": "npm run build",
+            "type": "node-terminal"
+        },
+        {
+            "command": "vite preview",
+            "name": "npm run preview",
+            "type": "node-terminal"
+        }
+    ]
+}
