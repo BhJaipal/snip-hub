@@ -9,13 +9,15 @@ interface pageModule {
   name: string;
   link: string;
   img: string;
-}
+};
+
+let base= "./src/components/assets/";
 
 let homeList = ref<pageModule[]>([
   {
     name: "Bootstrap",
     link: "getbootstrap.com",
-    img: "./assets/bootstrap.png",
+    img: base + "/bootstrap.png",
   },
   {
     name: "jQuery UI",
@@ -26,21 +28,25 @@ let homeList = ref<pageModule[]>([
   { name: "SystemJS", link: "github.com/systemjs", img: "no image" },
 ]);
 let aboutList = ref<pageModule[]>([
-  { name: "Vue", link: "vuejs.org", img: "./assets/vue.png" },
+  {
+    name: "Vue",
+    link: "vuejs.org",
+    img: base + "vue.png"
+  },
   {
     name: "TypeScript",
     link: "typescriptlang.org",
-    img: "./assets/ts-logo.png",
+    img: base+ "ts-logo.png",
   },
   {
     name: "Bootstrap",
     link: "getbootstrap.com",
-    img: "./assets/bootstrap.png",
+    img: base + "bootstrap.png",
   },
   {
     name: "Vite", 
     link: "vitejs.dev", 
-    img: "./assets/vite.png"
+    img: base + "vite.png"
   },
 ]);
 </script>
@@ -104,6 +110,7 @@ let aboutList = ref<pageModule[]>([
 }
 .item {
   height: 25px;
+  margin-left: 100px;
 }
 .item > a > .name {
   height: 24px;
