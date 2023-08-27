@@ -15,7 +15,7 @@ let homeList = ref<pageModule[]>([
   {
     name: "Bootstrap",
     link: "getbootstrap.com",
-    img: "./src/components/assets/bootstrap.png",
+    img: "./assets/bootstrap.png",
   },
   {
     name: "jQuery UI",
@@ -26,23 +26,27 @@ let homeList = ref<pageModule[]>([
   { name: "SystemJS", link: "github.com/systemjs", img: "no image" },
 ]);
 let aboutList = ref<pageModule[]>([
-  { name: "Vue", link: "vuejs.org", img: "./src/components/assets/vue.png" },
+  { name: "Vue", link: "vuejs.org", img: "./assets/vue.png" },
   {
     name: "TypeScript",
     link: "typescriptlang.org",
-    img: "./src/components/assets/ts-logo.png",
+    img: "./assets/ts-logo.png",
   },
   {
     name: "Bootstrap",
     link: "getbootstrap.com",
-    img: "./src/components/assets/bootstrap.png",
+    img: "./assets/bootstrap.png",
   },
-  { name: "Vite", link: "vitejs.dev", img: "./src/components/assets/vite.png" },
+  {
+    name: "Vite", 
+    link: "vitejs.dev", 
+    img: "./assets/vite.png"
+  },
 ]);
 </script>
 
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="#">Navbar</a>
     <button
       class="navbar-toggler"
