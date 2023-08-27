@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="#">Navbar</a>
     <button
       class="navbar-toggler"
@@ -19,7 +19,7 @@
           <router-link class="nav-link" to="/">Home <span class="sr-only">(current)</span></router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" href="/about">Link</router-link>
+          <router-link class="nav-link" to="/about">Link</router-link>
         </li>
       </ul>
     </div>
