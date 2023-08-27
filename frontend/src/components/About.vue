@@ -49,34 +49,32 @@ let aboutList = ref<pageModule[]>([
     img: base + "vite.png"
   },
 ]);
+let navigation= ref<
+  {name: string, href: string}[]
+>([
+  {name: "Home", href: "/"},
+  {name: "About", href: "/about"}
+])
 </script>
 
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-toggle="collapse"
-      data-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <router-link class="nav-link" to="/">Home</router-link>
-        </li>
-        <li class="nav-item">
-          <router-link class="nav-link" to="/about">About<span class="sr-only">(current)</span></router-link>
-        </li>
-      </ul>
-    </div>
-  </nav>
+<div class="bg-black">
+  <header class="absolute inset-x-0 top-0 z-50">
+    <nav class="flex item-center justify-between p-3 lg:px-4" aria-label="Global">
+      <div class="flex lg:flex-1">
+        <a href="#" class="-m-1.5 p-1.5">
+          <span class="sr-only">Navbar</span>
+        </a>
+      </div>
+      <div class="hidden lg:flex lg:gap-x-12">
+        <router-link v-for="item in navigation" :key="item.name" v-bind:to="item.href" class="text-sm font-semibold leading-6 text-gray-900">{{ item.name }}</router-link>
+      </div>
+      <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+        <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Log in <span aria-hidden="true">&rarr;</span></a>
+      </div>
+    </nav>
+  </header>
+</div>
 
   <h1>{{ msg }}</h1>
 
