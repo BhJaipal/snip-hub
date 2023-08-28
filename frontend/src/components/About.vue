@@ -50,31 +50,26 @@ let aboutList = ref<pageModule[]>([
   },
 ]);
 let navigation= ref<
-  {name: string, href: string}[]
+  {name: string, href: string, active: boolean}[]
 >([
-  {name: "Home", href: "/"},
-  {name: "About", href: "/about"}
+  {name: "Home", href: "/", active: false},
+  {name: "About", href: "/about", active: true}
 ])
 </script>
 
 <template>
-<div class="bg-black">
-  <header class="absolute inset-x-0 top-0 z-50">
-    <nav class="flex item-center justify-between p-3 lg:px-4" aria-label="Global">
-      <div class="flex lg:flex-1">
-        <a href="#" class="-m-1.5 p-1.5">
-          <span class="sr-only">Navbar</span>
-        </a>
+    <nav class="bg-[#181818] inset-0 h-20 w-full border-b-2 border-white">
+      <div class="bg-transparent font-bold h-full pt-5 flex py-2 float-left text-2xl pl-2.5">About Page
       </div>
-      <div class="hidden lg:flex lg:gap-x-12">
-        <router-link v-for="item in navigation" :key="item.name" v-bind:to="item.href" class="text-sm font-semibold leading-6 text-gray-900">{{ item.name }}</router-link>
-      </div>
-      <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-        <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Log in <span aria-hidden="true">&rarr;</span></a>
+      <div class="flex justify-end py-2">
+        <button v-for="item in navigation" 
+          :key="item.name"
+          class="text-white font-bold rounded-xl border-2 w-[60px] h-[55px] mt-[5px] bg-slate-900 mr-5 flex-row flex-nowrap hover:bg-indigo-950 cursor-pointor decoration-transparent">
+          <router-link class="underline-none" v-bind:active="item.active" v-bind:to="item.href">
+            {{ item.name }}</router-link>
+          </button>
       </div>
     </nav>
-  </header>
-</div>
 
   <h1>{{ msg }}</h1>
 
@@ -103,8 +98,8 @@ let navigation= ref<
 </template>
 
 <style scoped>
-.read-the-docs {
-  color: #888;
+nav> div> button:nth-child(2){
+  @apply bg-indigo-950
 }
 .item {
   height: 25px;

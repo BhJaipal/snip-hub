@@ -2,18 +2,8 @@
 </script>
 
 <template>
-  <router-view></router-view>
+  <router-view class="box-border w-full h-full mt-[0px]"></router-view>
 </template>
 
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
 </style>
