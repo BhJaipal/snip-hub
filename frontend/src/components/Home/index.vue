@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-let navigation= ref<[]
+let navigation= ref<[
   {name: string, href: string, active: boolean}[]>([
   {name: "Home", href: "/", active: true},
   {name: "About", href: "/about", active: false}
