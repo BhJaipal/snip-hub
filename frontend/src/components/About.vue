@@ -45,7 +45,7 @@ let aboutList = ref<pageModule[]>([
   },
   {
     name: "Vite",
-    link: "vitejs.dev", 
+    link: "vitejs.dev",
     img: base + "vite.png"
   },
 ]);
