@@ -98,7 +98,7 @@ let navigation= ref<
 </template>
 
 <style scoped>
-nav> div> button:nth-child(2){
+nav> div:nth-child(2){
   @apply bg-indigo-950
 }
 .item {
