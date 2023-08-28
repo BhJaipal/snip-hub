@@ -49,8 +49,7 @@ let aboutList = ref<pageModule[]>([
     img: base + "vite.png"
   },
 ]);
-let navigation= ref<{name: string, href: string, active: boolean}[]
->([
+let navigation= ref<{name: string, href: string, active: boolean}[]([
   {name: "Home", href: "/", active: false},
   {name: "About", href: "/about", active: true}
 ])
