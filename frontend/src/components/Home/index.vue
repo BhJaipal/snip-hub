@@ -20,7 +20,7 @@ let navigation= ref<{name: string, href: string, active: boolean}[]>([
   </nav>
 </template>
 <style scoped>
-nav> div> button:nth-child(1){
+nav> divnth-child(1){
   @apply bg-indigo-950
 }
 </style>
