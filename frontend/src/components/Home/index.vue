@@ -4,7 +4,7 @@ import { ref } from 'vue'
 let navigation= ref<{name: string, href: string, active: boolean}[]>([
   {name: "Home", href: "/", active: true},
   {name: "About", href: "/about", active: false}
-])
+]);
 </script>
 <template>
   <nav class="bg-[#181818] inset-0 h-20 w-full border-b-2 border-white">
