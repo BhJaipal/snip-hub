@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-defineProps<{
-  msg: string;
-}>();
 
 interface pageModule {
   name: string;
@@ -15,17 +12,11 @@ let base= "./src/components/assets/";
 
 let homeList = ref<pageModule[]>([
   {
-    name: "Bootstrap",
-    link: "getbootstrap.com",
-    img: base + "/bootstrap.png",
-  },
-  {
     name: "jQuery UI",
     link: "jqueryui.com",
     img: "https://jqueryui.com/resources/demos/checkboxradio/images/jquery-ui.png",
   },
   { name: "Highlight.js", link: "highlightjs.org", img: "no image" },
-  { name: "SystemJS", link: "github.com/systemjs", img: "no image" },
 ]);
 let aboutList = ref<pageModule[]>([
   {
@@ -37,11 +28,6 @@ let aboutList = ref<pageModule[]>([
     name: "TypeScript",
     link: "typescriptlang.org",
     img: base+ "ts-logo.png",
-  },
-  {
-    name: "Bootstrap",
-    link: "getbootstrap.com",
-    img: base + "bootstrap.png",
   },
   {
     name: "Vite",
@@ -68,8 +54,7 @@ let navigation= ref<{name: string, href: string, active: boolean}[]>([
           </button>
       </div>
     </nav>
-
-  <h1>{{ msg }}</h1>
+  <h1>About Page</h1>
 
   <h3>This is made by Jaipal</h3>
 
@@ -96,7 +81,7 @@ let navigation= ref<{name: string, href: string, active: boolean}[]>([
 </template>
 
 <style scoped>
-nav> div:nth-child(2){
+nav> div:nth-child(2)> button:nth-child(2){
   @apply bg-indigo-950
 }
 .item {
