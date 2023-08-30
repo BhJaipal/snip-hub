@@ -11,14 +11,7 @@ interface pageModule {
 let base= "./src/components/assets/";
 
 let homeList = ref<pageModule[]>([
-  {
-    name: "jQuery UI",
-    link: "jqueryui.com",
-    img: "https://jqueryui.com/resources/demos/checkboxradio/images/jquery-ui.png",
-  },
   { name: "Highlight.js", link: "highlightjs.org", img: "no image" },
-]);
-let aboutList = ref<pageModule[]>([
   {
     name: "Vue",
     link: "vuejs.org",
@@ -34,6 +27,11 @@ let aboutList = ref<pageModule[]>([
     link: "vitejs.dev",
     img: base + "vite.png"
   },
+  {
+    name: "tailwindcss",
+    link: "tailwindcss.com",
+    img: "https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+  }
 ]);
 let navigation= ref<{name: string, href: string, active: boolean}[]>([
   {name: "Home", href: "/", active: false},
@@ -43,7 +41,7 @@ let navigation= ref<{name: string, href: string, active: boolean}[]>([
 
 <template>
     <nav class="bg-[#181818] inset-0 h-20 w-full border-b-2 border-white">
-      <div class="bg-transparent font-bold h-full pt-5 flex py-2 float-left text-2xl pl-2.5">About Page
+      <div class="bg-transparent font-bold h-full pt-5 flex py-2 float-left text-2xl pl-2.5">Navbar
       </div>
       <div class="flex justify-end py-2">
         <button v-for="item in navigation"
@@ -56,9 +54,7 @@ let navigation= ref<{name: string, href: string, active: boolean}[]>([
     </nav>
   <h1>About Page</h1>
 
-  <h3>This is made by Jaipal</h3>
-
-  <h4>Modules used for home page</h4>
+  <h4>Modules used for this project</h4>
 
   <ul class="module-list">
     <li v-for="module in homeList" class="item">
@@ -66,16 +62,6 @@ let navigation= ref<{name: string, href: string, active: boolean}[]>([
         <div class="name">{{ module.name }}</div>
         <img class="logo" v-bind:src="module.img"
       /></a>
-    </li>
-  </ul>
-
-  <h4>Modules used for About page</h4>
-  <ul class="module-list">
-    <li v-for="module in aboutList" class="item">
-      <a v-bind:href="`https://${module.link}`" target="_blank">
-        <div class="name">{{ module.name }}</div>
-        <img class="logo" v-bind:src="module.img" />
-      </a>
     </li>
   </ul>
 </template>

@@ -1,15 +1,17 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import hljs from "highlight.js";
-import hljsVuePlugin.component as highlight from "@highlightjs/vue-plugin";
-
+import hljs from "highlight.js"
+import "./vs-dark.css";
+import highlight from "./highlighter.vue";
 const codeList= ref(null);
 
-fetch("http://localhost:3300")
+fetch("http://localhost:3300/languages")
   .then(res => {return res.json();})
   .then(data=> {
   codeList.value= data;
-  hljs.highlightAll();
+  setTimeout(() => {
+    hljs.highlightAll();
+  }, 2000);
   });
 </script>
 <template>
@@ -18,19 +20,19 @@ fetch("http://localhost:3300")
 </div>
 <div v-else>
   <div v-for="(langName, index) in Object.keys(codeList)" v-bind:class="langName" v-bind:key="index">
-    <h3>{{ langName }}</h3>
-    <div v-for="(codeBox, index) in codeList[langName]" v-bind:key="index">
-      <h4>{{ codeBox.title }}</h4>
-      <highlight v-bind:language="langName" 
-        v-bind:code="codeBox.code" />
-    </div>
+    <h3>{{ langName.charAt(0).toUpperCase() + langName.slice(1) }}</h3>
+    <highlight v-for="(codeBox, index) in codeList[langName]" 
+    v-bind:key="index" 
+    v-bind:langName="langName"
+    v-bind:snipTitle="codeBox.title"
+    v-bind:snipCode="codeBox.code"/>
   </div>
 </div>
 </template>
 <style scoped>
 #loading{
-  margin-top: 330px;
-  margin-left: 145px;
+  margin-top: 280px;
+  margin-left: 160px;
   width: 48px;
   height: 48px;
   border: 5px solid #3498db;
@@ -42,6 +44,9 @@ fetch("http://localhost:3300")
 @keyframes rotate {
   0% {transform: rotate(0deg);}
   100% {transform: rotate(360deg);}
+}
+h3{
+  @apply text-xl font-bold
 }
 </style>
 
