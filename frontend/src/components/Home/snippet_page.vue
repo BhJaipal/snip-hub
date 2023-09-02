@@ -26,7 +26,7 @@ onMounted(() => {
                             18 ┊ box-sizing: border-box;
                                19 ┊ animation: rotate 1s linear infinite
                                   20 }
-                                     21
+                                     
                                          @keyframes rotate {
                                            0% {transform: rotate(0deg);}
                                                100% {transform: rotate(360deg);}
