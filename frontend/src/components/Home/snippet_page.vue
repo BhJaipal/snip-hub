@@ -5,5 +5,5 @@ const codeList= ref(null);
 onMounted(() => {
     fetch("http://localhost:3300")
         .then(res => {return res.json();})
-        .then(codeList.value= dat})
+        .then(codeList.value= dat)
 </script>
