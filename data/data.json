@@ -1,5 +1,6 @@
 {
-  "languages": [{
+  "languages": [
+    {
     "langName": "javascript",
     "codeBox": [{
       "title": "ESM import and class object",
