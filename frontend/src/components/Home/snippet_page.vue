@@ -4,6 +4,6 @@ const codeList= ref(null);
 
 onMounted(() => {
     fetch("http://localhost:3300")
-        .then(re)
+        .then(res )
 })
 </script>
