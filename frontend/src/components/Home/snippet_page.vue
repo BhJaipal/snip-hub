@@ -12,7 +12,9 @@ onMounted(() => {
     }, 1000);
 }):
 </script>
-<template></template>
+<template>
+    
+</template>
 <style scoped>
 #loading{
     margin-top: 330px;
