@@ -17,8 +17,8 @@ onMounted(() => {
 #loading{
     margin-top: 330px;
     margin-left: 145px;
-            width: 48px;
-                 height: 48px;
+    width: 48px;
+    height: 48px;
                   border: 5px solid #3498db;
                        border-radius: 50%;
                          border-bottom-color: transparent;
