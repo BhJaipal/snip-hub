@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-
+import 
 const codeList= ref(null);
 
 onMounted(() => {
