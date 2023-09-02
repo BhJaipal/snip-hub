@@ -19,7 +19,7 @@
     "c": [{
       "title": "hello World program",
       "code": "#include <stdio.h>\n\nint main() {\n  printf(\"Hello World\");\n  return 0;\n}"
-    }, 
+    },
     {
       "title": "User Input",
       "code": "#include <stdio.h>\n\nint main() {\n  char name[10];\n  printf(\"Enter your name: \");\n  scanf(\"%c\", &name);\n  printf(\"Hello %c\", name); \n  return 0;\n}"
