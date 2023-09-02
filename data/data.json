@@ -19,7 +19,7 @@
         "codeBox": [{
       "title": "if statement",
       "code": "if name == 'Jaipal': print('Hello Jaipal');\nelse: print('Hello World')"
-    }],
+    }]},
     "c": [{
       "title": "hello World program",
       "code": "#include <stdio.h>\n\nint main() {\n  printf(\"Hello World\");\n  return 0;\n}"
