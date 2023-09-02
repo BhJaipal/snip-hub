@@ -11,7 +11,7 @@ fetch("http://localhost:3300/languages")
   codeList.value= data;
   setTimeout(() => {
     hljs.highlightAll();
-  }, 2000);
+  }, 1000);
   });
 </script>
 <template>
