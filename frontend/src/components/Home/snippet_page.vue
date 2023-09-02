@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import hljs 
+import hljs from 
 const codeList= ref(null);
 
 onMounted(() => {
