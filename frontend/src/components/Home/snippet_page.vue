@@ -24,7 +24,7 @@ onMounted(() => {
                       16 ┊ border-radius: 50%;
                          17 ┊ border-bottom-color: transparent;
                             18 ┊ box-sizing: border-box;
-                               19 ┊ animation: rotate 1s linear infinite
+                                animation: rotate 1s linear infinite
                                    }
                                      
                                          @keyframes rotate {
