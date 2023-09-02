@@ -6,5 +6,7 @@ onMounted(() => {
     fetch("http://localhost:3300")
         .then(res => {return res.json();})
         .then(data= codeList.value= data);
-    set
+    setTimeout(() => {
+        
+    }, timeout);
 </script>
