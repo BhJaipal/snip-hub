@@ -1,3 +1,3 @@
 import { readFileSync } from "fs";
 
-export const typeDefs= readFile
+export const typeDefs= readFileSync
