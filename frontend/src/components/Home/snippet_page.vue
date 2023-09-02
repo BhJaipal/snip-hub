@@ -1,3 +1,3 @@
 <script setup lang="ts">
-import 
+import { r}
 </script>
