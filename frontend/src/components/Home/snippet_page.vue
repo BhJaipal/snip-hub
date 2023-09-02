@@ -7,6 +7,6 @@ onMounted(() => {
         .then(res => {return res.json();})
         .then(data= codeList.value= data);
     setTimeout(() => {
-        hljs.hig
+        hljs.highlig
     }, 1000);
 </script>
