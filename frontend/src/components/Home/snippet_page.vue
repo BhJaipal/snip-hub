@@ -20,7 +20,7 @@ onMounted(() => {
         margin-left: 145px;
               width: 48px;
                  height: 48px;
-                   15 ┊ border: 5px solid #3498db;
+                  border: 5px solid #3498db;
                       16 ┊ border-radius: 50%;
                          17 ┊ border-bottom-color: transparent;
                             18 ┊ box-sizing: border-box;
