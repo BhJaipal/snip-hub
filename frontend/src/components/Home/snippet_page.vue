@@ -2,5 +2,7 @@
 import { ref } from "vue";
 const codeList= ref(null);
 
-onMounted()
-</sc
+onMounted(() => {
+    
+})
+</script>
