@@ -21,7 +21,7 @@ onMounted(() => {
               width: 48px;
                  height: 48px;
                   border: 5px solid #3498db;
-                      16 ┊ border-radius: 50%;
+                       border-radius: 50%;
                          border-bottom-color: transparent;
                              box-sizing: border-box;
                                 animation: rotate 1s linear infinite
