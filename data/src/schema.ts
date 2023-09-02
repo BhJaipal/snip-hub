@@ -1,3 +1,3 @@
 import { readFileSync } from "fs";
 
-export const typeDefs= readFileSync("./schema.gql")
+export const typeDefs= readFileSync("./schema.gql");
