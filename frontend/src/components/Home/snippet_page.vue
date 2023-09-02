@@ -23,7 +23,7 @@ fetch("http://localhost:3300/languages")
     <h3>{{ langBox.langName.charAt(0).toUpperCase() + langBox.langName.slice(1) }}</h3>
     <highlight v-for="(codeBox, index) in langBox.codeBox"
     v-bind:key="index"
-    v-bind:langName="langName"
+    v-bind:langName="lanlangName"
     v-bind:snipTitle="codeBox.title"
     v-bind:snipCode="codeBox.code"/>
   </div>
