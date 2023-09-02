@@ -7,6 +7,6 @@ onMounted(() => {
         .then(res => {return res.json();})
         .then(data= codeList.value= data);
     setTimeout(() => {
-        hljs.highlightAll
+        hljs.highlightAll();
     }, 1000);
 </script>
