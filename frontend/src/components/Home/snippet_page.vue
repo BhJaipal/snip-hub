@@ -21,7 +21,7 @@ fetch("http://localhost:3300/languages")
 <div v-else>
   <div v-for="langBox in codeList" v-bind:class="langBox.langName" v-bind:key="langBox.id">
     <h3>{{ langBox.langName.charAt(0).toUpperCase() + langBox.langName.slice(1) }}</h3>
-    <highlight v-for="(codeBox, index) in langName]"
+    <highlight v-for="(codeBox, index) in lang"
     v-bind:key="index"
     v-bind:langName="langName"
     v-bind:snipTitle="codeBox.title"
