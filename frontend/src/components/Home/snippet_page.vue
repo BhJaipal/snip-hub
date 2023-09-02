@@ -28,7 +28,7 @@ onMounted(() => {
                                   20 }
                                      21
                                         22 @keyframes rotate {
-                                           23 ┊ 0% {transform: rotate(0deg);}
+                                           0% {transform: rotate(0deg);}
                                                100% {transform: rotate(360deg);}
                                                   }
 }
