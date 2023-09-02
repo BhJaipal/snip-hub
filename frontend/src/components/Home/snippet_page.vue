@@ -25,7 +25,7 @@ onMounted(() => {
                          17 ┊ border-bottom-color: transparent;
                             18 ┊ box-sizing: border-box;
                                19 ┊ animation: rotate 1s linear infinite
-                                  20 }
+                                   }
                                      
                                          @keyframes rotate {
                                            0% {transform: rotate(0deg);}
