@@ -2,6 +2,6 @@ import { readFileSync } from "fs";
 
 export const typeDefs= `#graphql
 type codeBlock{
-    title: strin
+    title: string
 }
 `
