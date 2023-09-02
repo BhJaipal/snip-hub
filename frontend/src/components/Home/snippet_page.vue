@@ -13,7 +13,7 @@ onMounted(() => {
 }):
 </script>
 <template>
-    
+    f
 </template>
 <style scoped>
 #loading{
