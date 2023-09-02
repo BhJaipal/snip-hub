@@ -41,5 +41,5 @@
       "title": "User Input",
       "code": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n  string name;\n  cout << \"Enter your name: \";\n  cout << \"Hello \" << name;\n  return 0;\n}"
     }]
-  }]}
+  }]
 }
