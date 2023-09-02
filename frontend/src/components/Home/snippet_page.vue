@@ -15,4 +15,4 @@ onMounted(() => {
 <template>
 </template>
 <style scoped>
-</sc
+</style
