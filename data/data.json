@@ -14,8 +14,7 @@
         "title": "CJS import",
         "code": "let moduleName = require('module');"
       }]},
-      "langName":
-    "python" [{
+      "langName": "python" [{
       "title": "if statement",
       "code": "if name == 'Jaipal': print('Hello Jaipal');\nelse: print('Hello World')"
     }],
