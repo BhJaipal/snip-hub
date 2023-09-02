@@ -1,3 +1,4 @@
 type codeBox{
-    title: String
+    title: String!
+    
 }
