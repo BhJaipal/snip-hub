@@ -14,4 +14,4 @@ onMounted(() => {
 </script>
 <template>
 </template>
-<style s
+<style scop
