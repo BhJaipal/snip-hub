@@ -1,6 +1,6 @@
 {
   "languages": [{
-    langName: "javascript": [{
+    langName": "javascript": [{
       "title": "ESM import and class object",
       "code": "import { Person } from \"./person\";\nlet person = new Person(\"Jaipal\", 18);\nperson.functionName(/* arguments if need any */);"
       },
