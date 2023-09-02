@@ -3,6 +3,6 @@ import { ref } from "vue";
 const codeList= ref(null);
 
 onMounted(() => {
-    fetch("http://localhost:")
+    fetch("http://localhost:3300")
 })
 </script>
