@@ -8,5 +8,5 @@ onMounted(() => {
         .then(data= codeList.value= data);
     setTimeout(() => {
         
-    }, timeout);
+    }, 1000);
 </script>
