@@ -1,4 +1,4 @@
-export const typeDefs= `#graphql
+export const typeDefs = `#graphql
 type CodeBox{
   title: String!
   code: String!
@@ -10,5 +10,4 @@ type lang{
 type Query{
   languages: [lang!]!
 }
-`
-
+`;

@@ -1,4 +1,0 @@
-type codeBox{
-    title: String!
-    code: String!
-}

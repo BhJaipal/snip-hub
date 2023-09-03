@@ -2,10 +2,10 @@
   "name": "data",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "compile": "tsc",
-    "start": "ts-node ./src/index.ts"
+    "start": "tsc && node ./dist/index.js"
   },
   "keywords": [],
   "author": "",
