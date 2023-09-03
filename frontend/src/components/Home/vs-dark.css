@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300&display=swap');
+code{color: lightskyblue !important;}
 span.hljs-comment{color: green}
 span.hljs-params{color: skyblue;}
 span.hljs-meta{color: dodgerblue;}
@@ -9,7 +10,7 @@ span.hljs-title{color: palegoldenrod;}
 span.variable{color: lightskyblue}
 span.hljs-variable.language_{color: deepskyblue;}
 span.hljs-number{color: palegreen;}
-span.hljs-title.class_{color: lightseagreen;}
+span.hljs-title.class_{color: lightseagreen;font-weight: bolder !important}
 span.hljs-title.function_{color: palegoldenrod;}
 span.hljs-string{color: sandybrown}
 pre> code{font-weight: bold;color: white; overflow-x: scroll; display: block; font-family: "Fira code"}

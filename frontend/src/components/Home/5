@@ -1,18 +1,18 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import hljs from "highlight.js";
 import "./vs-dark.css"
 import highlighter from "./highlighter.vue";
 
-const codeList = ref([]);
+const codeList= ref([]);
 
 onMounted(() => {
     fetch("http://localhost:3300/languages")
-        .then(res => { return res.json(); })
-        .then(data => codeList.value = data);
+        .then(res => {return res.json();})
+        .then(data=> codeList.value= data);
     setTimeout(() => {
         hljs.highlightAll();
-    }, 500);
+    }, 2000);
 });
 </script>
 <template>
@@ -21,16 +21,16 @@ onMounted(() => {
     </div>
     <div v-else>
         <div v-for="langBox in codeList">
-            <h3 class="text-center">{{ langBox.langName.charAt(0).toUpperCase() + langBox.langName.slice(1) }}</h3>
-            <highlighter v-for="codeBox in langBox['code-boxes']" 
-                v-bind:langName="langBox.langName"
-                v-bind:snipTitle="codeBox.title" 
-                v-bind:snipCode="codeBox.code" />
+            <h3 class="text-center">{{ langBox["langName"].charAt(0).toUpperCase()+ langBox["langName"].slice(1) }}</h3>
+            <highlighter v-for="codeBox in langBox['code-boxes']"
+                v-bind:lang-name="langBox['langName']"
+                v-bind:snip-title="codeBox['title']"
+                v-bind:snip-code="codeBox['code']" />
         </div>
     </div>
 </template>
 <style scoped>
-#loading {
+#loading{
     margin-top: 300px;
     margin-left: 160px;
     width: 48px;
@@ -43,11 +43,7 @@ onMounted(() => {
 }
 
 @keyframes rotate {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
-}</style>
+    0% {transform: rotate(0deg);}
+    100% {transform: rotate(360deg);}
+}
+</style>
