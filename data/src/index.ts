@@ -24,7 +24,8 @@ const app = express();
 
 app.use("/", graphqlHTTP({
   schema: buildSchema(typeDefs),
-  rootValue: resolvers
+  rootValue: resolvers,
+  graphiql: true
 }));
 
 app.listen(3300, () => {
