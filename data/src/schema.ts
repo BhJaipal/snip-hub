@@ -8,7 +8,7 @@ type lang{
   codeBoxes: [CodeBox]!
 }
 type Query{
-  languages: [lang!]!
-}
-`
+  langList: [lang!]
+  js: lang!
+}`;
 
