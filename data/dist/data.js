@@ -1,5 +1,6 @@
 export let languages = [
     {
+        id: 1,
         langName: "javascript",
         codeBoxes: [
             {
@@ -17,6 +18,7 @@ export let languages = [
         ]
     },
     {
+        id: 2,
         langName: "python",
         codeBoxes: [
             {
@@ -26,6 +28,7 @@ export let languages = [
         ]
     },
     {
+        id: 3,
         langName: "c",
         codeBoxes: [
             {
@@ -43,6 +46,7 @@ export let languages = [
         ]
     },
     {
+        id: 4,
         langName: "cpp",
         codeBoxes: [
             {

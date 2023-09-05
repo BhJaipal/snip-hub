@@ -4,10 +4,11 @@ type CodeBox{
   code: String!
 }
 type lang{
+  id: ID!
   langName: String!
   codeBoxes: [CodeBox]!
 }
 type Query{
-  languages: [lang!]!
-}
-`;
+  langList: [lang!]
+  langFind(id: ID!): lang!
+}`;
