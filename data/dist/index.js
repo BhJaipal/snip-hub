@@ -11,8 +11,8 @@ let resolvers = {
         langFind: (_, args) => {
             return languages.filter(
                 langBox => (
-                (langBox.id === args.id))
-            );
+                (langBox.langName === args.langName))
+            )[0];
         }
     }
 };

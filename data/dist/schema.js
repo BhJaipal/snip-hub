@@ -10,5 +10,5 @@ type lang{
 }
 type Query{
   langList: [lang!]
-  langFind(id: ID!): lang!
+  langFind(langName: String!): lang!
 }`;
