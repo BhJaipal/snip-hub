@@ -11,4 +11,16 @@ type lang{
 type Query{
   langList: [lang!]
   langFind(langName: String!): lang!
-}`;
+}
+type Mutation{
+  snipAdd(codeSnip: snipBox!): [lang!]!
+}
+input snipBox{
+  langName: String!
+  codeBox: codeBlock!
+}
+input codeBlock{
+  title: String!
+  code: String!
+}
+`;
