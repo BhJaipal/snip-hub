@@ -1,5 +1,6 @@
 import { typeDefs } from "./schema.js";
-import { languages } from "./data.js";
+import chalk from "chalk";
+import { readFileSync, writeFileSync } from "fs";
 // with koa
 // import Koa from "koa";
 // import mount from "koa-mount";
@@ -8,14 +9,24 @@ import { languages } from "./data.js";
 // apollo server
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
-import chalk from "chalk";
 // import { GraphQLSchema, buildSchema } from "graphql";
 
 let resolvers = {
     Query: {
-        langList: () => {return languages;},
+        langList: ()=> {
+            let read= readFileSync("dist/data.json", {
+                encoding: "utf8",
+                flag: "r"
+            });
+            let data= JSON.parse(read);
+            return data.languages;
+        },
         langFind: (_, args) => {
-            return languages.filter(
+            let read= readFileSync("dist/data.json", {
+                encoding: "utf8", flag: "r"
+            });
+            let data= JSON.parse(read);
+            return data.languages.filter(
                 langBox => (
                 (langBox.langName === args.langName))
             )[0];
@@ -23,6 +34,12 @@ let resolvers = {
     },
     Mutation: {
         snipAdd: (_, args) => {
+            let read= readFileSync("dist/data.json", {
+                encoding: "utf8",
+                flags: "r"
+            });
+            let data= JSON.parse(read);
+            let languages= data.languages;
             let find= false;
             let arg= args.codeSnip;
             for (let i in languages.length) {
@@ -45,6 +62,10 @@ let resolvers = {
                     }]
                 });
             } else {}
+            writeFileSync("dist/data.json", 
+                JSON.stringify({
+                "languages": languages
+            }));
             return languages;
         }
     }
