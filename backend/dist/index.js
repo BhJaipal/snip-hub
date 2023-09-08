@@ -1,15 +1,14 @@
 import { typeDefs } from "./schema.js";
 import chalk from "chalk";
 import { readFileSync, writeFileSync } from "fs";
-// with koa
-// import Koa from "koa";
-// import mount from "koa-mount";
-// import { graphqlHTTP } from "koa-graphql";
+// with express 
+import express from "express";
+import { graphqlHTTP } from "express-graphql";
 
 // apollo server
-import { ApolloServer } from "@apollo/server";
-import { startStandaloneServer } from "@apollo/server/standalone";
-// import { GraphQLSchema, buildSchema } from "graphql";
+// import { ApolloServer } from "@apollo/server";
+// import { startStandaloneServer } from "@apollo/server/standalone";
+import {  buildSchema, graphql } from "graphql";
 
 let resolvers = {
     Query: {
@@ -71,6 +70,7 @@ let resolvers = {
     }
 };
 // with apollo
+/*
 let server= new ApolloServer({
     typeDefs,
     resolvers
@@ -79,21 +79,29 @@ let server= new ApolloServer({
 let { url }= await startStandaloneServer(server, {
     listen: { port: 3300 }
 });
+*/
+// with express 
+let schema= buildSchema(typeDefs);
 
-// with Koa 
-/*
-const app= new Koa();
-app.use(
-    mount("/",
-        graphqlHTTP({
-            schema: buildSchema(typeDefs),
-            rootValue: resolvers,
-            graphiql: true
-        })
-    )
-)*/
+const app= express();
+app.get("/",
+    graphqlHTTP({
+        schema,
+        rootValue: resolvers,
+        graphiql: true
+    })
+);
 
-//app.listen(3300);
+app.get("/languages", (req, res) => {
+    res.send(graphql({schema,
+        rootValue: resolvers,
+        source: `query { langList {langName
+        codeBoxes { title
+        code}}}`
+    }));
+});
+
+app.listen(3300);
 
 
 console.log("server started at "+ chalk.hex("#40A0F0").underline("http://localhost:3300/"));
