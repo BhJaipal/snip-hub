@@ -92,16 +92,6 @@ app.get("/",
     })
 );
 
-app.get("/languages", (req, res) => {
-    res.send(graphql({schema,
-        rootValue: resolvers,
-        source: `query { langList {langName
-        codeBoxes { title
-        code}}}`
-    }));
-});
-
 app.listen(3300);
-
 
 console.log("server started at "+ chalk.hex("#40A0F0").underline("http://localhost:3300/"));
