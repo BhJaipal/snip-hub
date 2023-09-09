@@ -2,13 +2,13 @@ import { typeDefs } from "./schema.js";
 import chalk from "chalk";
 import { readFileSync, writeFileSync } from "fs";
 // with express 
-import express from "express";
-import { graphqlHTTP } from "express-graphql";
+// import express from "express";
+// import { graphqlHTTP } from "express-graphql";
 
 // apollo server
-// import { ApolloServer } from "@apollo/server";
-// import { startStandaloneServer } from "@apollo/server/standalone";
-import {  buildSchema, graphql } from "graphql";
+import { ApolloServer } from "@apollo/server";
+import { startStandaloneServer } from "@apollo/server/standalone";
+// import {  buildSchema, graphql } from "graphql";
 
 let resolvers = {
     Query: {
@@ -70,7 +70,7 @@ let resolvers = {
     }
 };
 // with apollo
-/*
+
 let server= new ApolloServer({
     typeDefs,
     resolvers
@@ -79,9 +79,9 @@ let server= new ApolloServer({
 let { url }= await startStandaloneServer(server, {
     listen: { port: 3300 }
 });
-*/
+
 // with express 
-let schema= buildSchema(typeDefs);
+/* let schema= buildSchema(typeDefs);
 
 const app= express();
 app.get("/",
@@ -93,5 +93,5 @@ app.get("/",
 );
 
 app.listen(3300);
-
+*/
 console.log("server started at "+ chalk.hex("#40A0F0").underline("http://localhost:3300/"));
