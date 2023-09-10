@@ -6,13 +6,22 @@ import highlighter from "./highlighter.vue";
 
 const codeList = ref([]);
 
-onMounted(() => {
-    fetch("http://localhost:3300/languages")
-        .then(res => { return res.json(); })
-        .then(data => codeList.value = data);
+onMounted(async () => {
+    let res= await fetch("http://localhost:3300/", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+        body: JSON.stringify({
+            query: "{langList{langName, id, codeBoxes {title, code}}}"
+        })
+    });
+    let data= await res.json();
+    codeList.value= data.data.langList;
     setTimeout(() => {
         hljs.highlightAll();
-    }, 500);
+    }, 100);
 });
 </script>
 <template>
@@ -22,7 +31,7 @@ onMounted(() => {
     <div v-else>
         <div v-for="langBox in codeList">
             <h3 class="text-center">{{ langBox.langName.charAt(0).toUpperCase() + langBox.langName.slice(1) }}</h3>
-            <highlighter v-for="codeBox in langBox['code-boxes']" 
+            <highlighter v-for="codeBox in langBox.codeBoxes" 
                 v-bind:langName="langBox.langName"
                 v-bind:snipTitle="codeBox.title" 
                 v-bind:snipCode="codeBox.code" />
@@ -50,4 +59,5 @@ onMounted(() => {
     100% {
         transform: rotate(360deg);
     }
-}</style>
+}
+</style>
