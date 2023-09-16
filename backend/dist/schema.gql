@@ -12,7 +12,7 @@ type Query{
   langFind(langName: String!): lang!
 }
 type Mutation{
-  snipAdd(codeSnip: snipBox!): [lang!]!
+  snipAdd(codeSnip: snipBox!): lang!
 }
 input snipBox{
   langName: String!
