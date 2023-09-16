@@ -33,8 +33,8 @@ async function sendData() {
       snipAdd(codeSnip: $codeSnip) {
         langName, codeBoxes {title, code}
       }}`,
-      variable: {
-        "codeSnip": {
+      variables: {
+        codeSnip: {
           "langName": document.getElementById("lang-select").value,
           "codeBlock": {
             "title": document.getElementById("title").value,
