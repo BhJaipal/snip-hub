@@ -65,7 +65,7 @@ let resolvers = {
                 JSON.stringify({
                 "languages": languages
             }));
-            return languages;
+            return args;
         }
     }
 };
