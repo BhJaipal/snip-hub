@@ -3,9 +3,10 @@ import { ref } from "vue";
 import hljs from "highlight.js";
 import "./../Home/vs-dark.css";
 
-let langSelect= ref(null);
-let preview= ref(null);
-let defaultSnip= ref("\"Hello World\"");
+let inputTitle= ref("");
+let langSelect = ref(null);
+let preview = ref(null);
+let defaultSnip = ref("\"Hello World\"");
 
 function toggle() {
   if (document.getElementsByClassName("navbar-list")[0].classList.contains("h-0")) {
@@ -25,8 +26,9 @@ function toggle() {
   }
 }
 
-async function sendData() {
-  await fetch("http://localhost:3300/", {
+document.getElementById("send-data").addEventListener("click", async function (e: any) {
+  e.preventDefault();
+  let res= await fetch("http://localhost:3300/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -40,18 +42,26 @@ async function sendData() {
       variables: {
         codeSnip: {
           "langName": langSelect.value,
-          "codeBlock": {
-            "title": document.getElementById("title").value,
+          "codeBox": {
+            "title": inputTitle.value,
             "code": defaultSnip.value
           }
         }
       }
     })
   });
-}
+  let data= await res.json();
+  if (typeof(data.data) === "undefined" || data.error) {
+    alert(data.error.title + " " + data.error.message);
+  } else {
+    alert("Data sent successfully");
+  }
+  console.log(data.data);
+});
 
 function selectValChange() {
-  document.getElementById("pre-tag").className= langSelect.value+ " pl-1 h-40 w-72 bg-slate-800 mt-3 ml-[50px] text-left pt-0";
+  document.getElementById("pre-tag").className = langSelect.value.value + " pl-1 h-40 w-80 bg-slate-800 mt-[52px] ml-[34px] text-left pt-0";
+  hljs.highlightAll();
 };
 
 hljs.highlightAll();
@@ -60,15 +70,15 @@ function update() {
   hljs.highlightElement(preview.value);
 }
 
-let navigation= ref<{name: string, href: string, active: boolean}[]>([
-  {name: "Home", href: "/", active: false},
-  {name: "About", href: "/about", active: false},
-  {name: "Create", href: "/create", active: true}
+let navigation = ref<{ name: string, href: string, active: boolean }[]>([
+  { name: "Home", href: "/", active: false },
+  { name: "About", href: "/about", active: false },
+  { name: "Create", href: "/create", active: true }
 ]);
 </script>
 
 <template>
-    <nav class="bg-[#181818] inset-0 h-20 w-full border-b-2 border-white">
+  <nav class="bg-[#181818] inset-0 h-20 w-full border-b-2 border-white">
     <div class="bg-[#181818] font-bold h-18 pt-5 flex py-2 float-left text-2xl pl-2.5">Navbar
     </div>
     <div class="flex justify-end py-3 bg-[#181818]">
@@ -88,11 +98,10 @@ let navigation= ref<{name: string, href: string, active: boolean}[]>([
   </nav>
   <h1>Create Page</h1>
 
-  <form v-on:submit.prevent="sendData">
-    Select a language <select name="lang-select" 
+    Select a language <select 
+      name="lang-select" 
       ref="langSelect" 
-      @change="selectValChange" 
-      class="bg-slate-800">
+      @change="selectValChange" class="bg-slate-800">
       <option value="javascript" selected>javascript</option>
       <option value="php">PHP</option>
       <option value="python">Python</option>
@@ -100,30 +109,40 @@ let navigation= ref<{name: string, href: string, active: boolean}[]>([
       <option value="cpp">C++</option>
     </select><br />
 
-    <input class="rounded-lg bg-slate-800 w-60 h-8 mt-5 mb-3 pl-2" placeholder="Enter title" required/>
+    <input class="rounded-lg bg-slate-800 w-60 h-8 mt-5 mb-3 pl-2" placeholder="Enter title" v-model="inputTitle" required />
 
-    <textarea @change="update"
-      id="code-input" v-model="defaultSnip"
-      class="bg-slate-800 h-80 w-72 rounded-lg pl-2" placeholder="enter code here" required></textarea>
+    <textarea id="code-input" v-model="defaultSnip" class="bg-slate-800 h-80 w-72 rounded-lg pl-2"
+      placeholder="enter code here" autocapitalize="off" required></textarea>
+    <button class="bg-green-600 h-10 w-20 my-5 ml-5 rounded-lg"
+      @click="update">Highlight</button>
 
-    <pre id="pre-tag" class="javascript pl-1 h-40 w-72 bg-slate-800 mt-3 ml-[50px] text-left pt-0">
-    <code ref="preview">{{ defaultSnip }}</code></pre>
+    <div class="text-black mt-2">
+      <div class="flex flex-row ml-[34px] h-6 overflow-none mb-0 bg-gray-200 w-80 float-left">
+        <div class="bg-red-500 w-2 h-2 rounded-full ml-2 mr-0.5 mt-2"></div>
+        <div class="bg-yellow-500 w-2 h-2 rounded-full mx-0.5 mt-2"></div>
+        <div class="bg-green-500 w-2 h-2 rounded-full ml-0.5 mr-3 mt-2"></div>
+        <div class="overflow-y-scroll h-6">{{ inputTitle }}
+        </div>
+      </div>
+    </div>
 
-    <button type="submit" 
-      class="w-20 mt-2 h-10 hover:bg-blue-800 bg-sky-700">
+    <pre id="pre-tag" class="javascript pl-1 h-36 w-80 bg-slate-800 mt-[52px] ml-[34px] text-left pt-0"><code ref="preview" class="text-sm h-36 overflow-y-scroll">{{ defaultSnip }}</code></pre>
+
+    <button id="send-data" class="w-20 mt-2 h-10 hover:bg-blue-800 bg-sky-700">
       Submit
     </button>
-  </form>
 </template>
 
 <style scoped>
-nav> div:nth-child(2)> button:nth-child(2){
+nav>div:nth-child(2)>button:nth-child(2) {
   @apply bg-indigo-950
 }
+
 button>i.material-icons {
   font-size: 30px !important;
   padding-top: 5px;
 }
+
 code {
   margin-top: -20px;
 }
