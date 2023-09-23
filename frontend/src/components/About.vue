@@ -3,15 +3,14 @@ import { ref } from "vue";
 
 function toggle() {
   if (document.getElementsByClassName("navbar-list")[0].classList.contains("h-0")) {
-    // navbar-list to 110px 
-    document.getElementsByClassName("navbar-list")[0].classList.replace("h-0", "h-{110px}");
+    document.getElementsByClassName("navbar-list")[0].classList.replace("h-0", "h-{165px}");
     document.querySelectorAll("button.navbar-nav").forEach(node => {
       node.classList.replace("h-0", "h-[55px]");
       node.classList.replace("hidden", "block");
     });
     document.getElementsByTagName("nav")[0].classList.replace("h-20", "h-50");
   } else {
-    document.getElementsByClassName("navbar-list")[0].classList.replace("h-{110px}", "h-0");
+    document.getElementsByClassName("navbar-list")[0].classList.replace("h-{165px}", "h-0");
     document.querySelectorAll("button.navbar-nav").forEach(node => {
       node.classList.replace("h-[55px]", "h-0");
       node.classList.replace("block", "hidden");
@@ -53,8 +52,9 @@ let homeList = ref<pageModule[]>([
 ]);
 let navigation= ref<{name: string, href: string, active: boolean}[]>([
   {name: "Home", href: "/", active: false},
-  {name: "About", href: "/about", active: true}
-])
+  {name: "About", href: "/about", active: true},
+  {name: "Create", href: "/create", active: false}
+]);
 </script>
 
 <template>
