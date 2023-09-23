@@ -3,6 +3,10 @@ import { ref } from "vue";
 import hljs from "highlight.js";
 import "./../Home/vs-dark.css";
 
+let langSelect= ref(null);
+let preview= ref(null);
+let defaultSnip= ref("\"Hello World\"");
+
 function toggle() {
   if (document.getElementsByClassName("navbar-list")[0].classList.contains("h-0")) {
     document.getElementsByClassName("navbar-list")[0].classList.replace("h-0", "h-{165px}");
@@ -35,26 +39,25 @@ async function sendData() {
       }}`,
       variables: {
         codeSnip: {
-          "langName": document.getElementById("lang-select").value,
+          "langName": langSelect.value,
           "codeBlock": {
             "title": document.getElementById("title").value,
-            "code": document.getElementById("code-input").value
+            "code": defaultSnip.value
           }
         }
       }
     })
   });
 }
-document.getElementById("lang-select").addEventListener("change", function() {
-  document.getElementById("pre-tag").className= document.getElementById("lang-select").value;
-});
+
+function selectValChange() {
+  document.getElementById("pre-tag").className= langSelect.value+ " pl-1 h-40 w-72 bg-slate-800 mt-3 ml-[50px] text-left pt-0";
+};
 
 hljs.highlightAll();
 
 function update() {
-  let textArea= document.getElementById("code-input");
-  document.getElementById("preview").textContent= textArea.innerText;
-  hljs.highlightElement(document.getElementById("preview"));
+  hljs.highlightElement(preview.value);
 }
 
 let navigation= ref<{name: string, href: string, active: boolean}[]>([
@@ -86,21 +89,28 @@ let navigation= ref<{name: string, href: string, active: boolean}[]>([
   <h1>Create Page</h1>
 
   <form v-on:submit.prevent="sendData">
-    <select name="langSelect" id="lang-select" class="bg-slate-800">
-      <option value="javascript">javascript</option>
+    Select a language <select name="lang-select" 
+      ref="langSelect" 
+      @change="selectValChange" 
+      class="bg-slate-800">
+      <option value="javascript" selected>javascript</option>
       <option value="php">PHP</option>
       <option value="python">Python</option>
+      <option value="c">C</option>
+      <option value="cpp">C++</option>
     </select><br />
 
-    <input class="rounded-lg bg-slate-800 w-60 h-8 mt-5 mb-3 pl-2" placeholder="Enter title"/>
+    <input class="rounded-lg bg-slate-800 w-60 h-8 mt-5 mb-3 pl-2" placeholder="Enter title" required/>
 
-    <textarea onchange="update()"
-      id="code-input" class="bg-slate-800 h-80 w-72 rounded-lg pl-2" placeholder="enter code here"></textarea>
+    <textarea @change="update"
+      id="code-input" v-model="defaultSnip"
+      class="bg-slate-800 h-80 w-72 rounded-lg pl-2" placeholder="enter code here" required></textarea>
 
-    <pre id="pre-tag" class="javascript h-40 w-72 bg-slate-800 mt-3 ml-[50px]">
-    <code id="preview"></code></pre>
+    <pre id="pre-tag" class="javascript pl-1 h-40 w-72 bg-slate-800 mt-3 ml-[50px] text-left pt-0">
+    <code ref="preview">{{ defaultSnip }}</code></pre>
 
-    <button type="submit" class="w-10 h-5 bg-slate-800">
+    <button type="submit" 
+      class="w-20 mt-2 h-10 hover:bg-blue-800 bg-sky-700">
       Submit
     </button>
   </form>
@@ -113,5 +123,8 @@ nav> div:nth-child(2)> button:nth-child(2){
 button>i.material-icons {
   font-size: 30px !important;
   padding-top: 5px;
+}
+code {
+  margin-top: -20px;
 }
 </style>
