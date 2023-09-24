@@ -4,15 +4,21 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <link rel="stylesheet" href="eruda.css">
-    <script src="src/eruda.min.js">
+    <script src="./src/eruda.min.js">
     </script>
     <script>
-      erude.init()
+      eruda.init({tool: [
+        "console", "elements",
+        "network", "resourses", 
+        "info", "settings"
+      ]});
+      eruda.get().config.set("displaySize", 60);
     </script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite + Vue + TS</title>
   </head>
+  <div style="all: initial"></div>
   <body>
     <div id="app"></div>
     <script type="module" src="/src/main.ts"></script>

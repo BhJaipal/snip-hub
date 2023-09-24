@@ -26,8 +26,7 @@ function toggle() {
   }
 }
 
-document.getElementById("send-data").addEventListener("click", async function (e: any) {
-  e.preventDefault();
+async function sendDataBtn() {
   let res= await fetch("http://localhost:3300/", {
     method: "POST",
     headers: {
@@ -41,23 +40,23 @@ document.getElementById("send-data").addEventListener("click", async function (e
       }}`,
       variables: {
         codeSnip: {
-          "langName": langSelect.value,
-          "codeBox": {
-            "title": inputTitle.value,
-            "code": defaultSnip.value
+          langName: langSelect.value.value,
+          codeBox: {
+            title: inputTitle.value,
+            code: defaultSnip.value
           }
         }
       }
     })
   });
   let data= await res.json();
-  if (typeof(data.data) === "undefined" || data.error) {
-    alert(data.error.title + " " + data.error.message);
+  if (data.errors) {
+    alert(data.errors.title + " " + data.errors.message);
   } else {
     alert("Data sent successfully");
   }
   console.log(data.data);
-});
+}
 
 function selectValChange() {
   document.getElementById("pre-tag").className = langSelect.value.value + " pl-1 h-40 w-80 bg-slate-800 mt-[52px] ml-[34px] text-left pt-0";
@@ -128,7 +127,7 @@ let navigation = ref<{ name: string, href: string, active: boolean }[]>([
 
     <pre id="pre-tag" class="javascript pl-1 h-36 w-80 bg-slate-800 mt-[52px] ml-[34px] text-left pt-0"><code ref="preview" class="text-sm h-36 overflow-y-scroll">{{ defaultSnip }}</code></pre>
 
-    <button id="send-data" class="w-20 mt-2 h-10 hover:bg-blue-800 bg-sky-700">
+    <button @click="sendDataBtn" id="send-data" class="w-20 mt-2 h-10 hover:bg-blue-800 bg-sky-700">
       Submit
     </button>
 </template>

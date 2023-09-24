@@ -25,6 +25,10 @@
         {
           "title": "if statement",
           "code": "if name == 'Jaipal': print('Hello Jaipal');\nelse: print('Hello World')"
+        },
+        {
+          "title": "Private members of class",
+          "code": "class Person:\n    def __init__(self, name, salary):\n        self.name= name\n        self.__salary= salary\nPerson1 = Person(\"Jaipal\", 100000)\nprint(Person1.__salary)\n# Throws error"
         }
       ]
     },
