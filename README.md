@@ -1,3 +1,3 @@
-# Express-and-CodingHub 
+# snip-hub 
 
 I am gonna create CodingHubButBetter with Express
