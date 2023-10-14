@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import hljs from "highlight.js";
-import "./../Home/vs-dark.css";
+import "../../components/home/vs-dark.css";
 
 let inputTitle= ref("");
 let langSelect = ref(null);
@@ -27,7 +27,7 @@ function toggle() {
 }
 
 async function sendDataBtn() {
-  let res= await fetch("http://localhost:3300/", {
+  let { data }= await useFetch("http://localhost:3300/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -49,7 +49,6 @@ async function sendDataBtn() {
       }
     })
   });
-  let data= await res.json();
   if (data.errors) {
     alert(data.errors.title + " " + data.errors.message);
   } else {
@@ -77,21 +76,22 @@ let navigation = ref<{ name: string, href: string, active: boolean }[]>([
 </script>
 
 <template>
+  <NuxtLayout name="default"><template>
   <nav class="bg-[#181818] inset-0 h-20 w-full border-b-2 border-white">
     <div class="bg-[#181818] font-bold h-18 pt-5 flex py-2 float-left text-2xl pl-2.5">Navbar
     </div>
     <div class="flex justify-end py-3 bg-[#181818]">
       <button
-        class="w-[50px] bg-black text-white font-bold mr-5 flex-row flex-nowrap rounded-xl mr-5 border-2 h-[45px] mt-[5px]"
+        class="w-[50px] bg-black text-white font-bold flex-row flex-nowrap rounded-xl mr-5 border-2 h-[45px] mt-[5px]"
         @click="toggle">
         <i class="material-icons">menu</i></button>
     </div>
     <div class="flex navbar-list flex-col w-full h-0">
       <button v-for="item in navigation" v-bind:key="item.name"
         class="text-white font-bold rounded-xl h-0 bg-slate-900 hover:bg-indigo-950 cursor-pointor decoration-transparent navbar-nav hidden">
-        <router-link class="underline-none" v-bind:active="item.active" v-bind:to="item.href">
+        <NuxtLink class="underline-none" v-bind:active="item.active" v-bind:to="item.href">
           {{ item.name }}
-        </router-link>
+        </NuxtLink>
       </button>
     </div>
   </nav>
@@ -112,7 +112,7 @@ let navigation = ref<{ name: string, href: string, active: boolean }[]>([
 
     <textarea id="code-input" v-model="defaultSnip" class="bg-slate-800 h-80 w-72 rounded-lg pl-2"
       placeholder="enter code here" autocapitalize="off" required></textarea>
-    <button class="bg-green-600 h-10 w-20 my-5 ml-5 rounded-lg"
+    <button type="button" class="bg-green-600 h-10 w-20 my-5 ml-5 rounded-lg"
       @click="update">Highlight</button>
 
     <div class="text-black mt-2">
@@ -130,6 +130,8 @@ let navigation = ref<{ name: string, href: string, active: boolean }[]>([
     <button @click="sendDataBtn" id="send-data" class="w-20 mt-2 h-10 hover:bg-blue-800 bg-sky-700">
       Submit
     </button>
+    </template>
+  </NuxtLayout>
 </template>
 
 <style scoped>

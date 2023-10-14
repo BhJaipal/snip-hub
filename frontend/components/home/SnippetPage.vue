@@ -2,12 +2,12 @@
 import { ref, onMounted } from "vue";
 import hljs from "highlight.js";
 import "./vs-dark.css"
-import highlighter from "./highlighter.vue";
+import Highlight from "./Highlighter.vue";
 
 const codeList = ref([]);
 
 onMounted(async () => {
-    let res= await fetch("http://localhost:3300/", {
+    let { data }= await useFetch("http://localhost:3300/", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -17,7 +17,6 @@ onMounted(async () => {
             query: "{langList{langName, id, codeBoxes {title, code}}}"
         })
     });
-    let data= await res.json();
     codeList.value= data.data.langList;
     setTimeout(() => {
         hljs.highlightAll();
@@ -31,7 +30,7 @@ onMounted(async () => {
     <div v-else>
         <div v-for="langBox in codeList">
             <h3 class="text-center">{{ langBox.langName.charAt(0).toUpperCase() + langBox.langName.slice(1) }}</h3>
-            <highlighter v-for="codeBox in langBox.codeBoxes" 
+            <Highlight v-for="codeBox in langBox.codeBoxes" 
                 v-bind:langName="langBox.langName"
                 v-bind:snipTitle="codeBox.title" 
                 v-bind:snipCode="codeBox.code" />
