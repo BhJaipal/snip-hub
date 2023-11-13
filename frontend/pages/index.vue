@@ -1,53 +1,55 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { ref } from 'vue';
 import "./../app.css";
-let navigation = ref<{ name: string, href: string, active: boolean }[]>([
-  { name: "Home", href: "/", active: true },
-  { name: "About", href: "/about", active: false },
-  { name: "Create", href: "/create", active: false }
-]);
-function toggle() {
-  if (document.getElementsByClassName("navbar-list")[0].classList.contains("h-0")) {
-    document.getElementsByClassName("navbar-list")[0].classList.replace("h-0", "h-{165px}");
-    document.querySelectorAll("button.navbar-nav").forEach(node => {
-      node.classList.replace("h-0", "h-[55px]");
-      node.classList.replace("hidden", "block");
-    });
-    document.getElementsByTagName("nav")[0].classList.replace("h-20", "h-50");
-  } else {
-    document.getElementsByClassName("navbar-list")[0].classList.replace("h-{165px}", "h-0");
-    document.querySelectorAll("button.navbar-nav").forEach(node => {
-      node.classList.replace("h-[55px]", "h-0");
-      node.classList.replace("block", "hidden");
-    });
-    document.getElementsByTagName("nav")[0].classList.replace("h-50", "h-20");
-  }
-}
+import { onMounted } from "vue";
+import hljs from "highlight.js";
+import "./vs-dark.css"
+import {definePageMeta} from "#imports";
+
+const LangList = ref<{
+  id: string,
+  langName: string,
+  codeBoxes: {title: string, code: string}[]
+}[]>([]);
+
+definePageMeta({
+  layout: "default"
+})
+
+onMounted(async () => {
+  let { data }= await useFetch("http://localhost:3300/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+    },
+    body: JSON.stringify({
+      query: "{langList{langName, id, codeBoxes {title, code}}}"
+    })
+  });
+  LangList.value= data.data.langList;
+  setTimeout(() => {
+    hljs.highlightAll();
+  }, 100);
+});
+
 </script>
 <template>
-  <NuxtLayout name="default">
-  <template>
-  <nav class="bg-[#181818] inset-0 h-20 w-full border-b-2 border-white">
-    <div class="bg-[#181818] font-bold h-18 pt-5 flex py-2 float-left text-2xl pl-2.5">Navbar
+  <div id="home">
+
+    <div v-if="!(LangList.length)">
+      <div id="loading"></div>
     </div>
-    <div class="flex justify-end py-3 bg-[#181818]">
-      <button
-        class="w-[50px] bg-black text-white font-bold flex-row flex-nowrap rounded-xl mr-5 border-2 h-[45px] mt-[5px]"
-        @click="toggle">
-        <i class="material-icons">menu</i></button>
+  <div v-else>
+    <div v-for="langBox in LangList">
+      <h3 class="text-center">{{ langBox.langName.charAt(0).toUpperCase() + langBox.langName.slice(1) }}</h3>
+        <HomeHighlighter v-for="codeBox in langBox.codeBoxes"
+                       v-bind:langName="langBox.langName"
+                       v-bind:snipTitle="codeBox.title"
+                       v-bind:snipCode="codeBox.code" />
+      </div>
     </div>
-    <div class="flex navbar-list flex-col w-full h-0">
-      <button v-for="item in navigation" v-bind:key="item.name"
-        class="text-white font-bold rounded-xl h-0 bg-slate-900 hover:bg-indigo-950 cursor-pointor decoration-transparent navbar-nav hidden">
-        <NuxtLink class="underline-none" v-bind:active="item.active" v-bind:to="item.href">
-          {{ item.name }}
-        </NuxtLink>
-      </button>
-    </div>
-  </nav>
-  <HomeSnippetPage />
-  </template>
-  </NuxtLayout>
+  </div>
 </template>
 <style scoped>
 nav>div:nth-child(2)>button:nth-child(1) {
@@ -57,4 +59,26 @@ nav>div:nth-child(2)>button:nth-child(1) {
 button>i.material-icons {
   font-size: 30px !important;
   padding-top: 5px;
-}</style>
+}
+#loading {
+  margin-top: 300px;
+  margin-left: 160px;
+  width: 48px;
+  height: 48px;
+  border: 5px solid #3498db;
+  border-radius: 50%;
+  border-bottom-color: transparent;
+  box-sizing: border-box;
+  animation: rotate 1s linear infinite
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+</style>

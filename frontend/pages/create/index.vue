@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import hljs from "highlight.js";
-import "../../components/home/vs-dark.css";
+import "../vs-dark.css";
 
 let inputTitle= ref("");
 let langSelect = ref(null);
