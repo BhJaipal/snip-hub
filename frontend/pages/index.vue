@@ -9,7 +9,7 @@ import {definePageMeta} from "#imports";
 const LangList = ref<{
   id: string,
   langName: string,
-  codeBoxes: {title: string, code: string}[]
+  codeBoxes: { title: string, code: string }[]
 }[]>([]);
 
 definePageMeta({
@@ -17,17 +17,19 @@ definePageMeta({
 })
 
 onMounted(async () => {
-  let { data }= await useFetch("http://localhost:3300/", {
+  let data= await fetch("http://localhost:3300/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       "Accept": "application/json"
     },
     body: JSON.stringify({
-      query: "{langList{langName, id, codeBoxes {title, code}}}"
+      query: "{langList{langName, codeBoxes {title, code}}}"
     })
   });
-  LangList.value= data.data.langList;
+  let res= await data.json();
+
+  LangList.value= res.data.langList;
   setTimeout(() => {
     hljs.highlightAll();
   }, 100);
@@ -52,17 +54,14 @@ onMounted(async () => {
   </div>
 </template>
 <style scoped>
-nav>div:nth-child(2)>button:nth-child(1) {
-  @apply bg-indigo-950;
-}
-
-button>i.material-icons {
+button > i.material-icons {
   font-size: 30px !important;
   padding-top: 5px;
 }
+
 #loading {
-  margin-top: 300px;
-  margin-left: 160px;
+  margin-top: 45vh;
+  margin-left: 50vw;
   width: 48px;
   height: 48px;
   border: 5px solid #3498db;

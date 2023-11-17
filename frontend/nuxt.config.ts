@@ -2,6 +2,14 @@
 export default defineNuxtConfig({
   devtools: { enabled: false },
   modules: [
-      "@nuxtjs/tailwindcss"
-  ]
+      "@nuxtjs/tailwindcss",
+      "nuxt-icon"
+  ],
+    app: {
+      head: {
+          link: [
+              { rel: "stylesheet", href: "https://fonts.googleapis.com/icon?family=Material+Icons"}
+          ]
+      }
+    }
 })
