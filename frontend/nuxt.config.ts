@@ -1,9 +1,10 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  devtools: { enabled: false },
+  devtools: { enabled: true },
   modules: [
       "@nuxtjs/tailwindcss",
-      "nuxt-icon"
+      "nuxt-icon",
+      "@nuxt/image"
   ],
     app: {
       head: {

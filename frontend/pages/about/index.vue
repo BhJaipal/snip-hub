@@ -1,104 +1,100 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import {definePageMeta} from "#imports";
+import { definePageMeta } from "#imports";
 definePageMeta({
-  layout: 'default'
-})
+  layout: "default",
+});
 interface pageModule {
   name: string;
   link: string;
   img: string;
-};
+}
 
 let homeList = ref<pageModule[]>([
-  { name: "Highlight.js", link: "highlightjs.org", img: "no image" },
+  { name: "Highlight.js", link: "highlightjs.org", img: "/" },
   {
-    name: "Vue 3",
+    name: "Vue",
     link: "vuejs.org",
-    img: "/assets/vue.png"
+    img: "/vue.png",
   },
   {
-    name: "TypeScript 5",
+    name: "TypeScript",
     link: "typescriptlang.org",
-    img: "/assets/ts-logo.png",
+    img: "/ts-logo.png",
   },
   {
     name: "Vite",
     link: "vitejs.dev",
-    img: "/assets/vite.png"
+    img: "/vite.png",
   },
   {
     name: "tailwindcss",
     link: "tailwindcss.com",
-    img: "https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+    img: "https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600",
   },
   {
-    name: "NuxtJS 3",
-    link: "https://nuxt.com",
-    img: "/favicon.ico"
-  }
+    name: "NuxtJS",
+    link: "nuxt.com",
+    img: "/favicon.ico",
+  },
 ]);
-let navigation= ref<{name: string, href: string, active: boolean}[]>([
-  {name: "Home", href: "/", active: false},
-  {name: "About", href: "/about", active: true},
-  {name: "Create", href: "/create", active: false}
+let navigation = ref<{ name: string; href: string; active: boolean }[]>([
+  { name: "Home", href: "/", active: false },
+  { name: "About", href: "/about", active: true },
+  { name: "Create", href: "/create", active: false },
 ]);
 </script>
 
 <template>
-  <h1>About Page</h1>
+  <div class="text-center">
+    <h1>About Page</h1>
 
-  <h4>Modules used for this project</h4>
+    <h2>Modules used for this project</h2>
 
-  <ul class="module-list">
-    <li v-for="module in homeList" class="item">
-      <a v-bind:href="`https://${module.link}`" target="_blank">
-        <div class="name">{{ module.name }}</div>
-        <img class="logo" v-bind:src="module.img"
-      /></a>
-    </li>
-  </ul>
+    <ul class="module-list">
+      <li v-for="(module, index) in homeList" :key="index" class="item">
+        <a v-bind:href="`https://${module.link}`" target="_blank">
+          <div class="name">
+            <h3>{{ module.name }}</h3>
+          </div>
+          <div class="img">
+            <img class="logo" v-bind:src="module.img" />
+          </div>
+        </a>
+      </li>
+    </ul>
+  </div>
 </template>
 
 <style scoped>
-nav> div:nth-child(2)> button:nth-child(2){
-  @apply bg-indigo-950
-}
 .item {
-  height: 25px;
-  margin-left: 100px;
+  height: auto;
+  margin-left: 40vw;
+  text-align: left;
 }
 .item > a > .name {
-  height: 24px;
+  height: 4vh;
   text-align: center;
-  width: 100px !important;
+  width: 1vw;
   float: left;
 }
-.item > a > .logo {
+.img {
+  width: auto;
+  height: 4vh;
+}
+.item > a > .img > .logo {
   box-sizing: border-box;
   width: auto;
-  height: 24px;
-  background-size: cover;
+  height: 4vh;
 }
-.item > a > img[src$="strap.png"] {
-  width: auto;
-  height: 24px;
-}
-.item > a > img[src$="jquery-ui.png"] {
-  background: rgb(178, 73, 38);
-}
-.item > a > img[src="no image"] {
+.item > a > img[src="/"] {
   display: none;
 }
 ul.module-list {
   list-style-type: none;
 }
-.item> a {
+.item > a {
   text-decoration: none;
   color: inherit;
 }
-button>i.material-icons {
-  font-size: 30px !important;
-  padding-top: 5px;
-  }
 </style>
