@@ -25,7 +25,7 @@ document.querySelectorAll("button.copy-btn").forEach((elem) => {
 });
 </script>
 <template>
-  <div v-highlight>
+  <div v-highlight class="highlighter">
     <div class="text-black">
       <div
         class="flex flex-row overflow-none mb-0 bg-gray-200 float-left circle-box"
@@ -37,7 +37,7 @@ document.querySelectorAll("button.copy-btn").forEach((elem) => {
           {{ snipTitle }}
         </h3>
       </div>
-      <button class="border-0 copy-btn" @click="copy(snipCode)">
+      <button class="border-0 copy-btn cursor-pointer" @click="copy(snipCode)">
         <i class="material-icons bg-grey-200 copy-icon float-left">
           content_copy
         </i>
@@ -52,12 +52,53 @@ document.querySelectorAll("button.copy-btn").forEach((elem) => {
   </div>
 </template>
 <style scoped>
-@media (min-width: 200px) {
+@media (min-width: 150px) {
   .circle-box {
-    @apply ml-5 h-6 w-[245px];
+    @apply ml-[5vw] h-4 w-[70vw];
   }
   .circle {
-    @apply w-2 h-2 mt-2;
+    @apply w-2 h-2 mt-1;
+  }
+  .circle:first-child {
+    @apply ml-2;
+  }
+  .circle:nth-child(2) {
+    @apply mx-[2px];
+  }
+  .circle:nth-child(3) {
+    @apply mr-3;
+  }
+  .highlighter {
+    @apply text-left;
+  }
+
+  .highlighter > pre {
+    @apply text-sm ml-[5vw] mb-4 pt-0 mt-[-10px] w-[90vw] overflow-scroll;
+  }
+
+  .highlighter > pre > code {
+    @apply bg-slate-900 w-[90vw] pl-5 mt-[-20px];
+  }
+  .snip-title {
+    @apply h-6 overflow-auto text-sm;
+  }
+  .copy-btn {
+    font: medium;
+    @apply w-[20vw] h-4 pt-[-20px];
+  }
+  .copy-btn i {
+    @apply w-3 h-4 text-xs;
+  }
+  .copy-btn div {
+    @apply pl-[1vw] h-4 pb-[1vh];
+  }
+}
+@media (min-width: 300px) {
+  .circle-box {
+    @apply ml-[5vw] h-6 w-[74vw];
+  }
+  .circle {
+    @apply w-3 h-3 mt-1.5;
   }
   .circle:first-child {
     @apply ml-2 mr-0.5;
@@ -68,48 +109,48 @@ document.querySelectorAll("button.copy-btn").forEach((elem) => {
   .circle:nth-child(3) {
     @apply ml-0.5 mr-3;
   }
-  div {
+  .highlighter {
     @apply text-left;
   }
 
-  div > pre {
-    @apply text-sm ml-10 mb-4 pt-0 w-[300px] overflow-scroll mt-0;
+  .highlighter > pre {
+    @apply text-sm ml-[5vw] mb-4 pt-0 w-[90vw] overflow-scroll mt-0;
   }
 
-  div > pre > code {
-    @apply bg-slate-900 pl-5 mt-[-20px];
+  .highlighter > pre > code {
+    @apply bg-slate-900 w-[90vw] pl-5 mt-[-20px];
   }
   .snip-title {
-    @apply h-6;
+    font-size: medium;
+    @apply h-6 overflow-auto -mt-1;
   }
   .copy-btn {
-    @apply w-[55px] h-6;
+    @apply w-[16vw] h-6;
   }
   .copy-btn i {
-    @apply w-3 h-4 text-sm;
+    @apply w-3 h-6 text-sm;
   }
   .copy-btn div {
-    @apply pl-[17px];
+    @apply pl-[1vw] h-6 text-lg py-[-10px];
   }
 }
-@media (min-width: 550px) {
+@media (min-width: 600px) {
   .circle-box {
-    @apply ml-5 h-8 w-[700px];
+    @apply ml-[5vw] h-8 w-[80vw];
   }
   .circle {
-    @apply w-4 h-4 mt-4;
+    @apply w-4 h-4 mt-2;
   }
-  div {
+  .highlighter {
     @apply text-left;
   }
 
-  div > pre {
-    //width: 700px;
-    @apply text-lg mx-5 mb-10 pt-0 overflow-scroll mt-0 w-[900px];
+  .highlighter > pre {
+    @apply text-lg mx-[5vw] mb-10 overflow-scroll w-[90vw];
   }
 
-  div > pre > code {
-    @apply bg-slate-900 pl-5 mt-[-20px] w-[900px];
+  .highlighter > pre > code {
+    @apply bg-slate-900 mt-[-40px] w-[90vw];
   }
   .circle:first-child {
     @apply ml-4 mr-0.5;
@@ -122,35 +163,76 @@ document.querySelectorAll("button.copy-btn").forEach((elem) => {
   }
 
   .snip-title {
-    @apply h-12 text-2xl pt-1.5;
+    @apply h-12 overflow-auto text-2xl pt-1;
   }
   .copy-btn {
-    @apply w-[200px] h-10;
+    @apply w-[10vw] h-8;
   }
   .copy-btn i {
-    @apply w-6 h-8 text-lg;
+    @apply h-8 text-lg;
   }
   .copy-btn div {
-    @apply pl-[50px];
+    @apply pl-[1vw] h-8;
   }
 }
-@media (min-width: 1400px) {
+@media (min-width: 800px) {
   .circle-box {
-    @apply ml-20 h-12 w-[1650px];
+    @apply ml-[5vw] h-8 w-[80vw];
   }
   .circle {
-    @apply w-6 h-6 mt-3;
+    @apply w-4 h-4 mt-2;
   }
-  div {
+  .highlighter {
     @apply text-left;
   }
 
-  div > pre {
-    @apply text-lg ml-20 mb-4 pt-0 w-[1750px] overflow-scroll mt-0;
+  .highlighter > pre {
+    @apply text-lg mx-[5vw] mb-10 overflow-scroll w-[90vw];
   }
 
-  div > pre > code {
-    @apply bg-slate-900 pl-5 mt-[-30px] w-[1750px];
+  .highlighter > pre > code {
+    @apply bg-slate-900 mt-[-40px] w-[90vw];
+  }
+  .circle:first-child {
+    @apply ml-4 mr-0.5;
+  }
+  .circle:nth-child(2) {
+    @apply mx-0.5;
+  }
+  .circle:nth-child(3) {
+    @apply ml-0.5 mr-3;
+  }
+
+  .snip-title {
+    @apply h-12 overflow-hidden text-2xl pt-1;
+  }
+  .copy-btn {
+    @apply w-[10vw] h-8 text-lg;
+  }
+  .copy-btn i {
+    @apply h-8 text-lg;
+  }
+  .copy-btn div {
+    @apply pl-[1vw] h-8;
+  }
+}
+@media (min-width: 1100px) {
+  .circle-box {
+    @apply ml-20 h-10 w-[82vw];
+  }
+  .circle {
+    @apply w-[18px] h-5 mt-2.5;
+  }
+  .highlighter {
+    @apply text-left;
+  }
+
+  .highlighter > pre {
+    @apply text-lg ml-20 mx-[2vw] mb-4 pt-0 w-[90vw] overflow-scroll mt-0;
+  }
+
+  .highlighter > pre > code {
+    @apply bg-slate-900 pl-5 mt-[-30px] w-[90vw];
   }
   .circle:first-child {
     @apply ml-2 mr-2;
@@ -163,16 +245,57 @@ document.querySelectorAll("button.copy-btn").forEach((elem) => {
   }
 
   .snip-title {
-    @apply h-14 text-2xl;
+    @apply h-14 overflow-y-hidden text-2xl;
   }
   .copy-btn {
-    @apply w-[100px] h-12 text-2xl;
+    @apply w-[8vw] h-10 text-xl;
   }
   .copy-btn i {
-    @apply w-3 h-12 pt-2;
+    @apply h-10 pt-2;
   }
   .copy-btn div {
-    @apply pl-[25px] h-12 pt-2;
+    @apply pl-0 h-10 pt-2;
+  }
+}
+@media (min-width: 1400px) {
+  .circle-box {
+    @apply ml-20 h-12 w-[84vw];
+  }
+  .circle {
+    @apply w-6 h-6 mt-3;
+  }
+  .highlighter {
+    @apply text-left;
+  }
+
+  .highlighter > pre {
+    @apply text-lg ml-20 mx-[2vw] mb-4 pt-0 w-[90vw] overflow-scroll mt-0;
+  }
+
+  .highlighter > pre > code {
+    @apply bg-slate-900 pl-5 mt-[-30px] w-[90vw];
+  }
+  .circle:first-child {
+    @apply ml-2 mr-2;
+  }
+  .circle:nth-child(2) {
+    @apply mx-2;
+  }
+  .circle:nth-child(3) {
+    @apply ml-2 mr-12;
+  }
+
+  .snip-title {
+    @apply h-14 overflow-y-hidden text-2xl;
+  }
+  .copy-btn {
+    @apply w-[6vw] h-12;
+  }
+  .copy-btn i {
+    @apply h-12 pt-2 text-2xl;
+  }
+  .copy-btn div {
+    @apply pl-0 h-12 pt-2 text-2xl;
   }
 }
 </style>

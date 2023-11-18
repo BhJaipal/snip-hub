@@ -1,54 +1,60 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref } from "vue";
 import "./../app.css";
 import { onMounted } from "vue";
 import hljs from "highlight.js";
-import "./vs-dark.css"
-import {definePageMeta} from "#imports";
+import "./vs-dark.css";
+import { definePageMeta } from "#imports";
 
-const LangList = ref<{
-  id: string,
-  langName: string,
-  codeBoxes: { title: string, code: string }[]
-}[]>([]);
+const LangList = ref<
+  {
+    id: string;
+    langName: string;
+    codeBoxes: { title: string; code: string }[];
+  }[]
+>([]);
 
 definePageMeta({
-  layout: "default"
-})
+  layout: "default",
+});
 
 onMounted(async () => {
-  let data= await fetch("http://localhost:3300/", {
+  let data = await fetch("http://localhost:3300/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Accept": "application/json"
+      Accept: "application/json",
     },
     body: JSON.stringify({
-      query: "{langList{langName, codeBoxes {title, code}}}"
-    })
+      query: "{langList{langName, codeBoxes {title, code}}}",
+    }),
   });
-  let res= await data.json();
+  let res = await data.json();
 
-  LangList.value= res.data.langList;
+  LangList.value = res.data.langList;
   setTimeout(() => {
     hljs.highlightAll();
   }, 100);
 });
-
 </script>
 <template>
   <div id="home">
-
-    <div v-if="!(LangList.length)">
+    <div v-if="!LangList.length">
       <div id="loading"></div>
     </div>
-  <div v-else>
-    <div v-for="langBox in LangList">
-      <h3 class="text-center">{{ langBox.langName.charAt(0).toUpperCase() + langBox.langName.slice(1) }}</h3>
-        <HomeHighlighter v-for="codeBox in langBox.codeBoxes"
-                       v-bind:langName="langBox.langName"
-                       v-bind:snipTitle="codeBox.title"
-                       v-bind:snipCode="codeBox.code" />
+    <div v-else>
+      <div v-for="langBox in LangList">
+        <h2 class="text-center">
+          {{
+            langBox.langName.charAt(0).toUpperCase() + langBox.langName.slice(1)
+          }}
+        </h2>
+        <HomeHighlighter
+          v-for="codeBox in langBox.codeBoxes"
+          v-bind:langName="langBox.langName"
+          v-bind:snipTitle="codeBox.title"
+          v-bind:snipCode="codeBox.code"
+        />
       </div>
     </div>
   </div>
@@ -68,7 +74,7 @@ button > i.material-icons {
   border-radius: 50%;
   border-bottom-color: transparent;
   box-sizing: border-box;
-  animation: rotate 1s linear infinite
+  animation: rotate 1s linear infinite;
 }
 
 @keyframes rotate {
