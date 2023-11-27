@@ -2,15 +2,13 @@
 import { ref } from "vue";
 import hljs from "highlight.js";
 import "../vs-dark.css";
-import { def } from "@vue/shared";
 
 definePageMeta({
   layout: "default",
 });
 
 let inputTitle = ref("");
-let langSelect = ref(null);
-let preview = ref(null);
+let langSelect = ref("");
 let defaultSnip = ref('"Hello World"');
 
 async function sendDataBtn() {
@@ -31,10 +29,10 @@ async function sendDataBtn() {
           codeBox: {
             title: inputTitle.value,
             code: defaultSnip.value,
-          },
-        },
-      },
-    }),
+          }
+        }
+      }
+    })
   });
   /**
    * @type { {error: Object} | {data: Object} }
@@ -52,6 +50,7 @@ function selectValChange() {
   document.getElementById("pre-tag")!.className =
     langSelect.value +
     " pl-1 h-40 w-80 bg-slate-800 mt-[52px] ml-[34px] text-left pt-0";
+  update();
   hljs.highlightAll();
 }
 
@@ -59,29 +58,30 @@ hljs.highlightAll();
 
 function update() {
   document.getElementById("preview")!.innerHTML = defaultSnip.value;
-  hljs.highlightElement(document.getElementById("preview")!);
+  hljs.highlightAll();
 }
 </script>
 
 <template>
   <h1>Create Page</h1>
-
-  Select a language
-  <select
-    name="lang-select"
-    ref="langSelect"
-    @change="selectValChange"
-    class="bg-slate-800"
-  >
-    <option value="javascript" selected>javascript</option>
-    <option value="php">PHP</option>
-    <option value="python">Python</option>
-    <option value="c">C</option>
-    <option value="cpp">C++</option></select
-  ><br />
+  <p class="text-center">
+    Select a language
+    <select
+      name="lang-select"
+      v-model="langSelect"
+      @change="selectValChange"
+      class="bg-slate-800 text-white"
+    >
+      <option value="javascript" selected>javascript</option>
+      <option value="php">PHP</option>
+      <option value="python">Python</option>
+      <option value="c">C</option>
+      <option value="cpp">C++</option></select
+    ><br />
+  </p>
 
   <input
-    class="rounded-lg bg-slate-800 w-60 h-8 mt-5 mb-3 pl-2"
+    class="rounded-lg bg-slate-800 code-title text-white"
     placeholder="Enter title"
     v-model="inputTitle"
     required
@@ -90,39 +90,32 @@ function update() {
   <textarea
     id="code-input"
     v-model="defaultSnip"
-    class="bg-slate-800 h-80 w-72 rounded-lg pl-2"
+    class="bg-slate-800 rounded-lg"
     placeholder="enter code here"
     autocapitalize="off"
+    v-on:change="update"
     required
   ></textarea>
-  <button
-    type="button"
-    class="bg-green-600 h-10 w-20 my-5 ml-5 rounded-lg"
-    @click="update"
-  >
-    Highlight
-  </button>
-
   <div class="text-black mt-2">
     <div
-      class="flex flex-row ml-[34px] h-6 overflow-none mb-0 bg-gray-200 w-80 float-left"
+      class="flex flex-row overflow-none mb-0 bg-gray-200 float-left circle-box"
     >
-      <div class="bg-red-500 w-2 h-2 rounded-full ml-2 mr-0.5 mt-2"></div>
-      <div class="bg-yellow-500 w-2 h-2 rounded-full mx-0.5 mt-2"></div>
-      <div class="bg-green-500 w-2 h-2 rounded-full ml-0.5 mr-3 mt-2"></div>
-      <div class="overflow-y-scroll h-6">{{ inputTitle }}</div>
+      <div class="bg-red-500 rounded-full mt-2 circle"></div>
+      <div class="bg-yellow-500 rounded-full mt-2 circle"></div>
+      <div class="bg-green-500 rounded-full mt-2 circle"></div>
+      <div class="overflow-y-scroll snip-title">{{ inputTitle }}</div>
     </div>
   </div>
 
   <pre
     id="pre-tag"
-    class="javascript pl-1 h-36 w-80 bg-slate-800 mt-[52px] ml-[34px] text-left pt-0"
+    class="javascript bg-slate-800 mt-[52px] pt-0"
   ><code id="preview" class="text-sm h-36 overflow-y-scroll">{{ defaultSnip }}</code></pre>
 
   <button
     @click="sendDataBtn"
     id="send-data"
-    class="w-20 mt-2 h-10 hover:bg-blue-800 bg-sky-700"
+    class="hover:bg-blue-800 bg-sky-700"
   >
     Submit
   </button>
@@ -130,12 +123,75 @@ function update() {
 
 <style scoped>
 @media (min-width: 150px) {
+  h1{
+    @apply text-center
+  }
   button > i.material-icons {
     font-size: 30px !important;
     padding-top: 5px;
   }
   code {
     margin-top: -20px;
+  }
+  pre{
+    @apply pt-[5vh] mt-0 text-lg pl-1 h-36 w-[90vw] ml-[5vw] mr-[5vw] overflow-scroll;
+  }
+  .code-title{
+    @apply ml-[5vw] w-[90vw] h-[5vh] my-[5vh] text-center
+  }
+  .circle-box{
+    @apply w-[90vw] h-6 ml-[5vw]
+  }
+  #code-input{
+    @apply ml-[5vw] w-[90vw] h-[40vh] pl-2 text-white
+  }
+  .circle {
+    @apply w-2 h-2 mt-1;
+  }
+  .circle:first-child {
+    @apply ml-2;
+  }
+  .circle:nth-child(2) {
+    @apply mx-[2px];
+  }
+  .circle:nth-child(3) {
+    @apply mr-3;
+  }
+  #send-data{
+    @apply w-[20vw] mt-2 ml-[40vw] h-10;
+  }
+}
+@media (min-width: 1100px) {
+  button > i.material-icons {
+    font-size: 30px !important;
+    padding-top: 5px;
+  }
+  .circle-box{
+    @apply w-[90vw] h-10 ml-[5vw]
+  }
+  .snip-title{
+    @apply text-2xl font-bold
+  }
+  p{
+    @apply mt-5 mb-0 text-xl
+  }
+  pre{
+    @apply pt-[3vh] mt-0 text-xl pl-1 h-80 w-[90vw];
+  }
+  #send-data{
+    @apply w-[5vw] mt-[1vh] h-[5vh] ml-[47.5vw] text-lg;
+  }
+  .circle {
+    @apply w-5 h-5 mt-2.5;
+  }
+  .circle:first-child {
+    @apply ml-2 mr-2;
+  }
+  .circle:nth-child(2) {
+    @apply mx-2;
+  }
+  .circle:nth-child(3) {
+    @apply ml-2 mr-12;
   }
 }
 </style>

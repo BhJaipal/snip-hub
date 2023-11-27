@@ -20,11 +20,6 @@
             "label": "npm run preview",
             "type": "npm",
             "script": "preview"
-        },
-        {
-            "label": "git push",
-            "type": "git",
-            "script": "push origin main"
         }
     ]
 }
