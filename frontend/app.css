@@ -2,7 +2,7 @@
 @tailwind utilities;
 @tailwind components;
 
-@media (min-width: 200px) {
+@media (min-width: 150px) {
   h1 {
     @apply text-2xl font-bold;
   }
@@ -18,8 +18,61 @@
   h6 {
     @apply text-xs font-bold;
   }
+  p{
+    @apply text-xs
+  }
+  code{
+    @apply text-xs
+  }
+  pre{
+    @apply text-xs
+  }
+  div{
+    @apply text-xs
+  }
+  span{
+    @apply text-xs
+  }
+  button{
+    @apply text-xs
+  }
 }
-@media (min-width: 550px) {
+@media (min-width: 300px) {
+  h1 {
+    @apply text-3xl font-bold;
+  }
+  h2 {
+    @apply text-2xl font-bold;
+  }
+  h3 {
+    @apply text-xl font-bold;
+  }
+  h4 {
+    @apply text-lg font-bold;
+  }
+  h6 {
+    @apply text-sm font-bold;
+  }
+  p{
+    @apply text-sm
+  }
+  code{
+    @apply text-sm
+  }
+  pre{
+    @apply text-sm
+  }
+  div{
+    @apply text-sm
+  }
+  span{
+    @apply text-sm
+  }
+  button{
+    @apply text-sm
+  }
+}
+@media (min-width: 600px) {
   h1 {
     @apply text-4xl font-bold;
   }
@@ -29,11 +82,29 @@
   h3 {
     @apply text-2xl font-bold;
   }
-  h5 {
-    @apply text-lg font-bold;
-  }
   h4 {
     @apply text-xl font-bold;
+  }
+  p{
+    @apply text-xl
+  }
+  code{
+    @apply text-xl
+  }
+  pre{
+    @apply text-xl
+  }
+  div{
+    @apply text-xl
+  }
+  span{
+    @apply text-xl
+  }
+  button{
+    @apply text-xl
+  }
+  h5 {
+    @apply text-lg font-bold;
   }
 }
 @media (min-width: 1400px) {
@@ -45,6 +116,27 @@
   }
   h3 {
     @apply text-4xl font-bold;
+  }
+  h4 {
+    @apply text-3xl font-bold
+  }
+  p{
+    @apply text-3xl
+  }
+  code{
+    @apply text-3xl
+  }
+  pre{
+    @apply text-3xl
+  }
+  div{
+    @apply text-3xl
+  }
+  span{
+    @apply text-3xl
+  }
+  button{
+    @apply text-3xl
   }
   h5 {
     @apply text-2xl font-bold;

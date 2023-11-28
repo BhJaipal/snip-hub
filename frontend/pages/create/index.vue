@@ -126,9 +126,111 @@ function update() {
   h1{
     @apply text-center
   }
-  button > i.material-icons {
-    font-size: 30px !important;
-    padding-top: 5px;
+  code {
+    margin-top: -20px;
+  }
+  pre{
+    @apply pt-[5vh] mt-0 text-lg pl-1 h-36 w-[90vw] ml-[5vw] mr-[5vw] overflow-scroll;
+  }
+  .code-title{
+    @apply ml-[5vw] w-[90vw] h-[5vh] my-[5vh] text-center
+  }
+  .circle-box{
+    @apply w-[90vw] h-6 ml-[5vw]
+  }
+  #code-input{
+    font-size: 15px;
+    @apply ml-[5vw] w-[90vw] h-[40vh] pl-2 text-white
+  }
+  .circle {
+    @apply w-2 h-2 mt-1;
+  }
+  .circle:first-child {
+    @apply ml-2;
+  }
+  .circle:nth-child(2) {
+    @apply mx-[2px];
+  }
+  .circle:nth-child(3) {
+    @apply mr-3;
+  }
+  #send-data{
+    @apply w-[25vw] my-2 ml-[40vw] h-7 text-white font-bold;
+  }
+}
+@media (min-width: 300px) {
+  h1{
+    @apply text-center
+  }
+  code {
+    margin-top: -20px;
+  }
+  pre{
+    @apply pt-[5vh] mt-0 text-lg pl-1 h-36 w-[90vw] ml-[5vw] mr-[5vw] overflow-scroll;
+  }
+  .code-title{
+    @apply ml-[5vw] w-[90vw] h-[5vh] my-[5vh] text-center
+  }
+  .circle-box{
+    @apply w-[90vw] h-6 ml-[5vw]
+  }
+  #code-input{
+    @apply ml-[5vw] w-[90vw] h-[40vh] pl-2 text-white text-sm
+  }
+  .circle {
+    @apply w-2 h-2 mt-1;
+  }
+  .circle:first-child {
+    @apply ml-2;
+  }
+  .circle:nth-child(2) {
+    @apply mx-[2px];
+  }
+  .circle:nth-child(3) {
+    @apply mr-3;
+  }
+  #send-data{
+    @apply w-[20vw] my-3 ml-[40vw] h-10 text-white text-lg;
+  }
+}
+@media (min-width: 600px) {
+  h1{
+    @apply text-center
+  }
+  code {
+    margin-top: -20px;
+  }
+  pre{
+    @apply pt-[5vh] mt-0 text-lg pl-1 h-36 w-[90vw] ml-[5vw] mr-[5vw] overflow-scroll;
+  }
+  .code-title{
+    @apply ml-[5vw] w-[90vw] h-[5vh] my-[5vh] text-center text-lg
+  }
+  .circle-box{
+    @apply w-[90vw] h-6 ml-[5vw]
+  }
+  #code-input{
+    @apply ml-[5vw] w-[90vw] h-[40vh] pl-2 text-white
+  }
+  .circle {
+    @apply w-2 h-2 mt-1 text-xl;
+  }
+  .circle:first-child {
+    @apply ml-2;
+  }
+  .circle:nth-child(2) {
+    @apply mx-[2px];
+  }
+  .circle:nth-child(3) {
+    @apply mr-3;
+  }
+  #send-data{
+    @apply w-[20vw] my-4 ml-[40vw] h-[12vh] text-xl font-bold;
+  }
+}
+@media (min-width: 800px) {
+  h1{
+    @apply text-center
   }
   code {
     margin-top: -20px;
@@ -162,15 +264,11 @@ function update() {
   }
 }
 @media (min-width: 1100px) {
-  button > i.material-icons {
-    font-size: 30px !important;
-    padding-top: 5px;
-  }
   .circle-box{
     @apply w-[90vw] h-10 ml-[5vw]
   }
   .snip-title{
-    @apply text-2xl font-bold
+    @apply text-2xl font-bold pl-[35vw]
   }
   p{
     @apply mt-5 mb-0 text-xl
@@ -179,10 +277,46 @@ function update() {
     @apply pt-[3vh] mt-0 text-xl pl-1 h-80 w-[90vw];
   }
   #send-data{
-    @apply w-[5vw] mt-[1vh] h-[5vh] ml-[47.5vw] text-lg;
+    @apply w-[5vw] mt-[1vh] h-[5vh] ml-[47.5vw] text-lg mb-5;
   }
   .circle {
     @apply w-5 h-5 mt-2.5;
+  }
+  .circle:first-child {
+    @apply ml-2 mr-2;
+  }
+  .circle:nth-child(2) {
+    @apply mx-2;
+  }
+  .circle:nth-child(3) {
+    @apply ml-2 mr-12;
+  }
+}
+@media (min-width: 1400px) {
+  .circle-box{
+    @apply w-[90vw] h-10 ml-[5vw]
+  }
+  #code-input{
+    @apply ml-[5vw] w-[90vw] h-[40vh] pl-2 text-white text-xl
+  }
+
+  .snip-title{
+    @apply text-2xl font-bold pl-[35vw]
+  }
+  p{
+    @apply mt-5 mb-0 text-xl
+  }
+  pre{
+    @apply pt-[3vh] mt-0 pl-1 h-80 w-[90vw] text-lg;
+  }
+  code{
+    @apply h-80 w-[90vw] text-lg;
+  }
+  #send-data{
+    @apply w-[5vw] mt-[1vh] h-[5vh] ml-[47.5vw] text-lg mb-5;
+  }
+  .circle {
+    @apply w-6 h-6 mt-3;
   }
   .circle:first-child {
     @apply ml-2 mr-2;
