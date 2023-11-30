@@ -7,6 +7,24 @@ definePageMeta({
   layout: "default",
 });
 
+let langNames= ref<Array<string>>([]);
+onMounted(async () => {
+  let res= await fetch("http://localhost:3300", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json"
+    },
+    body: JSON.stringify({
+      query: `query {
+        langNames
+      }`
+    })
+  });
+  let data= await res.json();
+  langNames.value= data.data.langNames;
+})
+
 let inputTitle = ref("");
 let langSelect = ref("");
 let defaultSnip = ref('"Hello World"');
@@ -73,12 +91,9 @@ function update() {
         @change="selectValChange"
         class="bg-slate-800 text-white"
       >
-        <option value="javascript" selected>javascript</option>
-        <option value="php">PHP</option>
-        <option value="python">Python</option>
-        <option value="c">C</option>
-        <option value="cpp">C++</option></select
-      ><br />
+        <option v-for="(langname, index) in langNames" :key="index" :value="langname">{{ langname }}</option>
+      </select>
+      <br />
     </div>
   </div>
 
