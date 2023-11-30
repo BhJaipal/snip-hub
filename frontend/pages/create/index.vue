@@ -21,7 +21,7 @@ async function sendDataBtn() {
     body: JSON.stringify({
       query: `mutation ($codeSnip: snipBox!){
       snipAdd(codeSnip: $codeSnip) {
-        langName, codeBoxes {title, code}
+        id, message
       }}`,
       variables: {
         codeSnip: {
@@ -35,10 +35,10 @@ async function sendDataBtn() {
     })
   });
   /**
-   * @type { {error: Object} | {data: Object} }
+   * @type { {errors: Object} | {data: Object} }
    */
   let data = await res.json();
-  if (data.errors) {
+  if (!data.data) {
     alert(data.errors.title + " " + data.errors.message);
   } else {
     alert("Data sent successfully");
@@ -49,7 +49,7 @@ async function sendDataBtn() {
 function selectValChange() {
   document.getElementById("pre-tag")!.className =
     langSelect.value +
-    " pl-1 h-40 w-80 bg-slate-800 mt-[52px] ml-[34px] text-left pt-0";
+    " bg-slate-800 mt-[52px] pt-0";
   update();
   hljs.highlightAll();
 }
@@ -57,28 +57,30 @@ function selectValChange() {
 hljs.highlightAll();
 
 function update() {
-  document.getElementById("preview")!.innerHTML = defaultSnip.value;
+  document.getElementById("preview")!.innerText = defaultSnip.value;
   hljs.highlightAll();
 }
 </script>
 
 <template>
   <h1>Create Page</h1>
-  <p class="text-center">
-    Select a language
-    <select
-      name="lang-select"
-      v-model="langSelect"
-      @change="selectValChange"
-      class="bg-slate-800 text-white"
-    >
-      <option value="javascript" selected>javascript</option>
-      <option value="php">PHP</option>
-      <option value="python">Python</option>
-      <option value="c">C</option>
-      <option value="cpp">C++</option></select
-    ><br />
-  </p>
+  <div class="text-center flex flex-row select-container h-6 flex-nowrap">
+    <div class="">Select a language</div>
+    <div class="w-20">
+      <select
+        name="lang-select"
+        v-model="langSelect"
+        @change="selectValChange"
+        class="bg-slate-800 text-white"
+      >
+        <option value="javascript" selected>javascript</option>
+        <option value="php">PHP</option>
+        <option value="python">Python</option>
+        <option value="c">C</option>
+        <option value="cpp">C++</option></select
+      ><br />
+    </div>
+  </div>
 
   <input
     class="rounded-lg bg-slate-800 code-title text-white"
@@ -110,7 +112,7 @@ function update() {
   <pre
     id="pre-tag"
     class="javascript bg-slate-800 mt-[52px] pt-0"
-  ><code id="preview" class="text-sm h-36 overflow-y-scroll">{{ defaultSnip }}</code></pre>
+  ><code id="preview" class="overflow-y-scroll">{{ defaultSnip }}</code></pre>
 
   <button
     @click="sendDataBtn"
@@ -136,7 +138,7 @@ function update() {
     @apply ml-[5vw] w-[90vw] h-[5vh] my-[5vh] text-center
   }
   .circle-box{
-    @apply w-[90vw] h-6 ml-[5vw]
+    @apply w-[90vw] h-4 ml-[5vw]
   }
   #code-input{
     font-size: 15px;
@@ -155,7 +157,13 @@ function update() {
     @apply mr-3;
   }
   #send-data{
-    @apply w-[25vw] my-2 ml-[40vw] h-7 text-white font-bold;
+    @apply w-[28vw] my-2 ml-[36vw] h-7 text-white font-bold;
+  }
+  .select-container{
+    @apply mt-2.5
+  }
+  .select-container div:first-child {
+    @apply mr-1 ml-[15vw]
   }
 }
 @media (min-width: 300px) {
@@ -178,7 +186,7 @@ function update() {
     @apply ml-[5vw] w-[90vw] h-[40vh] pl-2 text-white text-sm
   }
   .circle {
-    @apply w-2 h-2 mt-1;
+    @apply w-3 h-3 mt-1.5;
   }
   .circle:first-child {
     @apply ml-2;
@@ -190,7 +198,13 @@ function update() {
     @apply mr-3;
   }
   #send-data{
-    @apply w-[20vw] my-3 ml-[40vw] h-10 text-white text-lg;
+    @apply w-[24vw] my-3 ml-[38vw] h-10 text-white text-lg;
+  }
+  .select-container{
+    @apply mt-3
+  }
+  .select-container div:first-child {
+    @apply mr-1 ml-[25vw]
   }
 }
 @media (min-width: 600px) {
@@ -213,7 +227,7 @@ function update() {
     @apply ml-[5vw] w-[90vw] h-[40vh] pl-2 text-white
   }
   .circle {
-    @apply w-2 h-2 mt-1 text-xl;
+    @apply w-3 h-3 mt-1.5 text-xl;
   }
   .circle:first-child {
     @apply ml-2;
@@ -225,7 +239,13 @@ function update() {
     @apply mr-3;
   }
   #send-data{
-    @apply w-[20vw] my-4 ml-[40vw] h-[12vh] text-xl font-bold;
+    @apply w-[20vw] mt-4 mb-6 ml-[40vw] h-[10vh] text-xl font-bold;
+  }
+  .select-container{
+    @apply mt-4
+  }
+  .select-container div:first-child {
+    @apply mr-1 ml-[30vw]
   }
 }
 @media (min-width: 800px) {
@@ -248,7 +268,7 @@ function update() {
     @apply ml-[5vw] w-[90vw] h-[40vh] pl-2 text-white
   }
   .circle {
-    @apply w-2 h-2 mt-1;
+    @apply w-3 h-3 mt-1.5;
   }
   .circle:first-child {
     @apply ml-2;
@@ -260,7 +280,13 @@ function update() {
     @apply mr-3;
   }
   #send-data{
-    @apply w-[20vw] mt-2 ml-[40vw] h-10;
+    @apply w-[16vw] mt-2 ml-[42vw] h-10;
+  }
+  .select-container{
+    @apply mt-4
+  }
+  .select-container div:first-child {
+    @apply mr-1 ml-[35vw]
   }
 }
 @media (min-width: 1100px) {
@@ -268,16 +294,20 @@ function update() {
     @apply w-[90vw] h-10 ml-[5vw]
   }
   .snip-title{
-    @apply text-2xl font-bold pl-[35vw]
+    @apply text-2xl font-bold pl-[25vw]
   }
   p{
     @apply mt-5 mb-0 text-xl
   }
   pre{
-    @apply pt-[3vh] mt-0 text-xl pl-1 h-80 w-[90vw];
+    @apply pt-[5vh] mt-0 text-lg pl-1 h-80 w-[90vw];
   }
+  code{
+    @apply text-lg
+  }
+  span{ @apply text-lg }
   #send-data{
-    @apply w-[5vw] mt-[1vh] h-[5vh] ml-[47.5vw] text-lg mb-5;
+    @apply w-[10vw] mt-[1vh] h-[8vh] ml-[47.5vw] text-lg mb-5;
   }
   .circle {
     @apply w-5 h-5 mt-2.5;
@@ -291,32 +321,41 @@ function update() {
   .circle:nth-child(3) {
     @apply ml-2 mr-12;
   }
+  .select-container{
+    @apply mt-5
+  }
+  .select-container div:first-child {
+    @apply mr-1 ml-[40vw]
+  }
 }
 @media (min-width: 1400px) {
+  *{
+    @apply text-base
+  }
   .circle-box{
     @apply w-[90vw] h-10 ml-[5vw]
   }
   #code-input{
-    @apply ml-[5vw] w-[90vw] h-[40vh] pl-2 text-white text-xl
+    @apply ml-[5vw] w-[90vw] h-[40vh] pl-2 text-white text-base
   }
-
   .snip-title{
     @apply text-2xl font-bold pl-[35vw]
   }
   p{
-    @apply mt-5 mb-0 text-xl
+    @apply mt-5 mb-0 text-xl ml-[40vw] mr-0
   }
   pre{
-    @apply pt-[3vh] mt-0 pl-1 h-80 w-[90vw] text-lg;
+    @apply pt-[3vh] mt-0 pl-1 h-80 w-[90vw] text-base;
   }
   code{
-    @apply h-80 w-[90vw] text-lg;
+    @apply h-80 w-[90vw] text-base;
   }
+  span{ @apply text-base }
   #send-data{
-    @apply w-[5vw] mt-[1vh] h-[5vh] ml-[47.5vw] text-lg mb-5;
+    @apply w-[6vw] mt-[3vh] h-[8vh] ml-[47vw] text-lg mb-5;
   }
   .circle {
-    @apply w-6 h-6 mt-3;
+    @apply w-6 h-6 mt-2.5;
   }
   .circle:first-child {
     @apply ml-2 mr-2;
@@ -326,6 +365,15 @@ function update() {
   }
   .circle:nth-child(3) {
     @apply ml-2 mr-12;
+  }
+  .select-container{
+    @apply mt-5
+  }
+  .select-container div:first-child {
+    @apply mr-1 ml-[40vw]
+  }
+  h1 {
+    @apply text-6xl font-bold;
   }
 }
 </style>

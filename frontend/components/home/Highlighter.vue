@@ -41,7 +41,7 @@ document.querySelectorAll("button.copy-btn").forEach((elem) => {
         <i class="material-icons bg-grey-200 copy-icon float-left">
           content_copy
         </i>
-        <div class="copy-text bg-gray-200">copy</div>
+        <p class="copy-text bg-gray-200">copy</p>
       </button>
     </div>
     <pre>
@@ -89,13 +89,13 @@ document.querySelectorAll("button.copy-btn").forEach((elem) => {
   .copy-btn i {
     @apply w-3 h-4 text-xs;
   }
-  .copy-btn div {
+  .copy-btn p {
     @apply pl-[1vw] h-4 pb-[1vh];
   }
 }
 @media (min-width: 300px) {
   .circle-box {
-    @apply ml-[5vw] h-6 w-[74vw];
+    @apply ml-[5vw] h-6 w-[70vw];
   }
   .circle {
     @apply w-3 h-3 mt-1.5;
@@ -122,16 +122,16 @@ document.querySelectorAll("button.copy-btn").forEach((elem) => {
   }
   .snip-title {
     font-size: medium;
-    @apply h-6 overflow-auto -mt-1;
+    @apply h-6 overflow-auto mt-0;
   }
   .copy-btn {
-    @apply w-[16vw] h-6;
+    @apply w-[20vw] h-6;
   }
   .copy-btn i {
     @apply w-3 h-6 text-sm;
   }
-  .copy-btn div {
-    @apply pl-[1vw] h-6 text-lg py-[-10px];
+  .copy-btn p {
+    @apply pl-[1vw] h-6 text-lg pb-[2vh];
   }
 }
 @media (min-width: 600px) {
@@ -146,7 +146,7 @@ document.querySelectorAll("button.copy-btn").forEach((elem) => {
   }
 
   .highlighter > pre {
-    @apply text-lg mx-[5vw] mb-10 overflow-scroll w-[90vw];
+    @apply text-lg mx-[5vw] mb-0 overflow-scroll w-[90vw];
   }
 
   .highlighter > pre > code {
@@ -171,7 +171,7 @@ document.querySelectorAll("button.copy-btn").forEach((elem) => {
   .copy-btn i {
     @apply h-8 text-lg;
   }
-  .copy-btn div {
+  .copy-btn p {
     @apply pl-[1vw] h-8;
   }
 }
@@ -187,7 +187,7 @@ document.querySelectorAll("button.copy-btn").forEach((elem) => {
   }
 
   .highlighter > pre {
-    @apply text-lg mx-[5vw] mb-10 overflow-scroll w-[90vw];
+    @apply text-lg mx-[5vw] mb-0 overflow-scroll w-[90vw] h-auto;
   }
 
   .highlighter > pre > code {
@@ -212,7 +212,7 @@ document.querySelectorAll("button.copy-btn").forEach((elem) => {
   .copy-btn i {
     @apply h-8 text-lg;
   }
-  .copy-btn div {
+  .copy-btn p {
     @apply pl-[1vw] h-8;
   }
 }
@@ -253,7 +253,7 @@ document.querySelectorAll("button.copy-btn").forEach((elem) => {
   .copy-btn i {
     @apply h-10 pt-2;
   }
-  .copy-btn div {
+  .copy-btn p {
     @apply pl-0 h-10 pt-2;
   }
 }
@@ -294,7 +294,7 @@ document.querySelectorAll("button.copy-btn").forEach((elem) => {
   .copy-btn i {
     @apply h-12 pt-2 text-2xl;
   }
-  .copy-btn div {
+  .copy-btn p {
     @apply pl-0 h-12 pt-2 text-2xl;
   }
 }
