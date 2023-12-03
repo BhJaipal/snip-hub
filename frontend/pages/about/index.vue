@@ -54,11 +54,13 @@ let navigation = ref<{ name: string; href: string; active: boolean }[]>([
     <ul class="module-list">
       <li v-for="(module, index) in homeList" :key="index" class="item">
         <a v-bind:href="`https://${module.link}`" target="_blank">
-          <div class="name">
-            <h3>{{ module.name }}</h3>
-          </div>
-          <div class="img">
-            <img class="logo" v-bind:src="module.img" />
+          <div class="module-div">
+            <div class="img">
+              <img class="logo" v-bind:src="module.img" />
+            </div>
+            <div class="name">
+              <h3>{{ module.name }}</h3>
+            </div>
           </div>
         </a>
       </li>
@@ -68,26 +70,26 @@ let navigation = ref<{ name: string; href: string; active: boolean }[]>([
 
 <style scoped>
 .item {
-  height: auto;
+  min-height: 5vh;
   margin-left: 40vw;
-  text-align: left;
+  text-align: right;
 }
-.item > a > .name {
-  height: 4vh;
+.item > a > .module-div > .name {
   text-align: center;
   width: 1vw;
-  float: left;
 }
 .img {
   width: auto;
-  height: 4vh;
+  height: 5vh;
+  float: right;
+  margin-right: 46vw;
 }
-.item > a > .img > .logo {
+.item > a > .module-div > .img > .logo {
   box-sizing: border-box;
   width: auto;
-  height: 4vh;
+  height: 5vh;
 }
-.item > a > img[src="/"] {
+.item > a > .module-div > img[src="/"] {
   display: none;
 }
 ul.module-list {
