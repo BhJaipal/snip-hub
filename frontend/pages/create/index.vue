@@ -7,23 +7,23 @@ definePageMeta({
   layout: "default",
 });
 
-let langNames= ref<Array<string>>([]);
+let langNames = ref<Array<string>>([]);
 onMounted(async () => {
-  let res= await fetch("http://localhost:3300", {
+  let res = await fetch("http://localhost:3300", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Accept: "application/json"
+      Accept: "application/json",
     },
     body: JSON.stringify({
       query: `query {
         langNames
-      }`
-    })
+      }`,
+    }),
   });
-  let data= await res.json();
-  langNames.value= data.data.langNames;
-})
+  let data = await res.json();
+  langNames.value = data.data.langNames;
+});
 
 let inputTitle = ref("");
 let langSelect = ref("");
@@ -47,10 +47,10 @@ async function sendDataBtn() {
           codeBox: {
             title: inputTitle.value,
             code: defaultSnip.value,
-          }
-        }
-      }
-    })
+          },
+        },
+      },
+    }),
   });
   /**
    * @type { {errors: Object} | {data: Object} }
@@ -66,8 +66,7 @@ async function sendDataBtn() {
 
 function selectValChange() {
   document.getElementById("pre-tag")!.className =
-    langSelect.value +
-    " bg-slate-800 mt-[52px] pt-0";
+    langSelect.value + " bg-slate-800 mt-[52px] pt-0";
   update();
   hljs.highlightAll();
 }
@@ -91,7 +90,13 @@ function update() {
         @change="selectValChange"
         class="bg-slate-800 text-white"
       >
-        <option v-for="(langname, index) in langNames" :key="index" :value="langname">{{ langname }}</option>
+        <option
+          v-for="(langname, index) in langNames"
+          :key="index"
+          :value="langname"
+        >
+          {{ langname }}
+        </option>
       </select>
       <br />
     </div>
@@ -140,24 +145,24 @@ function update() {
 
 <style scoped>
 @media (min-width: 150px) {
-  h1{
-    @apply text-center
+  h1 {
+    @apply text-center;
   }
   code {
     margin-top: -20px;
   }
-  pre{
+  pre {
     @apply pt-[5vh] mt-0 text-lg pl-1 h-36 w-[90vw] ml-[5vw] mr-[5vw] overflow-scroll;
   }
-  .code-title{
-    @apply ml-[5vw] w-[90vw] h-[5vh] my-[5vh] text-center
+  .code-title {
+    @apply ml-[5vw] w-[90vw] h-[5vh] my-[5vh] text-center;
   }
-  .circle-box{
-    @apply w-[90vw] h-4 ml-[5vw]
+  .circle-box {
+    @apply w-[90vw] h-4 ml-[5vw];
   }
-  #code-input{
+  #code-input {
     font-size: 15px;
-    @apply ml-[5vw] w-[90vw] h-[40vh] pl-2 text-white
+    @apply ml-[5vw] w-[90vw] h-[40vh] pl-2 text-white;
   }
   .circle {
     @apply w-2 h-2 mt-1;
@@ -171,34 +176,34 @@ function update() {
   .circle:nth-child(3) {
     @apply mr-3;
   }
-  #send-data{
+  #send-data {
     @apply w-[28vw] my-2 ml-[36vw] h-7 text-white font-bold;
   }
-  .select-container{
-    @apply mt-2.5
+  .select-container {
+    @apply mt-2.5;
   }
   .select-container div:first-child {
-    @apply mr-1 ml-[15vw]
+    @apply mr-1 ml-[15vw];
   }
 }
 @media (min-width: 300px) {
-  h1{
-    @apply text-center
+  h1 {
+    @apply text-center;
   }
   code {
     margin-top: -20px;
   }
-  pre{
+  pre {
     @apply pt-[5vh] mt-0 text-lg pl-1 h-36 w-[90vw] ml-[5vw] mr-[5vw] overflow-scroll;
   }
-  .code-title{
-    @apply ml-[5vw] w-[90vw] h-[5vh] my-[5vh] text-center
+  .code-title {
+    @apply ml-[5vw] w-[90vw] h-[5vh] my-[5vh] text-center;
   }
-  .circle-box{
-    @apply w-[90vw] h-6 ml-[5vw]
+  .circle-box {
+    @apply w-[90vw] h-6 ml-[5vw];
   }
-  #code-input{
-    @apply ml-[5vw] w-[90vw] h-[40vh] pl-2 text-white text-sm
+  #code-input {
+    @apply ml-[5vw] w-[90vw] h-[40vh] pl-2 text-white text-sm;
   }
   .circle {
     @apply w-3 h-3 mt-1.5;
@@ -212,34 +217,34 @@ function update() {
   .circle:nth-child(3) {
     @apply mr-3;
   }
-  #send-data{
+  #send-data {
     @apply w-[24vw] my-3 ml-[38vw] h-10 text-white text-lg;
   }
-  .select-container{
-    @apply mt-3
+  .select-container {
+    @apply mt-3;
   }
   .select-container div:first-child {
-    @apply mr-1 ml-[25vw]
+    @apply mr-1 ml-[25vw];
   }
 }
 @media (min-width: 600px) {
-  h1{
-    @apply text-center
+  h1 {
+    @apply text-center;
   }
   code {
     margin-top: -20px;
   }
-  pre{
+  pre {
     @apply pt-[5vh] mt-0 text-lg pl-1 h-36 w-[90vw] ml-[5vw] mr-[5vw] overflow-scroll;
   }
-  .code-title{
-    @apply ml-[5vw] w-[90vw] h-[5vh] my-[5vh] text-center text-lg
+  .code-title {
+    @apply ml-[5vw] w-[90vw] h-[5vh] my-[5vh] text-center text-lg;
   }
-  .circle-box{
-    @apply w-[90vw] h-6 ml-[5vw]
+  .circle-box {
+    @apply w-[90vw] h-6 ml-[5vw];
   }
-  #code-input{
-    @apply ml-[5vw] w-[90vw] h-[40vh] pl-2 text-white
+  #code-input {
+    @apply ml-[5vw] w-[90vw] h-[40vh] pl-2 text-white;
   }
   .circle {
     @apply w-3 h-3 mt-1.5 text-xl;
@@ -253,34 +258,34 @@ function update() {
   .circle:nth-child(3) {
     @apply mr-3;
   }
-  #send-data{
+  #send-data {
     @apply w-[20vw] mt-4 mb-6 ml-[40vw] h-[10vh] text-xl font-bold;
   }
-  .select-container{
-    @apply mt-4
+  .select-container {
+    @apply mt-4;
   }
   .select-container div:first-child {
-    @apply mr-1 ml-[30vw]
+    @apply mr-1 ml-[30vw];
   }
 }
 @media (min-width: 800px) {
-  h1{
-    @apply text-center
+  h1 {
+    @apply text-center;
   }
   code {
     margin-top: -20px;
   }
-  pre{
+  pre {
     @apply pt-[5vh] mt-0 text-lg pl-1 h-36 w-[90vw] ml-[5vw] mr-[5vw] overflow-scroll;
   }
-  .code-title{
-    @apply ml-[5vw] w-[90vw] h-[5vh] my-[5vh] text-center
+  .code-title {
+    @apply ml-[5vw] w-[90vw] h-[5vh] my-[5vh] text-center;
   }
-  .circle-box{
-    @apply w-[90vw] h-6 ml-[5vw]
+  .circle-box {
+    @apply w-[90vw] h-6 ml-[5vw];
   }
-  #code-input{
-    @apply ml-[5vw] w-[90vw] h-[40vh] pl-2 text-white
+  #code-input {
+    @apply ml-[5vw] w-[90vw] h-[40vh] pl-2 text-white;
   }
   .circle {
     @apply w-3 h-3 mt-1.5;
@@ -294,34 +299,36 @@ function update() {
   .circle:nth-child(3) {
     @apply mr-3;
   }
-  #send-data{
+  #send-data {
     @apply w-[16vw] mt-2 ml-[42vw] h-10;
   }
-  .select-container{
-    @apply mt-4
+  .select-container {
+    @apply mt-4;
   }
   .select-container div:first-child {
-    @apply mr-1 ml-[35vw]
+    @apply mr-1 ml-[35vw];
   }
 }
 @media (min-width: 1100px) {
-  .circle-box{
-    @apply w-[90vw] h-10 ml-[5vw]
+  .circle-box {
+    @apply w-[90vw] h-10 ml-[5vw];
   }
-  .snip-title{
-    @apply text-2xl font-bold pl-[25vw]
+  .snip-title {
+    @apply text-2xl font-bold pl-[25vw];
   }
-  p{
-    @apply mt-5 mb-0 text-xl
+  p {
+    @apply mt-5 mb-0 text-xl;
   }
-  pre{
+  pre {
     @apply pt-[5vh] mt-0 text-lg pl-1 h-80 w-[90vw];
   }
-  code{
-    @apply text-lg
+  code {
+    @apply text-lg;
   }
-  span{ @apply text-lg }
-  #send-data{
+  span {
+    @apply text-lg;
+  }
+  #send-data {
     @apply w-[10vw] mt-[1vh] h-[8vh] ml-[47.5vw] text-lg mb-5;
   }
   .circle {
@@ -336,37 +343,39 @@ function update() {
   .circle:nth-child(3) {
     @apply ml-2 mr-12;
   }
-  .select-container{
-    @apply mt-5
+  .select-container {
+    @apply mt-5;
   }
   .select-container div:first-child {
-    @apply mr-1 ml-[40vw]
+    @apply mr-1 ml-[40vw];
   }
 }
 @media (min-width: 1400px) {
-  *{
-    @apply text-base
+  * {
+    @apply text-base;
   }
-  .circle-box{
-    @apply w-[90vw] h-10 ml-[5vw]
+  .circle-box {
+    @apply w-[90vw] h-10 ml-[5vw];
   }
-  #code-input{
-    @apply ml-[5vw] w-[90vw] h-[40vh] pl-2 text-white text-base
+  #code-input {
+    @apply ml-[5vw] w-[90vw] h-[40vh] pl-2 text-white text-base;
   }
-  .snip-title{
-    @apply text-2xl font-bold pl-[35vw]
+  .snip-title {
+    @apply text-2xl font-bold pl-[35vw];
   }
-  p{
-    @apply mt-5 mb-0 text-xl ml-[40vw] mr-0
+  p {
+    @apply mt-5 mb-0 text-xl ml-[40vw] mr-0;
   }
-  pre{
+  pre {
     @apply pt-[3vh] mt-0 pl-1 h-80 w-[90vw] text-base;
   }
-  code{
+  code {
     @apply h-80 w-[90vw] text-base;
   }
-  span{ @apply text-base }
-  #send-data{
+  span {
+    @apply text-base;
+  }
+  #send-data {
     @apply w-[6vw] mt-[3vh] h-[8vh] ml-[47vw] text-lg mb-5;
   }
   .circle {
@@ -381,11 +390,11 @@ function update() {
   .circle:nth-child(3) {
     @apply ml-2 mr-12;
   }
-  .select-container{
-    @apply mt-5
+  .select-container {
+    @apply mt-5;
   }
   .select-container div:first-child {
-    @apply mr-1 ml-[40vw]
+    @apply mr-1 ml-[40vw];
   }
   h1 {
     @apply text-6xl font-bold;

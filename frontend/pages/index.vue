@@ -43,14 +43,15 @@ onMounted(async () => {
       <div id="loading"></div>
     </div>
     <div v-else>
-      <div v-for="langBox in LangList">
+      <div v-for="(langBox, index) in LangList" :key="index">
         <h2 class="text-center">
           {{
             langBox.langName.charAt(0).toUpperCase() + langBox.langName.slice(1)
           }}
         </h2>
         <HomeHighlighter
-          v-for="codeBox in langBox.codeBoxes"
+          v-for="(codeBox, index2) in langBox.codeBoxes"
+          :key="index2"
           v-bind:langName="langBox.langName"
           v-bind:snipTitle="codeBox.title"
           v-bind:snipCode="codeBox.code"
