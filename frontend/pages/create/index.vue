@@ -7,6 +7,10 @@ definePageMeta({
 	layout: "default",
 });
 
+useHead({
+	title: "Create Page",
+});
+
 let langNames = ref<Array<string>>([]);
 onMounted(async () => {
 	let res = await fetch("http://localhost:3300", {
@@ -16,9 +20,7 @@ onMounted(async () => {
 			Accept: "application/json",
 		},
 		body: JSON.stringify({
-			query: `query {
-        langNames
-      }`,
+			query: `query { langNames }`,
 		}),
 	});
 	let data = await res.json();
@@ -86,14 +88,14 @@ function update() {
 
 <template>
 	<h1>Create Page</h1>
-	<div class="text-center flex flex-row select-container h-6 flex-nowrap">
+	<div class="flex flex-row h-6 text-center select-container flex-nowrap">
 		<div class="">Select a language</div>
 		<div class="w-20">
 			<select
 				name="lang-select"
 				v-model="langSelect"
 				@change="selectValChange"
-				class="bg-slate-800 text-white"
+				class="text-white bg-slate-800"
 			>
 				<option
 					v-for="(langname, index) in langNames"
@@ -108,7 +110,7 @@ function update() {
 	</div>
 
 	<input
-		class="rounded-lg bg-slate-800 code-title text-white"
+		class="text-white rounded-lg bg-slate-800 code-title"
 		placeholder="Enter title"
 		v-model="inputTitle"
 		required
@@ -117,19 +119,19 @@ function update() {
 	<textarea
 		id="code-input"
 		v-model="defaultSnip"
-		class="bg-slate-800 rounded-lg"
+		class="rounded-lg bg-slate-800"
 		placeholder="enter code here"
 		autocapitalize="off"
 		v-on:keydown="update"
 		required
 	></textarea>
-	<div class="text-black mt-2">
+	<div class="mt-2 text-black">
 		<div
-			class="flex flex-row overflow-none mb-0 bg-gray-200 float-left circle-box"
+			class="flex flex-row float-left mb-0 bg-gray-200 overflow-none circle-box"
 		>
-			<div class="bg-red-500 rounded-full mt-2 circle"></div>
-			<div class="bg-yellow-500 rounded-full mt-2 circle"></div>
-			<div class="bg-green-500 rounded-full mt-2 circle"></div>
+			<div class="mt-2 bg-red-500 rounded-full circle"></div>
+			<div class="mt-2 bg-yellow-500 rounded-full circle"></div>
+			<div class="mt-2 bg-green-500 rounded-full circle"></div>
 			<div class="overflow-y-scroll snip-title">{{ inputTitle }}</div>
 		</div>
 	</div>

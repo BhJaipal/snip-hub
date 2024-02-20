@@ -1,8 +1,16 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { definePageMeta } from "#imports";
+import tsLogo from "@/assets/ts-logo.png";
+import vite from "@/assets/vite.png";
+import vue from "@/assets/vue.png";
+
 definePageMeta({
 	layout: "default",
+});
+
+useHead({
+	title: "About Page",
 });
 interface pageModule {
 	name: string;
@@ -15,17 +23,17 @@ let homeList = ref<pageModule[]>([
 	{
 		name: "Vue",
 		link: "vuejs.org",
-		img: "~/assets/vue.png",
+		img: vue,
 	},
 	{
 		name: "TypeScript",
 		link: "typescriptlang.org",
-		img: "~/assets/ts-logo.png",
+		img: tsLogo,
 	},
 	{
 		name: "Vite",
 		link: "vitejs.dev",
-		img: "~/assets/vite.png",
+		img: vite,
 	},
 	{
 		name: "tailwindcss",
