@@ -42,6 +42,7 @@ let navigation = ref<{ name: string; href: string; active: boolean }[]>([
 	{ name: "Home", href: "/", active: true },
 	{ name: "About", href: "/about", active: false },
 	{ name: "Create", href: "/create", active: false },
+	{ name: "Test page", href: "/test", active: false }
 ]);
 
 function toggle() {
@@ -84,4 +85,8 @@ button > i.material-icons {
 	font-size: 30px !important;
 	padding-top: 5px;
 }
+</style>
+
+<style>
+@import url("../app.css");
 </style>

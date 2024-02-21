@@ -1,16 +1,15 @@
 <script setup lang="ts">
-import { ref } from "vue";
 import { definePageMeta } from "#imports";
 import tsLogo from "@/assets/ts-logo.png";
 import vite from "@/assets/vite.png";
 import vue from "@/assets/vue.png";
 
 definePageMeta({
-	layout: "default",
+	layout: "default"
 });
 
 useHead({
-	title: "About Page",
+	title: "About Page"
 });
 interface pageModule {
 	name: string;
@@ -19,37 +18,41 @@ interface pageModule {
 }
 
 let homeList = ref<pageModule[]>([
-	{ name: "Highlight.js", link: "highlightjs.org", img: "/" },
+	{
+		name: "Highlight.js",
+		link: "highlightjs.org",
+		img: "https://highlightjs.org/icon.png"
+	},
 	{
 		name: "Vue",
 		link: "vuejs.org",
-		img: vue,
+		img: vue
 	},
 	{
 		name: "TypeScript",
 		link: "typescriptlang.org",
-		img: tsLogo,
+		img: tsLogo
 	},
 	{
 		name: "Vite",
 		link: "vitejs.dev",
-		img: vite,
+		img: vite
 	},
 	{
 		name: "tailwindcss",
 		link: "tailwindcss.com",
-		img: "https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600",
+		img: "https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
 	},
 	{
 		name: "NuxtJS",
 		link: "nuxt.com",
-		img: "/favicon.ico",
-	},
+		img: "/favicon.ico"
+	}
 ]);
 let navigation = ref<{ name: string; href: string; active: boolean }[]>([
 	{ name: "Home", href: "/", active: false },
 	{ name: "About", href: "/about", active: true },
-	{ name: "Create", href: "/create", active: false },
+	{ name: "Create", href: "/create", active: false }
 ]);
 </script>
 
@@ -62,7 +65,7 @@ let navigation = ref<{ name: string; href: string; active: boolean }[]>([
 		<ul class="module-list">
 			<li v-for="(module, index) in homeList" :key="index" class="item">
 				<a v-bind:href="`https://${module.link}`" target="_blank">
-					<div class="module-div">
+					<div class="my-5 module-div">
 						<div class="img">
 							<img class="logo" v-bind:src="module.img" />
 						</div>

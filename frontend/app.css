@@ -3,192 +3,192 @@
 @tailwind components;
 
 @media (min-width: 150px) {
-  h1 {
-    @apply text-2xl font-bold;
-  }
-  h2 {
-    @apply text-xl font-bold;
-  }
-  h3 {
-    @apply text-lg font-bold;
-  }
-  h5 {
-    @apply text-sm font-bold;
-  }
-  h6 {
-    @apply text-xs font-bold;
-  }
-  p{
-    @apply text-base
-  }
-  code{
-    @apply text-base
-  }
-  pre{
-    @apply text-base
-  }
-  div{
-    @apply text-base
-  }
-  span{
-    @apply text-base
-  }
-  button{
-    @apply text-base
-  }
+	h1 {
+		@apply text-2xl font-bold;
+	}
+	h2 {
+		@apply text-xl font-bold;
+	}
+	h3 {
+		@apply text-lg font-bold;
+	}
+	h5 {
+		@apply text-sm font-bold;
+	}
+	h6 {
+		@apply text-xs font-bold;
+	}
+	p {
+		@apply text-base;
+	}
+	code {
+		@apply text-base;
+	}
+	pre {
+		@apply text-base;
+	}
+	div {
+		@apply text-base;
+	}
+	span {
+		@apply text-base;
+	}
+	button {
+		@apply text-base;
+	}
 }
 @media (min-width: 300px) {
-  h1 {
-    @apply text-3xl font-bold;
-  }
-  h2 {
-    @apply text-2xl font-bold;
-  }
-  h3 {
-    @apply text-xl font-bold;
-  }
-  h4 {
-    @apply text-lg font-bold;
-  }
-  h6 {
-    @apply text-sm font-bold;
-  }
-  p{
-    @apply text-sm
-  }
-  code{
-    @apply text-sm
-  }
-  pre{
-    @apply text-sm
-  }
-  div{
-    @apply text-sm
-  }
-  span{
-    @apply text-sm
-  }
-  button{
-    @apply text-sm
-  }
+	h1 {
+		@apply text-3xl font-bold;
+	}
+	h2 {
+		@apply text-2xl font-bold;
+	}
+	h3 {
+		@apply text-xl font-bold;
+	}
+	h4 {
+		@apply text-lg font-bold;
+	}
+	h6 {
+		@apply text-sm font-bold;
+	}
+	p {
+		@apply text-sm;
+	}
+	code {
+		@apply text-sm;
+	}
+	pre {
+		@apply text-sm;
+	}
+	div {
+		@apply text-sm;
+	}
+	span {
+		@apply text-sm;
+	}
+	button {
+		@apply text-sm;
+	}
 }
 @media (min-width: 600px) {
-  h1 {
-    @apply text-4xl font-bold;
-  }
-  h2 {
-    @apply text-3xl font-bold;
-  }
-  h3 {
-    @apply text-2xl font-bold;
-  }
-  h4 {
-    @apply text-xl font-bold;
-  }
-  p{
-    @apply text-base
-  }
-  code{
-    @apply text-base
-  }
-  pre{
-    @apply text-base
-  }
-  textarea{
-    @apply text-lg
-  }
-  div{
-    @apply text-xl
-  }
-  span{
-    @apply text-base
-  }
-  input{
-    @apply text-xl
-  }
-  textarea{
-    @apply text-xl
-  }
-  button{
-    @apply text-xl
-  }
-  h5 {
-    @apply text-lg font-bold;
-  }
+	h1 {
+		@apply text-4xl font-bold;
+	}
+	h2 {
+		@apply text-3xl font-bold;
+	}
+	h3 {
+		@apply text-2xl font-bold;
+	}
+	h4 {
+		@apply text-xl font-bold;
+	}
+	p {
+		@apply text-base;
+	}
+	code {
+		@apply text-base;
+	}
+	pre {
+		@apply text-base;
+	}
+	textarea {
+		@apply text-lg;
+	}
+	div {
+		@apply text-xl;
+	}
+	span {
+		@apply text-base;
+	}
+	input {
+		@apply text-xl;
+	}
+	textarea {
+		@apply text-xl;
+	}
+	button {
+		@apply text-xl;
+	}
+	h5 {
+		@apply text-lg font-bold;
+	}
 }
 @media (min-width: 1100px) {
-  h1 {
-    @apply text-5xl font-bold;
-  }
-  h2 {
-    @apply text-4xl font-bold;
-  }
-  h3 {
-    @apply text-3xl font-bold;
-  }
-  h4 {
-    @apply text-2xl font-bold
-  }
-  p{
-    @apply text-base
-  }
-  code{
-    @apply text-base
-  }
-  pre{
-    @apply text-base
-  }
-  div{
-    @apply text-base
-  }
-  span{
-    @apply text-base
-  }
-  button{
-    @apply text-base
-  }
-  h5 {
-    @apply text-xl font-bold;
-  }
-  h6 {
-    @apply text-lg font-bold;
-  }
+	h1 {
+		@apply text-5xl font-bold;
+	}
+	h2 {
+		@apply text-4xl font-bold;
+	}
+	h3 {
+		@apply text-3xl font-bold;
+	}
+	h4 {
+		@apply text-2xl font-bold;
+	}
+	p {
+		@apply text-base;
+	}
+	code {
+		@apply text-base;
+	}
+	pre {
+		@apply text-base;
+	}
+	div {
+		@apply text-base;
+	}
+	span {
+		@apply text-base;
+	}
+	button {
+		@apply text-base;
+	}
+	h5 {
+		@apply text-xl font-bold;
+	}
+	h6 {
+		@apply text-lg font-bold;
+	}
 }
 @media (min-width: 1400px) {
-  h1 {
-    @apply text-6xl font-bold;
-  }
-  h2 {
-    @apply text-5xl font-bold;
-  }
-  h3 {
-    @apply text-4xl font-bold;
-  }
-  h4 {
-    @apply text-3xl font-bold
-  }
-  p{
-    @apply text-base
-  }
-  code{
-    @apply text-base
-  }
-  pre{
-    @apply text-base
-  }
-  div{
-    @apply text-base
-  }
-  span{
-    @apply text-base
-  }
-  button{
-    @apply text-base
-  }
-  h5 {
-    @apply text-2xl font-bold;
-  }
-  h6 {
-    @apply text-lg font-bold;
-  }
+	h1 {
+		@apply text-6xl font-bold;
+	}
+	h2 {
+		@apply text-5xl font-bold;
+	}
+	h3 {
+		@apply text-4xl font-bold;
+	}
+	h4 {
+		@apply text-3xl font-bold;
+	}
+	p {
+		@apply text-base;
+	}
+	code {
+		@apply text-base;
+	}
+	pre {
+		@apply text-base;
+	}
+	div {
+		@apply text-base;
+	}
+	span {
+		@apply text-base;
+	}
+	button {
+		@apply text-base;
+	}
+	h5 {
+		@apply text-2xl font-bold;
+	}
+	h6 {
+		@apply text-lg font-bold;
+	}
 }

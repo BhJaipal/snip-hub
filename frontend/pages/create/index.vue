@@ -1,14 +1,13 @@
 <script setup lang="ts">
-import { ref } from "vue";
 import hljs from "highlight.js";
 import "../vs-dark.css";
 
 definePageMeta({
-	layout: "default",
+	layout: "default"
 });
 
 useHead({
-	title: "Create Page",
+	title: "Create Page"
 });
 
 let langNames = ref<Array<string>>([]);
@@ -17,11 +16,11 @@ onMounted(async () => {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
-			Accept: "application/json",
+			Accept: "application/json"
 		},
 		body: JSON.stringify({
-			query: `query { langNames }`,
-		}),
+			query: `query { langNames }`
+		})
 	});
 	let data = await res.json();
 	langNames.value = data.data.langNames;
@@ -36,7 +35,7 @@ async function sendDataBtn() {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
-			Accept: "application/json",
+			Accept: "application/json"
 		},
 		body: JSON.stringify({
 			query: `mutation ($codeSnip: snipBox!){
@@ -48,11 +47,11 @@ async function sendDataBtn() {
 					langName: langSelect.value,
 					codeBox: {
 						title: inputTitle.value,
-						code: defaultSnip.value,
-					},
-				},
-			},
-		}),
+						code: defaultSnip.value
+					}
+				}
+			}
+		})
 	});
 	/**
 	 * @type { {errors: Object} | {data: Object} }

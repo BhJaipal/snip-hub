@@ -20,7 +20,7 @@ onMounted(async function () {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
-			Accept: "application/json",
+			Accept: "application/json"
 		},
 		body: JSON.stringify({
 			query: `#graphql
@@ -31,8 +31,8 @@ onMounted(async function () {
 						title, code
 					}
 				}
-			}`,
-		}),
+			}`
+		})
 	});
 	let res = await data.json();
 

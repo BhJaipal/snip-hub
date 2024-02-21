@@ -1,7 +1,5 @@
 <script lang="ts" setup>
-import { ref } from "vue";
 import "./../app.css";
-import { onMounted } from "vue";
 import hljs from "highlight.js";
 import "./vs-dark.css";
 import { definePageMeta } from "#imports";
@@ -22,7 +20,7 @@ function goto() {
 }
 
 definePageMeta({
-	layout: "default",
+	layout: "default"
 });
 
 onMounted(async function () {
@@ -36,11 +34,11 @@ onMounted(async function () {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
-			Accept: "application/json",
+			Accept: "application/json"
 		},
 		body: JSON.stringify({
-			query: "{langList{langName, codeBoxes {title, code}}}",
-		}),
+			query: "{langList{langName, codeBoxes {title, code}}}"
+		})
 	});
 	let res = await data.json();
 
@@ -89,40 +87,39 @@ onMounted(async function () {
 	</div>
 </template>
 <style scoped>
-@tailwind components;
-@layer components {
-	.search-box {
-		@apply my-10;
-	}
-
-	.search-box i.search-icon {
-		@apply border-gray-500;
-	}
-
-	.search-box:hover .search-icon {
-		@apply border-sky-500;
-	}
-
-	.search-box button {
-		@apply h-10;
-	}
-
-	.search {
-		@apply w-[100%] outline-none border-gray-500 border-2 h-10 rounded-bl-full rounded-tl-full pl-5;
-	}
-
-	.search:focus {
-		@apply w-[120%] outline-none border-sky-500;
-	}
-
-	.search-icon {
-		@apply text-white bg-gray-500 rounded-tr-full rounded-br-full pt-2.5 w-10 h-10;
-	}
-
-	.search:focus + button .search-icon {
-		background-color: skyblue;
-	}
+@import url("./../app.css");
+.search-box {
+	@apply my-10;
 }
+
+.search-box i.search-icon {
+	@apply border-gray-500;
+}
+
+.search-box:hover .search-icon {
+	@apply border-sky-500;
+}
+
+.search-box button {
+	@apply h-10;
+}
+
+.search {
+	@apply w-[100%] outline-none border-gray-500 border-2 h-10 rounded-bl-full rounded-tl-full pl-5;
+}
+
+.search:focus {
+	@apply w-[120%] outline-none border-sky-500;
+}
+
+.search-icon {
+	@apply text-white bg-gray-500 rounded-tr-full rounded-br-full pt-2.5 w-10 h-10;
+}
+
+.search:focus + button .search-icon {
+	background-color: skyblue;
+}
+
 button > i.material-icons {
 	font-size: 30px !important;
 	padding-top: 5px;

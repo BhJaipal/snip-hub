@@ -10,8 +10,8 @@ export default {
     "./app.vue"
   ],
   theme: {
-    extend: {},
+    extend: {}
   },
-  plugins: [],
+  plugins: []
 }
 
