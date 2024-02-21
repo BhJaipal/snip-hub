@@ -1,29 +1,65 @@
 <script setup lang="ts">
+import { Icon } from "#components";
+import { defineProps } from "vue";
+import { UAlert } from "#components";
+
 defineProps<{
 	langName: string;
 	snipTitle: string;
 	snipCode: string;
 }>();
 
+const state = reactive({
+	icon: "material-symbols:content-copy-outline-sharp",
+	text: "copy",
+	alert: false,
+	copySuccess: false
+});
+
+function showAlert() {
+	state.alert = state.alert ? false : true;
+}
+
 function copy(code: string) {
 	navigator.clipboard
 		.writeText(code)
-		.then(function () {})
-		.catch(() => window.alert("Couldn't copy"));
+		.then(function () {
+			state.copySuccess = true;
+		})
+		.catch(() => {
+			state.copySuccess = false;
+		});
+	showAlert();
+	setTimeout(function () {
+		showAlert();
+		state.copySuccess = false;
+	}, 3000);
+	state.icon = "material-symbols:done";
+	state.text = "copied";
 }
 
-document.querySelectorAll("button.copy-btn").forEach((elem: any) => {
-	elem.addEventListener("focus", () => {
-		elem.children[0].innerText = "done";
-		elem.children[1].textContent = "copied";
-	});
-	elem.addEventListener("blur", () => {
-		elem.children[0].innerText = "content_copy";
-		elem.children[0].textContent = "copy";
-	});
-});
+function blur() {
+	state.icon = "material-symbols:content-copy-outline-sharp";
+	state.text = "copy";
+}
 </script>
 <template>
+	<div v-if="state.alert" class="absolute top-0 bottom-0 left-0 right-0 z-50">
+		<template v-if="state.copySuccess">
+			<UAlert
+				color="green"
+				title="success"
+				description="Code copied to clipboard"
+			/>
+		</template>
+		<template v-else>
+			<UAlert
+				color="red"
+				title="Error"
+				description="Could not copy code copied to clipboard"
+			/>
+		</template>
+	</div>
 	<div v-highlight class="highlighter">
 		<div class="text-black">
 			<div
@@ -39,11 +75,12 @@ document.querySelectorAll("button.copy-btn").forEach((elem: any) => {
 			<button
 				class="border-0 cursor-pointer copy-btn"
 				@click="copy(snipCode)"
+				@blur="blur"
 			>
-				<i class="float-left material-icons bg-grey-200 copy-icon">
-					content_copy
+				<i class="float-left bg-grey-200 copy-icon">
+					<Icon :name="state.icon" />
 				</i>
-				<p class="bg-gray-200 copy-text">copy</p>
+				<p class="bg-gray-200 copy-text">{{ state.text }}</p>
 			</button>
 		</div>
 		<pre>

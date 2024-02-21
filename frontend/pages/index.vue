@@ -7,12 +7,19 @@ import { definePageMeta } from "#imports";
 const state = reactive({ search: "" });
 
 const LangList = ref<
-	{
+	Array<{
 		id: string;
 		langName: string;
 		codeBoxes: { title: string; code: string }[];
-	}[]
+	}>
 >([]);
+useHead({
+	title: "Snip Hub Home Page"
+});
+
+function handlepress(event: KeyboardEvent) {
+	state.search += event.key;
+}
 
 function goto() {
 	console.log(state.search);
@@ -57,6 +64,7 @@ onMounted(async function () {
 					id="search"
 					placeholder="Search title"
 					v-model="state.search"
+					@keypress="handlepress"
 					class="search"
 				/>
 				<button class="appearance-none h-min" @click="goto">

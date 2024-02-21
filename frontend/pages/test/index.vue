@@ -1,7 +1,13 @@
 <script lang="ts" setup>
 import { Icon } from "#components";
 import UAccordian from "../../node_modules/@nuxt/ui/dist/runtime/components/elements/Accordion.vue";
-const items = [
+const items: Array<{
+	label: string;
+	icon: string;
+	content: string;
+	defaultOpen?: boolean;
+	disabled?: boolean;
+}> = [
 	{
 		label: "Getting Started",
 		icon: "i-heroicons-information-circle",
@@ -48,5 +54,5 @@ const items = [
 	<Icon name="material-symbols:content-copy-outline-sharp" />
 	<Icon name="material-symbols:search-rounded" />
 
-	<UAccordian :items="items" />
+	<UAccordian items="items" />
 </template>
