@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import "./../../app.css";
-import { onMounted } from "vue";
 import hljs from "highlight.js";
 import "./../vs-dark.css";
 
 let route = useRoute();
 let title = route.params.title;
+if (title == "") navigateTo("/");
 
 const titleFind = ref<
 	{
@@ -52,7 +52,7 @@ onMounted(async function () {
 			<div
 				class="p-5 border-4 border-b-0 border-l-0 shadow-lg border-sky-400 shadow-black rounded-xl"
 			>
-				<button @click="() => navigateTo('/')">
+				<button @click="() => navigateTo('/')" id="go-back">
 					<h4 class="font-bold text-center text-sky-600">
 						<i class="text-2xl font-bold material-icons"
 							>arrow_back_ios_new</i

@@ -48,8 +48,8 @@ function blur() {
 		<template v-if="state.copySuccess">
 			<UAlert
 				color="green"
-				title="success"
-				description="Code copied to clipboard"
+				icon="i-heroicons-check-20-solid"
+				title="Code copied to clipboard"
 			/>
 		</template>
 		<template v-else>

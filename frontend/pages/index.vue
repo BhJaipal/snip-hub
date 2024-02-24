@@ -4,7 +4,7 @@ import hljs from "highlight.js";
 import "./vs-dark.css";
 import { definePageMeta } from "#imports";
 
-const state = reactive({ search: "" });
+let search = ref("");
 
 const LangList = ref<
 	Array<{
@@ -13,17 +13,14 @@ const LangList = ref<
 		codeBoxes: { title: string; code: string }[];
 	}>
 >([]);
+
 useHead({
 	title: "Snip Hub Home Page"
 });
 
-function handlepress(event: KeyboardEvent) {
-	state.search += event.key;
-}
-
 function goto() {
-	console.log(state.search);
-	navigateTo("/search/" + state.search);
+	console.log(search.value);
+	navigateTo("/search/" + search.value);
 }
 
 definePageMeta({
@@ -34,7 +31,6 @@ onMounted(async function () {
 	document
 		.getElementById("search")!
 		.addEventListener("keydown", function (event) {
-			event.preventDefault();
 			event.key == "Enter" && goto();
 		});
 	let data = await fetch("http://localhost:3300/", {
@@ -63,11 +59,15 @@ onMounted(async function () {
 					type="text"
 					id="search"
 					placeholder="Search title"
-					v-model="state.search"
-					@keypress="handlepress"
+					v-model="search"
+					@change="(e) => e.preventDefault()"
 					class="search"
 				/>
-				<button class="appearance-none h-min" @click="goto">
+				<button
+					class="appearance-none h-min"
+					@click="goto"
+					id="search-btn"
+				>
 					<i class="material-icons search-icon">search</i>
 				</button>
 			</div>
