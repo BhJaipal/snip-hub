@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import "./../app.css";
 import hljs from "highlight.js";
 import "./vs-dark.css";
 import { definePageMeta } from "#imports";
@@ -77,7 +76,7 @@ onMounted(async function () {
 		</div>
 		<div v-else>
 			<div v-for="(langBox, index) in LangList" :key="index">
-				<h2 class="text-center">
+				<h2 class="text-3xl text-center">
 					{{
 						langBox.langName.charAt(0).toUpperCase() +
 						langBox.langName.slice(1)

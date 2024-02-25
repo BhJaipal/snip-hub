@@ -10,6 +10,8 @@ useHead({
 	title: "Create Page"
 });
 
+const state = reactive({ sent: false, success: false });
+
 let langNames = ref<Array<string>>([]);
 onMounted(async () => {
 	let res = await fetch("http://localhost:3300", {
@@ -38,10 +40,12 @@ async function sendDataBtn() {
 			Accept: "application/json"
 		},
 		body: JSON.stringify({
-			query: `mutation ($codeSnip: snipBox!){
-      snipAdd(codeSnip: $codeSnip) {
-        id, message
-      }}`,
+			query: `#graphql
+			mutation ($codeSnip: snipBox!){
+				snipAdd(codeSnip: $codeSnip) {
+					id, message
+				}
+			}`,
 			variables: {
 				codeSnip: {
 					langName: langSelect.value,
@@ -58,9 +62,13 @@ async function sendDataBtn() {
 	 */
 	let data = await res.json();
 	if (!data.data) {
+		state.sent = true;
+		state.success = false;
 		alert(data.errors.title + " " + data.errors.message);
 	} else {
 		alert("Data sent successfully");
+		state.sent = true;
+		state.success = true;
 		console.log(data.data);
 	}
 }
@@ -86,67 +94,80 @@ function update() {
 </script>
 
 <template>
+	<template v-if="state.sent">
+		<template v-if="state.success">
+			<UAlert color="green" title="Data sent successfully" />
+		</template>
+		<template v-else>
+			<UAlert color="red" title="Error, Check console" />
+		</template>
+	</template>
 	<h1>Create Page</h1>
-	<div class="flex flex-row h-6 text-center select-container flex-nowrap">
-		<div class="">Select a language</div>
-		<div class="w-20">
-			<select
-				name="lang-select"
-				v-model="langSelect"
-				@change="selectValChange"
-				class="text-white bg-slate-800"
-			>
-				<option
-					v-for="(langname, index) in langNames"
-					:key="index"
-					:value="langname"
+	<form @submit.prevent="sendDataBtn">
+		<div class="flex flex-row h-6 text-center select-container flex-nowrap">
+			<div class="">Select a language</div>
+			<div class="w-20">
+				<select
+					data-title="Select a language"
+					name="lang-select"
+					v-model="langSelect"
+					@change="selectValChange"
+					required
+					class="text-white bg-slate-800"
 				>
-					{{ langname }}
-				</option>
-			</select>
-			<br />
+					<template
+						v-for="(langname, index) in langNames"
+						:key="index"
+					>
+						<option :value="langname">
+							{{ langname }}
+						</option>
+					</template>
+				</select>
+				<br />
+			</div>
 		</div>
-	</div>
 
-	<input
-		class="text-white rounded-lg bg-slate-800 code-title"
-		placeholder="Enter title"
-		v-model="inputTitle"
-		required
-	/>
+		<input
+			class="text-white rounded-lg bg-slate-800 code-title"
+			placeholder="Enter title"
+			v-model="inputTitle"
+			required
+		/>
 
-	<textarea
-		id="code-input"
-		v-model="defaultSnip"
-		class="rounded-lg bg-slate-800"
-		placeholder="enter code here"
-		autocapitalize="off"
-		v-on:keydown="update"
-		required
-	></textarea>
-	<div class="mt-2 text-black">
-		<div
-			class="flex flex-row float-left mb-0 bg-gray-200 overflow-none circle-box"
+		<textarea
+			id="code-input"
+			v-model="defaultSnip"
+			class="rounded-lg bg-slate-800"
+			placeholder="enter code here"
+			autocapitalize="off"
+			v-on:keydown="update"
+			required
+		></textarea>
+		<div class="mt-2 text-black">
+			<div
+				class="flex flex-row float-left mb-0 bg-gray-200 overflow-none circle-box"
+			>
+				<div class="mt-2 bg-red-500 rounded-full circle"></div>
+				<div class="mt-2 bg-yellow-500 rounded-full circle"></div>
+				<div class="mt-2 bg-green-500 rounded-full circle"></div>
+				<div class="overflow-y-scroll snip-title">{{ inputTitle }}</div>
+			</div>
+		</div>
+
+		<pre
+			id="pre-tag"
+			class="javascript bg-slate-800 mt-[52px] pt-0"
+		><code id="preview" class="overflow-y-scroll">{{ defaultSnip }}</code></pre>
+
+		<button
+			type="submit"
+			id="send-data"
+			class="hover:bg-blue-800 bg-sky-700"
 		>
-			<div class="mt-2 bg-red-500 rounded-full circle"></div>
-			<div class="mt-2 bg-yellow-500 rounded-full circle"></div>
-			<div class="mt-2 bg-green-500 rounded-full circle"></div>
-			<div class="overflow-y-scroll snip-title">{{ inputTitle }}</div>
-		</div>
-	</div>
-
-	<pre
-		id="pre-tag"
-		class="javascript bg-slate-800 mt-[52px] pt-0"
-	><code id="preview" class="overflow-y-scroll">{{ defaultSnip }}</code></pre>
-
-	<button
-		@click="sendDataBtn"
-		id="send-data"
-		class="hover:bg-blue-800 bg-sky-700"
-	>
-		Submit
-	</button>
+			Submit
+		</button>
+	</form>
 </template>
 
 <style scoped>

@@ -4,10 +4,10 @@
 
 @media (min-width: 150px) {
 	h1 {
-		@apply text-2xl font-bold;
+		@apply text-3xl font-bold;
 	}
 	h2 {
-		@apply text-xl font-bold;
+		@apply text-2xl font-bold;
 	}
 	h3 {
 		@apply text-lg font-bold;
@@ -42,7 +42,7 @@
 		@apply text-3xl font-bold;
 	}
 	h2 {
-		@apply text-2xl font-bold;
+		@apply text-xl font-bold;
 	}
 	h3 {
 		@apply text-xl font-bold;

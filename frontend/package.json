@@ -9,7 +9,8 @@
 		"preview": "nuxt preview",
 		"postinstall": "nuxt prepare",
 		"check": "prettier -c .",
-		"format": "prettier --write ."
+		"format": "prettier --write .",
+		"test": "npx cypress open"
 	},
 	"devDependencies": {
 		"@nuxt/devtools": "latest",
@@ -26,9 +27,14 @@
 		"vue-router": "^4.2.5"
 	},
 	"dependencies": {
+		"@apollo/client": "^3.9.5",
 		"@nuxt/image": "^1.0.0",
 		"@nuxt/ui": "^2.13.0",
+		"@nuxtjs/apollo": "^4.0.1-rc.5",
+		"graphql": "^15.8.0",
+		"graphql-tag": "^2.12.6",
 		"highlight.js": "^10.7.3",
+		"react": "^18.2.0",
 		"vue-hljs": "^3.0.1"
 	}
 }

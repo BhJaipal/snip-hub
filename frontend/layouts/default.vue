@@ -8,6 +8,7 @@
 			</div>
 			<div class="flex justify-end py-3 bg-[#181818]">
 				<button
+					id="menu"
 					class="w-[50px] bg-black text-white font-bold flex-row flex-nowrap rounded-xl mr-5 border-2 h-[45px] mt-[5px]"
 					@click="toggle"
 				>

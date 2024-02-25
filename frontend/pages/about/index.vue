@@ -64,7 +64,11 @@ let navigation = ref<{ name: string; href: string; active: boolean }[]>([
 
 		<ul class="module-list">
 			<li v-for="(module, index) in homeList" :key="index" class="item">
-				<a v-bind:href="`https://${module.link}`" target="_blank">
+				<a
+					v-bind:href="`https://${module.link}`"
+					target="_blank"
+					class="goto-sites"
+				>
 					<div class="my-5 module-div">
 						<div class="img">
 							<img class="logo" v-bind:src="module.img" />

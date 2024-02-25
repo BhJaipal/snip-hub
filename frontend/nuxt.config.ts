@@ -4,8 +4,9 @@ export default defineNuxtConfig({
 		cssPath: "./app.css",
 		configPath: "./tailwind.config.js"
 	},
+	plugins: ["./plugins/apollo.ts"],
 	devtools: { enabled: true },
-	modules: ["nuxt-icon", "@nuxt/image", "@nuxt/ui"],
+	modules: ["nuxt-icon", "@nuxt/image", "@nuxt/ui", "@nuxtjs/tailwindcss"],
 	app: {
 		head: {
 			link: [
