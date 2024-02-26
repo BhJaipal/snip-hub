@@ -2,6 +2,9 @@
 code {
 	color: lightskyblue !important;
 }
+span {
+	font-size: inherit;
+}
 span.hljs-comment {
 	color: green;
 }

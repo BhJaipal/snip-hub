@@ -97,7 +97,7 @@ function blur() {
 <style scoped>
 @media (min-width: 150px) {
 	.circle-box {
-		@apply ml-[5vw] h-4 w-[70vw];
+		@apply h-4 w-[70vw];
 	}
 	.circle {
 		@apply w-2 h-2 mt-1;
@@ -112,19 +112,20 @@ function blur() {
 		@apply mr-3;
 	}
 	.highlighter {
-		@apply text-left;
+		@apply text-left flex flex-col justify-items-center;
 	}
 
 	.highlighter > pre {
-		font-size: 10px;
-		line-height: 12px;
-		@apply ml-[5vw] mb-4 pt-0 w-[90vw] overflow-scroll;
+		@apply mb-4 mt-1 pt-0 w-full overflow-scroll text-xs flex flex-row justify-items-center items-center px-[5%];
 	}
 
 	.highlighter > pre > code {
 		font-size: 10px;
 		line-height: 12px;
-		@apply bg-slate-900 w-[90vw] pl-5 mt-[-20px];
+		@apply bg-slate-800 w-[100%] pl-5 mt-[-20px] text-xs;
+	}
+	span {
+		@apply text-base;
 	}
 	.snip-title {
 		font-size: 10px;
@@ -149,6 +150,10 @@ function blur() {
 @media (min-width: 300px) {
 	.circle-box {
 		@apply ml-[5vw] h-8 w-[70vw];
+	}
+	span {
+		font-size: 10px;
+		line-height: 12px;
 	}
 	.circle {
 		@apply w-4 h-4 mt-1.5;
@@ -324,11 +329,11 @@ function blur() {
 	}
 
 	.highlighter > pre {
-		@apply text-lg ml-20 mx-[2vw] mb-4 pt-0 w-[90vw] overflow-scroll mt-0;
+		@apply text-lg mx-[2vw] px-[5%] mb-4 pt-5 w-[100vw] overflow-scroll mt-0;
 	}
 
 	.highlighter > pre > code {
-		@apply bg-slate-900 pl-5 mt-[-30px] w-[90vw];
+		@apply bg-slate-800 w-[90vw] text-base;
 	}
 	.circle:first-child {
 		@apply ml-2 mr-2;

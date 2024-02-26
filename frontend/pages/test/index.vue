@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { Icon } from "#components";
-const { $apolloClient } = useNuxtApp();
 import gql from "graphql-tag";
 import UAccordian from "../../node_modules/@nuxt/ui/dist/runtime/components/elements/Accordion.vue";
+import { ApolloClient, InMemoryCache } from "@apollo/client";
 const items: Array<{
 	label: string;
 	icon: string;
@@ -24,18 +24,22 @@ let query = gql`
 		langNames
 	}
 `;
-let data = ref([]);
+let data = reactive({ data: { langNames: [] } });
 let loading = ref(false);
-let error = ref({});
+let error = ref(null);
+let apolloClient = new ApolloClient({
+	uri: "http://localhost:3300/",
+	cache: new InMemoryCache()
+});
 onMounted(async function () {
 	({
-		data: data.value,
+		data: data.data,
 		loading: loading.value,
 		error: error.value
-	} = await $apolloClient.query({
+	} = await apolloClient.query({
 		query: query
 	}));
-	console.log(data.value, loading.value, error.value);
+	console.log(data.data, loading.value);
 });
 </script>
 
@@ -45,4 +49,42 @@ onMounted(async function () {
 	<Icon name="material-symbols:search-rounded" />
 
 	<UAccordian :items="items" />
+	<template v-if="loading">
+		<div class="loading"></div>
+	</template>
+	<template v-else-if="error">
+		{{ error }}
+	</template>
+	<template v-else>
+		<h1>LangNames</h1>
+		<ul>
+			<li v-for="(lang, index) in data.data.langNames" :key="index">
+				{{ lang }}
+			</li>
+		</ul>
+	</template>
 </template>
+
+<style scoped>
+#loading {
+	margin-top: 45vh;
+	margin-left: 50vw;
+	width: 48px;
+	height: 48px;
+	border: 5px solid #3498db;
+	border-radius: 50%;
+	border-bottom-color: transparent;
+	box-sizing: border-box;
+	animation: rotate 1s linear infinite;
+}
+
+@keyframes rotate {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(360deg);
+	}
+}
+</style>

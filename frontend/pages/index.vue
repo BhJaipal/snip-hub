@@ -2,8 +2,32 @@
 import hljs from "highlight.js";
 import "./vs-dark.css";
 import { definePageMeta } from "#imports";
+import { ApolloClient, InMemoryCache } from "@apollo/client";
+import gql from "graphql-tag";
+
+let state = reactive({
+	loading: false,
+	error: null
+});
 
 let search = ref("");
+let query = gql`
+	{
+		langList {
+			langName
+			codeBoxes {
+				title
+				code
+			}
+		}
+	}
+`;
+
+type _langList = Array<{
+	id: string;
+	langName: string;
+	codeBoxes: { title: string; code: string }[];
+}>;
 
 const LangList = ref<
 	Array<{
@@ -12,6 +36,19 @@ const LangList = ref<
 		codeBoxes: { title: string; code: string }[];
 	}>
 >([]);
+let apolloClient = new ApolloClient({
+	uri: "http://localhost:3300/",
+	cache: new InMemoryCache()
+});
+let data = reactive<{
+	data: {
+		langList: Array<{
+			id: string;
+			langName: string;
+			codeBoxes: { title: string; code: string }[];
+		}>;
+	};
+}>({ data: { langList: [] } });
 
 useHead({
 	title: "Snip Hub Home Page"
@@ -32,19 +69,15 @@ onMounted(async function () {
 		.addEventListener("keydown", function (event) {
 			event.key == "Enter" && goto();
 		});
-	let data = await fetch("http://localhost:3300/", {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-			Accept: "application/json"
-		},
-		body: JSON.stringify({
-			query: "{langList{langName, codeBoxes {title, code}}}"
-		})
+	let _data: any = await apolloClient.query({
+		query: query
 	});
-	let res = await data.json();
+	state.loading = _data.loading;
+	state.error = _data.error;
+	data.data = _data.data;
+	console.log(data.data);
 
-	LangList.value = res.data.langList;
+	LangList.value = data.data.langList;
 	setTimeout(function () {
 		hljs.highlightAll();
 	}, 100);
@@ -71,8 +104,11 @@ onMounted(async function () {
 				</button>
 			</div>
 		</div>
-		<div v-if="!LangList.length">
+		<div v-if="LangList.length == 0">
 			<div id="loading"></div>
+		</div>
+		<div v-else-if="state.error">
+			{{ state.error }}
 		</div>
 		<div v-else>
 			<div v-for="(langBox, index) in LangList" :key="index">
