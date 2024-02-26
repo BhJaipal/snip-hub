@@ -118,7 +118,7 @@ onMounted(async function () {
 						langBox.langName.slice(1)
 					}}
 				</h2>
-				<HomeHighlighter
+				<Highlighter
 					v-for="(codeBox, index2) in langBox.codeBoxes"
 					:key="index2"
 					v-bind:langName="langBox.langName"
