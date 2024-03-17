@@ -9,7 +9,7 @@ export async function useCustomFetch(url: string, query: string) {
 	let data = ref<{
 		data: any;
 		error?: object | null;
-	}>({ data: {} });
+	}>({ data: null });
 	let error = ref<{ status: number; message: string } | null>(null);
 	let res = await fetch(url, {
 		method: "POST",

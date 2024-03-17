@@ -21,7 +21,7 @@ let query = `
 type _langList = Array<{
 	langName: string;
 	codeBoxes: { title: string; code: string }[];
-}>;
+}> | null;
 
 let empty = [{ langName: "", codeBoxes: [] }];
 let error = ref<null | { message: string; status: number }>(null);
@@ -57,8 +57,8 @@ onMounted(async function () {
 		query
 	));
 
-	LangList.value = data.value.data.langList;
-	LangList.value.forEach((lang) => console.log(lang));
+	LangList.value = data.value.data == null ? null : data.value.data.langList;
+	LangList.value?.forEach((lang) => console.log(lang));
 	setTimeout(function () {
 		hljs.highlightAll();
 	}, 100);
@@ -97,7 +97,12 @@ onMounted(async function () {
 			</div>
 		</div>
 		<div v-else>
-			<div v-if="JSON.stringify(LangList[0]) == JSON.stringify(empty[0])">
+			<div v-if="LangList == null"></div>
+			<div
+				v-else-if="
+					JSON.stringify(LangList[0]) == JSON.stringify(empty[0])
+				"
+			>
 				<div class="my-10 text-3xl text-center text-red-500">
 					No data
 				</div>
