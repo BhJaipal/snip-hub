@@ -9,8 +9,8 @@ export async function useCustomFetch(url: string, query: string) {
 	let data = ref<{
 		data: any;
 		error?: object | null;
-	}>({ data: [] });
-	let error = ref(null);
+	}>({ data: {} });
+	let error = ref<{ status: number; message: string } | null>(null);
 	let res = await fetch(url, {
 		method: "POST",
 		headers: {
@@ -21,8 +21,11 @@ export async function useCustomFetch(url: string, query: string) {
 		})
 	});
 	let out = await res.json();
-	error.value =
-		out.error == undefined || out.error == null ? null : out.error;
+	if (res.status >= 400 && !res.ok) {
+		error.value = { status: res.status, message: out.message };
+		return { data: data, error };
+	}
+	error.value = null;
 	data.value = out;
 	return { data: data, error };
 }
