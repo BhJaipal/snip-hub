@@ -5,6 +5,7 @@
 	"scripts": {
 		"build": "nuxt build",
 		"dev": "nuxt dev",
+		"debug": "vite --debug hmr",
 		"generate": "nuxt generate",
 		"preview": "nuxt preview",
 		"postinstall": "nuxt prepare",
@@ -35,6 +36,7 @@
 		"graphql-tag": "^2.12.6",
 		"highlight.js": "^10.7.3",
 		"react": "^18.2.0",
+		"volar-service-vetur": "^0.0.34",
 		"vue-hljs": "^3.0.1"
 	}
 }

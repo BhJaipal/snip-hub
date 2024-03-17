@@ -2,51 +2,32 @@
 import hljs from "highlight.js";
 import "./vs-dark.css";
 import { definePageMeta } from "#imports";
-import { ApolloClient, InMemoryCache } from "@apollo/client";
-import gql from "graphql-tag";
-
-let state = reactive({
-	loading: false,
-	error: null
-});
+import { useCustomFetch } from "../server/api";
 
 let search = ref("");
-let query = gql`
-	{
-		langList {
-			langName
-			codeBoxes {
-				title
-				code
-			}
+let query = `
+#graphql
+{
+	langList {
+		langName
+		codeBoxes {
+			title
+			code
 		}
 	}
+}
 `;
 
 type _langList = Array<{
-	id: string;
 	langName: string;
 	codeBoxes: { title: string; code: string }[];
 }>;
 
-const LangList = ref<
-	Array<{
-		id: string;
-		langName: string;
-		codeBoxes: { title: string; code: string }[];
-	}>
->([]);
-let apolloClient = new ApolloClient({
-	uri: "http://localhost:3300/",
-	cache: new InMemoryCache()
-});
-let data = reactive<{
+let error = ref(null);
+const LangList = ref<_langList>([]);
+let data = ref<{
 	data: {
-		langList: Array<{
-			id: string;
-			langName: string;
-			codeBoxes: { title: string; code: string }[];
-		}>;
+		langList: _langList;
 	};
 }>({ data: { langList: [] } });
 
@@ -64,20 +45,19 @@ definePageMeta({
 });
 
 onMounted(async function () {
-	document
-		.getElementById("search")!
-		.addEventListener("keydown", function (event) {
+	let search = document.getElementById("search");
+	if (search instanceof HTMLInputElement) {
+		search.addEventListener("keydown", function (event) {
 			event.key == "Enter" && goto();
 		});
-	let _data: any = await apolloClient.query({
-		query: query
-	});
-	state.loading = _data.loading;
-	state.error = _data.error;
-	data.data = _data.data;
-	console.log(data.data);
+	}
+	({ data: data, error } = await useCustomFetch(
+		"http://localhost:3300/",
+		query
+	));
 
-	LangList.value = data.data.langList;
+	LangList.value = data.value.data.langList;
+	LangList.value.forEach((lang) => console.log(lang));
 	setTimeout(function () {
 		hljs.highlightAll();
 	}, 100);
@@ -104,14 +84,19 @@ onMounted(async function () {
 				</button>
 			</div>
 		</div>
-		<div v-if="LangList.length == 0">
+		<div v-if="(LangList == null || LangList.length == 0) && error == null">
 			<div id="loading"></div>
 		</div>
-		<div v-else-if="state.error">
-			{{ state.error }}
+		<div v-else-if="error">
+			{{ error }}
 		</div>
 		<div v-else>
-			<div v-for="(langBox, index) in LangList" :key="index">
+			<div v-if="LangList.length == 0">
+				<div class="my-10 text-3xl text-center text-red-500">
+					No data
+				</div>
+			</div>
+			<div v-else v-for="(langBox, index) in LangList" :key="index">
 				<h2 class="text-3xl text-center">
 					{{
 						langBox.langName.charAt(0).toUpperCase() +

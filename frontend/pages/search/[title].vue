@@ -3,10 +3,14 @@ import { ref, onMounted } from "vue";
 import "./../../app.css";
 import hljs from "highlight.js";
 import "./../vs-dark.css";
+import { useCustomFetch } from "../../server/api";
 
 let route = useRoute();
 let title = route.params.title;
 if (title == "") navigateTo("/");
+
+let dataList = ref({ data: { titleFind: [] } });
+let error = ref(null);
 
 const titleFind = ref<
 	{
@@ -14,16 +18,14 @@ const titleFind = ref<
 		codeBoxes: { title: string; code: string }[];
 	}[]
 >([]);
-
+let empty = {
+	langName: "",
+	codeBoxes: []
+};
 onMounted(async function () {
-	let data = await fetch("http://localhost:3300/", {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-			Accept: "application/json"
-		},
-		body: JSON.stringify({
-			query: `#graphql
+	({ data: dataList, error } = await useCustomFetch(
+		"http://localhost:3300/",
+		`#graphql
 			{
 				titleFind(title: "${title}") {
 					langName,
@@ -32,11 +34,10 @@ onMounted(async function () {
 					}
 				}
 			}`
-		})
-	});
-	let res = await data.json();
+	));
 
-	titleFind.value = res.data.titleFind;
+	titleFind.value = dataList.value.data.titleFind;
+	console.log(dataList.value, error.value);
 	setTimeout(function () {
 		hljs.highlightAll();
 	}, 100);
@@ -44,13 +45,16 @@ onMounted(async function () {
 </script>
 
 <template>
-	<div v-if="!titleFind.length">
+	<div v-if="error == null && titleFind.length == 0 && titleFind == null">
 		<div id="loading"></div>
 	</div>
-	<div v-else>
-		<div class="flex justify-center my-10">
+	<div v-else-if="error">
+		{{ error }}
+	</div>
+	<div class="flex flex-col justify-center my-10" v-else>
+		<div class="flex justify-center">
 			<div
-				class="p-5 border-4 border-b-0 border-l-0 shadow-lg border-sky-400 shadow-black rounded-xl"
+				class="block p-5 border-4 border-b-0 border-l-0 shadow-lg border-sky-400 shadow-black rounded-xl"
 			>
 				<button @click="() => navigateTo('/')" id="go-back">
 					<h4 class="font-bold text-center text-sky-600">
@@ -62,7 +66,13 @@ onMounted(async function () {
 				</button>
 			</div>
 		</div>
-		<div v-for="(langBox, index) in titleFind" :key="index">
+		<div
+			v-if="JSON.stringify(titleFind[0]) == JSON.stringify(empty)"
+			class="my-10 text-3xl text-center text-red-500"
+		>
+			No Snippet found related to "{{ title }}"
+		</div>
+		<div v-else v-for="(langBox, index) in titleFind" :key="index">
 			<h2 class="text-center">
 				{{
 					langBox.langName.charAt(0).toUpperCase() +
