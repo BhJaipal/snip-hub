@@ -22,7 +22,7 @@ export async function useCustomFetch(url: string, query: string) {
 	});
 	let out = await res.json();
 	if (res.status >= 400 && !res.ok) {
-		error.value = { status: res.status, message: out.message };
+		error.value = { status: res.status, message: res.statusText };
 		return { data: data, error };
 	}
 	error.value = null;

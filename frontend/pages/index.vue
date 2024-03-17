@@ -89,10 +89,10 @@ onMounted(async function () {
 			<div id="loading"></div>
 		</div>
 		<div v-else-if="error">
-			<div class="my-10 text-3xl font-bold text-center text-red-500">
+			<div class="my-5 text-5xl font-bold text-center text-red-500">
 				{{ error.status }}
 			</div>
-			<div class="my-10 text-xl text-center text-red-500">
+			<div class="my-5 text-3xl text-center text-red-500">
 				{{ error.message }}
 			</div>
 		</div>
