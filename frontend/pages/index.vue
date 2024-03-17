@@ -23,6 +23,7 @@ type _langList = Array<{
 	codeBoxes: { title: string; code: string }[];
 }>;
 
+let empty = [{ langName: "", codeBoxes: [] }];
 let error = ref(null);
 const LangList = ref<_langList>([]);
 let data = ref<{
@@ -91,7 +92,7 @@ onMounted(async function () {
 			{{ error }}
 		</div>
 		<div v-else>
-			<div v-if="LangList.length == 0">
+			<div v-if="JSON.stringify(LangList[0]) == JSON.stringify(empty[0])">
 				<div class="my-10 text-3xl text-center text-red-500">
 					No data
 				</div>
