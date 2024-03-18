@@ -1,8 +1,7 @@
 <script lang="ts" setup>
 import { Icon } from "#components";
-import gql from "graphql-tag";
+import { useCustomFetch } from "../../server/api";
 import UAccordian from "../../node_modules/@nuxt/ui/dist/runtime/components/elements/Accordion.vue";
-import { ApolloClient, InMemoryCache } from "@apollo/client";
 const items: Array<{
 	label: string;
 	icon: string;
@@ -19,27 +18,21 @@ const items: Array<{
 	}
 ];
 
-let query = gql`
+let query = `
 	{
 		langNames
 	}
 `;
-let data = reactive({ data: { langNames: [] } });
+let data = ref({ data: { langNames: [] } });
 let loading = ref(false);
-let error = ref(null);
-let apolloClient = new ApolloClient({
-	uri: "http://localhost:3300/",
-	cache: new InMemoryCache()
-});
+let error = ref<null | { message: string; status: number }>(null);
+
 onMounted(async function () {
-	({
-		data: data.data,
-		loading: loading.value,
-		error: error.value
-	} = await apolloClient.query({
-		query: query
-	}));
-	console.log(data.data, loading.value);
+	({ data: data, error: error } = await useCustomFetch(
+		"http://localhost:3300/",
+		query
+	));
+	console.log(data.value.data, loading.value);
 });
 </script>
 
@@ -49,7 +42,7 @@ onMounted(async function () {
 	<Icon name="material-symbols:search-rounded" />
 
 	<UAccordian :items="items" />
-	<template v-if="loading">
+	<template v-if="error == null && data.data.langNames.length == 0">
 		<div class="loading"></div>
 	</template>
 	<template v-else-if="error">

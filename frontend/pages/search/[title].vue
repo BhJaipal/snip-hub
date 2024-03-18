@@ -3,14 +3,14 @@ import { ref, onMounted } from "vue";
 import "./../../app.css";
 import hljs from "highlight.js";
 import "./../vs-dark.css";
-import { useCustomFetch } from "../../server/api";
+import { useCustomFetch } from "./../../server/api";
 
 let route = useRoute();
 let title = route.params.title;
 if (title == "") navigateTo("/");
 
 let dataList = ref({ data: { titleFind: [] } });
-let error = ref(null);
+let error = ref<null | { message: string; status: number }>(null);
 
 const titleFind = ref<
 	{
