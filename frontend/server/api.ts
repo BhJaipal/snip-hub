@@ -5,7 +5,11 @@ export default defineNuxtPlugin((nuxtApp) => {
 	nuxtApp.provide("useCustomFetch", useCustomFetch);
 });
 
-export async function useCustomFetch(url: string, query: string) {
+export async function useCustomFetch(
+	url: string,
+	query: string,
+	variables: object | null = null
+) {
 	let data = ref<{
 		data: any;
 		error?: object | null;
@@ -16,9 +20,14 @@ export async function useCustomFetch(url: string, query: string) {
 		headers: {
 			"Content-Type": "application/json"
 		},
-		body: JSON.stringify({
-			query: query
-		})
+		body: JSON.stringify(
+			variables == null
+				? { query }
+				: {
+						query: query,
+						variables: variables
+					}
+		)
 	});
 	let out = await res.json();
 	if (res.status >= 400 && !res.ok) {

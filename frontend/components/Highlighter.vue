@@ -87,9 +87,9 @@ function blur() {
 				</button>
 			</div>
 			<pre>
-      <code v-bind:class="langName">
+<code v-bind:class="langName">
 {{ snipCode }}
-      </code>
+</code>
     </pre>
 		</div>
 	</div>

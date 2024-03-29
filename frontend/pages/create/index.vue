@@ -74,21 +74,40 @@ async function sendDataBtn() {
 }
 
 function selectValChange() {
-	document.getElementById("pre-tag")!.className =
-		langSelect.value + " bg-slate-800 mt-[52px] pt-0";
+	let preTag = document.getElementById("pre-tag");
+	if (preTag == null) return;
+	preTag.className = langSelect.value + " bg-slate-800 mt-[52px] pt-0";
 	update();
 	hljs.highlightAll();
 }
 
 hljs.highlightAll();
+function getCursorPosition(textareaElement: HTMLTextAreaElement) {
+	// Check if the element is a textarea
+	if (textareaElement.tagName.toLowerCase() !== "textarea") {
+		return -1; // Not a textarea
+	}
 
-function update() {
+	// Modern browsers (property approach)
+	return textareaElement.selectionStart;
+}
+
+function update(e: KeyboardEvent = <KeyboardEvent>{}) {
+	if (e.key == "Tab") {
+		e.preventDefault();
+		let curPosition = getCursorPosition(
+			document.getElementById("code-input") as HTMLTextAreaElement
+		);
+		let first = defaultSnip.value.slice(0, curPosition);
+		let second = defaultSnip.value.slice(curPosition);
+		defaultSnip.value = first + "\t" + second;
+		// defaultSnip.value += "\t";
+	}
 	document.getElementById("preview")!.innerText = defaultSnip.value;
-	document
-		.getElementById("pre-tag")!
-		.classList.remove("language-" + langSelect.value);
-	document.getElementById("pre-tag")!.className =
-		langSelect.value + " bg-slate-800 mt-[52px] pt-0";
+	let preTag = document.getElementById("pre-tag");
+	if (preTag == null) return;
+	preTag.classList.remove("language-" + langSelect.value);
+	preTag.className = langSelect.value + " bg-slate-800 mt-[52px] pt-0";
 	hljs.highlightAll();
 }
 </script>

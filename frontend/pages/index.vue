@@ -37,7 +37,6 @@ useHead({
 });
 
 function goto() {
-	console.log(search.value);
 	navigateTo("/search/" + search.value);
 }
 
@@ -46,12 +45,12 @@ definePageMeta({
 });
 
 onMounted(async function () {
-	let search = document.getElementById("search");
-	if (search instanceof HTMLInputElement) {
-		search.addEventListener("keydown", function (event) {
-			event.key == "Enter" && goto();
-		});
-	}
+	let search = document.querySelector<HTMLInputElement>("#search");
+	if (search == null) return;
+	search.addEventListener("keydown", function (event) {
+		event.key == "Enter" && goto();
+	});
+
 	({ data: data, error } = await useCustomFetch(
 		"http://localhost:3300/",
 		query

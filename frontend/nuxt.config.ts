@@ -5,15 +5,5 @@ export default defineNuxtConfig({
 		configPath: "./tailwind.config.js"
 	},
 	devtools: { enabled: true },
-	modules: ["nuxt-icon", "@nuxt/image", "@nuxt/ui", "@nuxtjs/tailwindcss"],
-	app: {
-		head: {
-			link: [
-				{
-					rel: "stylesheet",
-					href: "https://fonts.googleapis.com/icon?family=Material+Icons"
-				}
-			]
-		}
-	}
+	modules: ["nuxt-icon", "@nuxt/image", "@nuxt/ui", "@nuxtjs/tailwindcss"]
 });
