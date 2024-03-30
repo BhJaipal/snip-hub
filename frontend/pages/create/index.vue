@@ -2,6 +2,15 @@
 import hljs from "highlight.js";
 import "../vs-dark.css";
 
+let pairedVales: Record<string, string> = {
+	"{": "}",
+	'"': '"',
+	"'": "'",
+	"(": ")",
+	"[": "]",
+	"<": ">",
+	"`": "`"
+};
 definePageMeta({
 	layout: "default"
 });
@@ -9,7 +18,7 @@ definePageMeta({
 useHead({
 	title: "Create Page"
 });
-
+let eKeyDefault = new KeyboardEvent("keydown", { key: "" });
 const state = reactive({ sent: false, success: false });
 
 let langNames = ref<Array<string>>([]);
@@ -30,7 +39,7 @@ onMounted(async () => {
 
 let inputTitle = ref("");
 let langSelect = ref("");
-let defaultSnip = ref('"Hello World"');
+let defaultSnip = ref('console.log("Hello World");');
 
 async function sendDataBtn() {
 	let res = await fetch("http://localhost:3300/", {
@@ -57,14 +66,14 @@ async function sendDataBtn() {
 			}
 		})
 	});
-	/**
-	 * @type { {errors: Object} | {data: Object} }
-	 */
-	let data = await res.json();
+	let data: {
+		data?: { snipAdd: { id: string; message: string } };
+		errors?: { title: string; message: string };
+	} = await res.json();
 	if (!data.data) {
 		state.sent = true;
 		state.success = false;
-		alert(data.errors.title + " " + data.errors.message);
+		if (data.errors) alert(data.errors.title + " " + data.errors.message);
 	} else {
 		alert("Data sent successfully");
 		state.sent = true;
@@ -74,7 +83,7 @@ async function sendDataBtn() {
 }
 
 function selectValChange() {
-	let preTag = document.getElementById("pre-tag");
+	let preTag = document.querySelector<HTMLPreElement>("#pre-tag");
 	if (preTag == null) return;
 	preTag.className = langSelect.value + " bg-slate-800 mt-[52px] pt-0";
 	update();
@@ -82,33 +91,47 @@ function selectValChange() {
 }
 
 hljs.highlightAll();
-function getCursorPosition(textareaElement: HTMLTextAreaElement) {
-	// Check if the element is a textarea
+function getCursorPosition(textareaElement: HTMLTextAreaElement | null) {
+	if (textareaElement == null) {
+		return -1;
+	}
 	if (textareaElement.tagName.toLowerCase() !== "textarea") {
 		return -1; // Not a textarea
 	}
-
-	// Modern browsers (property approach)
 	return textareaElement.selectionStart;
 }
 
-function update(e: KeyboardEvent = <KeyboardEvent>{}) {
+function update(e = eKeyDefault) {
+	let textarea = document.querySelector<HTMLTextAreaElement>("#code-input");
+	if (textarea == null) return;
 	if (e.key == "Tab") {
 		e.preventDefault();
 		let curPosition = getCursorPosition(
-			document.getElementById("code-input") as HTMLTextAreaElement
+			document.querySelector<HTMLTextAreaElement>("#code-input")
 		);
 		let first = defaultSnip.value.slice(0, curPosition);
 		let second = defaultSnip.value.slice(curPosition);
 		defaultSnip.value = first + "\t" + second;
-		// defaultSnip.value += "\t";
+		let textarea =
+			document.querySelector<HTMLTextAreaElement>("#code-input");
+		if (textarea == null) return;
+		textarea.setSelectionRange(curPosition, curPosition);
+	} else if (Object.keys(pairedVales).includes(e.key)) {
+		let curPosition = getCursorPosition(
+			document.querySelector<HTMLTextAreaElement>("#code-input")
+		);
+		e.preventDefault();
+		let first = defaultSnip.value.slice(0, curPosition);
+		let second = defaultSnip.value.slice(curPosition);
+		defaultSnip.value = first + e.key + pairedVales[e.key] + second;
 	}
-	document.getElementById("preview")!.innerText = defaultSnip.value;
-	let preTag = document.getElementById("pre-tag");
+	let previewTag = document.getElementById("preview");
+	if (previewTag == null) return;
+	previewTag.innerText = defaultSnip.value;
+	let preTag = document.querySelector<HTMLPreElement>("#pre-tag");
 	if (preTag == null) return;
 	preTag.classList.remove("language-" + langSelect.value);
-	preTag.className = langSelect.value + " bg-slate-800 mt-[52px] pt-0";
-	hljs.highlightAll();
+	hljs.highlightElement(preTag);
 }
 </script>
 
@@ -173,12 +196,12 @@ function update(e: KeyboardEvent = <KeyboardEvent>{}) {
 				<div class="overflow-y-scroll snip-title">{{ inputTitle }}</div>
 			</div>
 		</div>
-
-		<pre
-			id="pre-tag"
-			class="javascript bg-slate-800 mt-[52px] pt-0"
-		><code id="preview" class="overflow-y-scroll">{{ defaultSnip }}</code></pre>
-
+		<div v-highlight>
+			<pre
+				id="pre-tag"
+				class="javascript bg-slate-800 mt-[52px] pt-0"
+			><code id="preview" class="overflow-y-scroll">{{ defaultSnip }}</code></pre>
+		</div>
 		<button
 			type="submit"
 			id="send-data"

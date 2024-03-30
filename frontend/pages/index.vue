@@ -5,8 +5,7 @@ import { definePageMeta } from "#imports";
 import { useCustomFetch } from "../server/api";
 
 let search = ref("");
-let query = `
-#graphql
+let query = `#graphql
 {
 	langList {
 		langName
@@ -57,7 +56,6 @@ onMounted(async function () {
 	));
 
 	LangList.value = data.value.data == null ? null : data.value.data.langList;
-	LangList.value?.forEach((lang) => console.log(lang));
 	setTimeout(function () {
 		hljs.highlightAll();
 	}, 100);

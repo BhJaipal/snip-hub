@@ -5,15 +5,5 @@
 </template>
 
 <script lang="ts">
-export default {
-	head: {
-		link: [
-			// Material Icons
-			{
-				rel: "stylesheet",
-				href: "https://fonts.googleapis.com/icon?family=Material+Icons"
-			}
-		]
-	}
-};
+export default {};
 </script>
