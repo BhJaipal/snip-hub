@@ -1,6 +1,15 @@
+<script lang="ts">
+import highlightjsVue from "@highlightjs/vue-plugin";
+
+export default {
+	components: {
+		highlightjs: highlightjsVue.component
+	}
+};
+</script>
 <script setup lang="ts">
 import hljs from "highlight.js";
-import "../vs-dark.css";
+import "highlight.js/styles/vs2015.css";
 
 let pairedVales: Record<string, string> = {
 	"{": "}",
@@ -21,25 +30,14 @@ useHead({
 let eKeyDefault = new KeyboardEvent("keydown", { key: "" });
 const state = reactive({ sent: false, success: false });
 
-let langNames = ref<Array<string>>([]);
-onMounted(async () => {
-	let res = await fetch("http://localhost:3300", {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-			Accept: "application/json"
-		},
-		body: JSON.stringify({
-			query: `query { langNames }`
-		})
-	});
-	let data = await res.json();
-	langNames.value = data.data.langNames;
-});
+let hljsLangList = hljs.listLanguages();
+console.log(hljsLangList);
+
+let langNames = ref<Array<string>>(["typescript", "python", "c", "php", "cpp"]);
 
 let inputTitle = ref("");
 let langSelect = ref("");
-let defaultSnip = ref('console.log("Hello World");');
+let defaultSnip = ref(`let name: string = "Jaipal";`);
 
 async function sendDataBtn() {
 	let res = await fetch("http://localhost:3300/", {
@@ -83,11 +81,7 @@ async function sendDataBtn() {
 }
 
 function selectValChange() {
-	let preTag = document.querySelector<HTMLPreElement>("#pre-tag");
-	if (preTag == null) return;
-	preTag.className = langSelect.value + " bg-slate-800 mt-[52px] pt-0";
 	update();
-	hljs.highlightAll();
 }
 
 hljs.highlightAll();
@@ -102,36 +96,27 @@ function getCursorPosition(textareaElement: HTMLTextAreaElement | null) {
 }
 
 function update(e = eKeyDefault) {
-	let textarea = document.querySelector<HTMLTextAreaElement>("#code-input");
-	if (textarea == null) return;
+	let codeInput = document.querySelector<HTMLTextAreaElement>("#code-input");
+
+	if (codeInput == null) return;
 	if (e.key == "Tab") {
 		e.preventDefault();
-		let curPosition = getCursorPosition(
-			document.querySelector<HTMLTextAreaElement>("#code-input")
-		);
-		let first = defaultSnip.value.slice(0, curPosition);
-		let second = defaultSnip.value.slice(curPosition);
-		defaultSnip.value = first + "\t" + second;
-		let textarea =
-			document.querySelector<HTMLTextAreaElement>("#code-input");
-		if (textarea == null) return;
-		textarea.setSelectionRange(curPosition, curPosition);
+		let curPosition = getCursorPosition(codeInput);
+		defaultSnip.value =
+			defaultSnip.value.slice(0, curPosition) +
+			"\t" +
+			defaultSnip.value.slice(curPosition);
+		if (codeInput.value == null) return;
 	} else if (Object.keys(pairedVales).includes(e.key)) {
-		let curPosition = getCursorPosition(
-			document.querySelector<HTMLTextAreaElement>("#code-input")
-		);
 		e.preventDefault();
-		let first = defaultSnip.value.slice(0, curPosition);
-		let second = defaultSnip.value.slice(curPosition);
-		defaultSnip.value = first + e.key + pairedVales[e.key] + second;
+		let curPosition = getCursorPosition(codeInput);
+		defaultSnip.value =
+			defaultSnip.value.slice(0, curPosition) +
+			e.key +
+			pairedVales[e.key] +
+			defaultSnip.value.slice(curPosition);
+		if (codeInput.value == null) return;
 	}
-	let previewTag = document.getElementById("preview");
-	if (previewTag == null) return;
-	previewTag.innerText = defaultSnip.value;
-	let preTag = document.querySelector<HTMLPreElement>("#pre-tag");
-	if (preTag == null) return;
-	preTag.classList.remove("language-" + langSelect.value);
-	hljs.highlightElement(preTag);
 }
 </script>
 
@@ -196,12 +181,7 @@ function update(e = eKeyDefault) {
 				<div class="overflow-y-scroll snip-title">{{ inputTitle }}</div>
 			</div>
 		</div>
-		<div v-highlight>
-			<pre
-				id="pre-tag"
-				class="javascript bg-slate-800 mt-[52px] pt-0"
-			><code id="preview" class="overflow-y-scroll">{{ defaultSnip }}</code></pre>
-		</div>
+		<highlightjs :code="defaultSnip" :language="langSelect" />
 		<button
 			type="submit"
 			id="send-data"

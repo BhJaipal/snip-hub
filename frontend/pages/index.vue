@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import hljs from "highlight.js";
-import "./vs-dark.css";
+import "highlight.js/styles/vs2015.css";
 import { definePageMeta } from "#imports";
 import { useCustomFetch } from "../server/api";
 
