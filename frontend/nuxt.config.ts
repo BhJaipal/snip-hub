@@ -5,5 +5,11 @@ export default defineNuxtConfig({
 		configPath: "./tailwind.config.js"
 	},
 	devtools: { enabled: true },
-	modules: ["nuxt-icon", "@nuxt/image", "@nuxt/ui", "@nuxtjs/tailwindcss"]
+	modules: [
+		"nuxt-icon",
+		"@nuxt/image",
+		"@nuxt/ui",
+		"@nuxtjs/tailwindcss",
+		"@pinia/nuxt"
+	]
 });

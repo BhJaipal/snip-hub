@@ -33,6 +33,7 @@ let navigation = ref<{ name: string; href: string }[]>([
 	{ name: "Home", href: "/" },
 	{ name: "About", href: "/about" },
 	{ name: "Create", href: "/create" },
+	{ name: "Test 2 page", href: "/test2" },
 	{ name: "Test page", href: "/test" }
 ]);
 
