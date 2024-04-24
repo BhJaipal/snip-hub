@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const counter = useState("counter", () => 0);
+import { counter } from "../../composables/states";
 watch(counter, () => {
 	console.log(counter.value);
 });

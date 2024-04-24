@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { counter } from "../../composables/states";
 import { Icon } from "#components";
 import { useCustomFetch } from "../../server/api";
 import UAccordian from "../../node_modules/@nuxt/ui/dist/runtime/components/elements/Accordion.vue";
@@ -23,6 +24,7 @@ let query = `
 		langNames
 	}
 `;
+
 let data = ref({ data: { langNames: [] } });
 let loading = ref(false);
 let error = ref<null | { message: string; status: number }>(null);
@@ -42,6 +44,8 @@ onMounted(async function () {
 	<Icon name="material-symbols:search-rounded" />
 
 	<UAccordian :items="items" />
+	<UBadge variant="outline">Counter: {{ counter }}</UBadge>
+
 	<template v-if="error == null && data.data.langNames.length == 0">
 		<div class="loading"></div>
 	</template>
