@@ -1,19 +1,16 @@
 import { defineNuxtPlugin } from "nuxt/app";
-import { ref } from "vue";
+import { ref, UnwrapRef } from "vue";
 
 export default defineNuxtPlugin((nuxtApp) => {
-	nuxtApp.provide("useCustomFetch", useCustomFetch);
+	nuxtApp.provide("useCustomFetch", useGQLFetch);
 });
 
-export async function useCustomFetch(
+export async function useGQLFetch<T>(
 	url: string,
 	query: string,
 	variables: object | null = null
 ) {
-	let data = ref<{
-		data: any;
-		error?: object | null;
-	}>({ data: null });
+	let data = ref<T | null>(null);
 	let error = ref<{ status: number; message: string } | null>(null);
 	let res = await fetch(url, {
 		method: "POST",
@@ -29,12 +26,12 @@ export async function useCustomFetch(
 					}
 		)
 	});
-	let out = await res.json();
+	let out: { data: UnwrapRef<T> } = await res.json();
 	if (res.status >= 400 && !res.ok) {
 		error.value = { status: res.status, message: res.statusText };
-		return { data: data, error };
+		return { data: null, error };
 	}
 	error.value = null;
-	data.value = out;
-	return { data: data, error };
+	data.value = out.data;
+	return { data: out.data, error };
 }

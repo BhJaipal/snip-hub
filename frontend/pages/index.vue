@@ -2,7 +2,7 @@
 import hljs from "highlight.js";
 import "highlight.js/styles/vs2015.css";
 import { definePageMeta } from "#imports";
-import { useCustomFetch } from "../server/api";
+import { useGQLFetch } from "../server/api";
 
 let search = ref("");
 let query = `#graphql
@@ -28,7 +28,7 @@ const LangList = ref<_langList>([]);
 let data = ref<{
 	data: {
 		langList: _langList;
-	};
+	} | null;
 }>({ data: { langList: [] } });
 
 useHead({
@@ -50,10 +50,9 @@ onMounted(async function () {
 		event.key == "Enter" && goto();
 	});
 
-	({ data: data, error } = await useCustomFetch(
-		"http://localhost:3300/",
-		query
-	));
+	({ data: LangList.value, error } = await useGQLFetch<{
+		langList: _langList;
+	}>("http://localhost:3300/", query));
 
 	LangList.value = data.value.data == null ? null : data.value.data.langList;
 	setTimeout(function () {

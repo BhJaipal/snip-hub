@@ -3,13 +3,15 @@ import { ref, onMounted } from "vue";
 import "./../../app.css";
 import hljs from "highlight.js";
 import "./../vs-dark.css";
-import { useCustomFetch } from "./../../server/api";
+import { useGQLFetch } from "./../../server/api";
 
 let route = useRoute();
 let title = route.params.title;
 if (title == "") navigateTo("/");
 
-let dataList = ref({ data: { titleFind: [] } });
+let dataList = ref<{ data: { titleFind: [] } | null }>({
+	data: { titleFind: [] }
+});
 let error = ref<null | { message: string; status: number }>(null);
 
 const titleFind = ref<
@@ -23,7 +25,7 @@ let empty = {
 	codeBoxes: []
 };
 onMounted(async function () {
-	({ data: dataList, error } = await useCustomFetch(
+	({ data: dataList, error } = await useGQLFetch<{ titleFind: [] }>(
 		"http://localhost:3300/",
 		`#graphql
 			{
@@ -36,7 +38,8 @@ onMounted(async function () {
 			}`
 	));
 
-	titleFind.value = dataList.value.data.titleFind;
+	if (dataList.value.data == null) return;
+	titleFind.value = dataList.value.data?.titleFind;
 	console.log(dataList.value, error.value);
 	setTimeout(function () {
 		hljs.highlightAll();
