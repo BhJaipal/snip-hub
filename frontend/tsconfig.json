@@ -6,7 +6,8 @@
 		"baseUrl": ".",
 		"paths": {
 			"#imports": ["./.nuxt/imports.d.ts"],
-			"#components": ["./.nuxt/components.d.ts"]
+			"#components": ["./.nuxt/components.d.ts"],
+			"#app/nuxt": ["./node_modules/nuxt/dist/app/index.d.ts"]
 		},
 		"lib": ["DOM", "ESNext"]
 	}

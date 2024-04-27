@@ -2,30 +2,34 @@
 import { ref, onMounted } from "vue";
 import "./../../app.css";
 import hljs from "highlight.js";
-import "./../vs-dark.css";
-import { useGQLFetch } from "./../../server/api";
+import "highlight.js/styles/vs2015.css";
+
+import { useGQLFetch } from "~/plugins/gql-fetch";
 
 let route = useRoute();
 let title = route.params.title;
 if (title == "") navigateTo("/");
 
-let dataList = ref<{ data: { titleFind: [] } | null }>({
-	data: { titleFind: [] }
-});
 let error = ref<null | { message: string; status: number }>(null);
 
 const titleFind = ref<
-	{
-		langName: string;
-		codeBoxes: { title: string; code: string }[];
-	}[]
+	| {
+			langName: string;
+			codeBoxes: { title: string; code: string }[];
+	  }[]
+	| null
 >([]);
 let empty = {
 	langName: "",
 	codeBoxes: []
 };
 onMounted(async function () {
-	({ data: dataList, error } = await useGQLFetch<{ titleFind: [] }>(
+	({ data: titleFind.value, error: error.value } = await useGQLFetch<{
+		titleFind: {
+			langName: string;
+			codeBoxes: { title: string; code: string }[];
+		}[];
+	}>(
 		"http://localhost:3300/",
 		`#graphql
 			{
@@ -38,9 +42,6 @@ onMounted(async function () {
 			}`
 	));
 
-	if (dataList.value.data == null) return;
-	titleFind.value = dataList.value.data?.titleFind;
-	console.log(dataList.value, error.value);
 	setTimeout(function () {
 		hljs.highlightAll();
 	}, 100);
@@ -48,13 +49,13 @@ onMounted(async function () {
 </script>
 
 <template>
-	<div v-if="error == null && titleFind.length == 0 && titleFind == null">
+	<div v-if="error == null && titleFind?.length == 0 && titleFind == null">
 		<div id="loading"></div>
 	</div>
-	<div v-else-if="error">
+	<div v-else-if="error && titleFind == null">
 		{{ error }}
 	</div>
-	<div class="flex flex-col justify-center my-10" v-else>
+	<div class="flex flex-col justify-center my-10" v-else-if="titleFind">
 		<div class="flex justify-center">
 			<div
 				class="block p-5 border-4 border-b-0 border-l-0 shadow-lg border-sky-400 shadow-black rounded-xl"

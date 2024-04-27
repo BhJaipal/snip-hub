@@ -2,7 +2,7 @@
 import hljs from "highlight.js";
 import "highlight.js/styles/vs2015.css";
 import { definePageMeta } from "#imports";
-import { useGQLFetch } from "../server/api";
+import { useGQLFetch } from "~/plugins/gql-fetch";
 
 let search = ref("");
 let query = `#graphql
@@ -20,21 +20,15 @@ let query = `#graphql
 type _langList = Array<{
 	langName: string;
 	codeBoxes: { title: string; code: string }[];
-}> | null;
+}>;
 
 let empty = [{ langName: "", codeBoxes: [] }];
 let error = ref<null | { message: string; status: number }>(null);
-const LangList = ref<_langList>([]);
-let data = ref<{
-	data: {
-		langList: _langList;
-	} | null;
-}>({ data: { langList: [] } });
+let LangList = ref<_langList | null>([]);
 
 useHead({
 	title: "Snip Hub Home Page"
 });
-
 function goto() {
 	navigateTo("/search/" + search.value);
 }
@@ -50,11 +44,11 @@ onMounted(async function () {
 		event.key == "Enter" && goto();
 	});
 
-	({ data: LangList.value, error } = await useGQLFetch<{
+	({ data: LangList.value, error: error.value } = await useGQLFetch<{
 		langList: _langList;
 	}>("http://localhost:3300/", query));
+	console.log(LangList.value);
 
-	LangList.value = data.value.data == null ? null : data.value.data.langList;
 	setTimeout(function () {
 		hljs.highlightAll();
 	}, 100);
@@ -83,6 +77,7 @@ onMounted(async function () {
 		</div>
 		<div v-if="(LangList == null || LangList.length == 0) && error == null">
 			<div id="loading"></div>
+			{{ LangList }}
 		</div>
 		<div v-else-if="error">
 			<div class="my-5 text-5xl font-bold text-center text-red-500">

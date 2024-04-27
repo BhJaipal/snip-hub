@@ -11,5 +11,13 @@ export default defineNuxtConfig({
 		"@nuxt/ui",
 		"@nuxtjs/tailwindcss",
 		"@pinia/nuxt"
-	]
+	],
+	alias: {
+		server: "./server",
+		"#components": "./.nuxt/components.d.ts",
+		"#imports": "./.nuxt/imports.d.ts",
+		composables: "./composables",
+		"~~": "./assets",
+		"~/plugins": "./plugins"
+	}
 });
