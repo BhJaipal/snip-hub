@@ -1,7 +1,7 @@
 import { ref } from "vue";
 
-type GQLFetch = Promise<{
-	data: Record<string, any> | null;
+type GQLFetch<T extends Record<string, any> = Record<string, any>> = Promise<{
+	data: T | null;
 	error: { status: number; message: string } | null;
 }>;
 export async function useGQLFetch<
@@ -9,7 +9,11 @@ export async function useGQLFetch<
 		string,
 		Record<string, any>
 	>
->(url: string, query: string, variables: object | null = null): GQLFetch {
+>(
+	url: string,
+	query: string,
+	variables: object | null = null
+): GQLFetch<T[keyof T]> {
 	let data = ref<Record<string, any> | null>(null);
 	let error = ref<{ status: number; message: string } | null>(null);
 	let res = await fetch(url, {
@@ -32,9 +36,7 @@ export async function useGQLFetch<
 		data.value = null;
 		return { data: null, error: error.value };
 	}
-	let key = Object.keys(out.data)[0];
-	console.log(key, out.data[key]);
-	data = ref(out.data[key]);
+	data.value = out.data[Object.keys(out.data)[0]] as T[keyof T];
 	return { data: data.value, error: null };
 }
 export default defineNuxtPlugin((nuxtApp) => {
