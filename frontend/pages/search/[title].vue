@@ -7,8 +7,8 @@ import "highlight.js/styles/vs2015.css";
 import { useGQLFetch } from "~/plugins/gql-fetch";
 
 let route = useRoute();
-let title = route.params.title;
-if (title == "") navigateTo("/");
+let title: string = route.params.title;
+if (title.trim() == "") navigateTo("/");
 
 let error = ref<null | { message: string; status: number }>(null);
 
@@ -23,7 +23,10 @@ let empty = {
 	langName: "",
 	codeBoxes: []
 };
+const nuxtApp = useNuxtApp();
+
 onMounted(async function () {
+	if (nuxtApp.$useGQLFetch == undefined) return;
 	({ data: titleFind.value, error: error.value } = await useGQLFetch<{
 		titleFind: {
 			langName: string;
@@ -58,7 +61,7 @@ onMounted(async function () {
 	<div class="flex flex-col justify-center my-10" v-else-if="titleFind">
 		<div class="flex justify-center">
 			<div
-				class="block p-5 border-4 border-b-0 border-l-0 shadow-lg border-sky-400 shadow-black rounded-xl"
+				class="block p-5 border-4 border-b-0 border-l-0 shadow-lg border-sky-400 shadow-black rounded-xl mb-10"
 			>
 				<button @click="() => navigateTo('/')" id="go-back">
 					<h4 class="font-bold text-center text-sky-600">
@@ -76,20 +79,71 @@ onMounted(async function () {
 		>
 			No Snippet found related to "{{ title }}"
 		</div>
-		<div v-else v-for="(langBox, index) in titleFind" :key="index">
-			<h2 class="text-center">
-				{{
-					langBox.langName.charAt(0).toUpperCase() +
-					langBox.langName.slice(1)
-				}}
-			</h2>
-			<Highlighter
-				v-for="(codeBox, index2) in langBox.codeBoxes"
-				:key="index2"
-				v-bind:langName="langBox.langName"
-				v-bind:snipTitle="codeBox.title"
-				v-bind:snipCode="codeBox.code"
-			/>
+		<div v-else>
+			<UAccordion :items="titleFind">
+				<template #default="{ item, index, open }">
+					<UButton
+						color="blue"
+						variant="ghost"
+						class="mx-[3%] border-t border-gray-700"
+						:ui="{
+							rounded: 'rounded-none',
+							padding: { sm: 'p-3' }
+						}"
+					>
+						<span class="truncate"
+							>{{ index + 1 }}.
+							{{
+								useNuxtApp().$langNamesPrint(item.langName)
+							}}</span
+						>
+
+						<template #trailing>
+							<UIcon
+								name="i-heroicons-chevron-right-20-solid"
+								class="w-5 h-5 ms-auto transform transition-transform duration-200"
+								:class="[open && 'rotate-90']"
+							/>
+						</template>
+					</UButton>
+				</template>
+				<template #item="{ item: langBox }">
+					<div class="mx-[3%]">
+						<UAccordion :items="langBox.codeBoxes">
+							<template #default="{ item, index, open }">
+								<UButton
+									color="green"
+									variant="ghost"
+									class="border-t border-gray-700 mx-[3%]"
+									:ui="{
+										rounded: 'rounded-none',
+										padding: { sm: 'p-3' }
+									}"
+								>
+									<span class="truncate"
+										>{{ index + 1 }}. {{ item.title }}</span
+									>
+
+									<template #trailing>
+										<UIcon
+											name="i-heroicons-chevron-right-20-solid"
+											class="w-5 h-5 ms-auto transform transition-transform duration-200"
+											:class="[open && 'rotate-90']"
+										/>
+									</template>
+								</UButton>
+							</template>
+							<template #item="{ item }">
+								<Highlighter
+									:langName="langBox.langName"
+									:snipTitle="item.title"
+									:snipCode="item.code"
+								/>
+							</template>
+						</UAccordion>
+					</div>
+				</template>
+			</UAccordion>
 		</div>
 	</div>
 </template>

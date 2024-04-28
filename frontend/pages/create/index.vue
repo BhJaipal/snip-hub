@@ -10,6 +10,7 @@ export default {
 <script setup lang="ts">
 import hljs from "highlight.js";
 import "highlight.js/styles/vs2015.css";
+import { useGQLFetch } from "~/plugins/gql-fetch";
 
 let pairedVales: Record<string, string> = {
 	"{": "}",
@@ -40,38 +41,36 @@ let langSelect = ref("");
 let defaultSnip = ref(`let name: string = "Jaipal";`);
 
 async function sendDataBtn() {
-	let res = await fetch("http://localhost:3300/", {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-			Accept: "application/json"
-		},
-		body: JSON.stringify({
-			query: `#graphql
+	let data: {
+		data: { id: string; message: string } | null;
+		error: { title: string; message: string };
+	} = await useGQLFetch<{
+		id: string;
+		message: string;
+	}>(
+		"http://localhost:3300/",
+		`#graphql
 			mutation ($codeSnip: snipBox!){
 				snipAdd(codeSnip: $codeSnip) {
 					id, message
 				}
 			}`,
-			variables: {
-				codeSnip: {
-					langName: langSelect.value,
-					codeBox: {
-						title: inputTitle.value,
-						code: defaultSnip.value
-					}
+		{
+			codeSnip: {
+				langName: langSelect.value,
+				codeBox: {
+					title: inputTitle.value,
+					code: defaultSnip.value
 				}
 			}
-		})
-	});
-	let data: {
-		data?: { snipAdd: { id: string; message: string } };
-		errors?: { title: string; message: string };
-	} = await res.json();
+		}
+	);
+	console.log(data);
+
 	if (!data.data) {
 		state.sent = true;
 		state.success = false;
-		if (data.errors) alert(data.errors.title + " " + data.errors.message);
+		if (data.error) alert(data.error.title + " " + data.error.message);
 	} else {
 		alert("Data sent successfully");
 		state.sent = true;
@@ -128,6 +127,9 @@ function update(e = eKeyDefault) {
 		<template v-else>
 			<UAlert color="red" title="Error, Check console" />
 		</template>
+		<div class="flex justify-center my-5">
+			<UButton @click="navigateTo('/')">Navigate to home</UButton>
+		</div>
 	</template>
 	<h1>Create Page</h1>
 	<form @submit.prevent="sendDataBtn">

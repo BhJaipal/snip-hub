@@ -24,15 +24,17 @@ let query = `
 		langNames
 	}
 `;
+const nuxtApp = useNuxtApp();
 
 let data = ref<string[] | null>([]);
 let loading = ref(false);
 let error = ref<null | { message: string; status: number }>(null);
 
 onMounted(async function () {
-	({ data: data.value, error: error.value } = await useGQLFetch<{
-		langNames: string[];
-	}>("http://localhost:3300/", query));
+	({ data: data.value, error: error.value } = await useGQLFetch<string[]>(
+		"http://localhost:3300/",
+		query
+	));
 	console.log(data.value, loading.value);
 });
 </script>

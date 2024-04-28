@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { counter } from "../../composables/states";
+import { navigateTo } from "#imports";
 watch(counter, () => {
 	console.log(counter.value);
 });
@@ -64,6 +65,13 @@ console.log(website.data);
 							varient="link"
 							class="flex flex-row justify-center w-1/2"
 							color="white"
+							@click="
+								navigateTo(
+									'https://www.npmjs.com/package/' +
+										website.data.npm,
+									{ external: true }
+								)
+							"
 						>
 							<div>
 								<div>NPM:</div>
@@ -82,6 +90,11 @@ console.log(website.data);
 						<UButton
 							class="flex justify-center w-1/2"
 							color="white"
+							@click="
+								navigateTo(website.data.github, {
+									external: true
+								})
+							"
 						>
 							<ULink
 								:to="website.data.github"

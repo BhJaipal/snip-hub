@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import hljs from "highlight.js";
-import "highlight.js/styles/vs2015.css";
+import "highlight.js/styles/atom-one-dark.css";
 import { definePageMeta } from "#imports";
 import { useGQLFetch } from "~/plugins/gql-fetch";
 
@@ -16,6 +16,7 @@ let query = `#graphql
 	}
 }
 `;
+const nuxtApp = useNuxtApp();
 
 type _langList = Array<{
 	langName: string;
@@ -44,10 +45,8 @@ onMounted(async function () {
 		event.key == "Enter" && goto();
 	});
 
-	({ data: LangList.value, error: error.value } = await useGQLFetch<{
-		langList: _langList;
-	}>("http://localhost:3300/", query));
-	console.log(LangList.value);
+	({ data: LangList.value, error: error.value } =
+		await useGQLFetch<_langList>("http://localhost:3300/", query));
 
 	setTimeout(function () {
 		hljs.highlightAll();
@@ -98,20 +97,72 @@ onMounted(async function () {
 					No data
 				</div>
 			</div>
-			<div v-else v-for="(langBox, index) in LangList" :key="index">
-				<h2 class="text-3xl text-center">
-					{{
-						langBox.langName.charAt(0).toUpperCase() +
-						langBox.langName.slice(1)
-					}}
-				</h2>
-				<Highlighter
-					v-for="(codeBox, index2) in langBox.codeBoxes"
-					:key="index2"
-					v-bind:langName="langBox.langName"
-					v-bind:snipTitle="codeBox.title"
-					v-bind:snipCode="codeBox.code"
-				/>
+			<div v-else>
+				<UAccordion :items="LangList">
+					<template #default="{ item, index, open }">
+						<UButton
+							color="blue"
+							variant="ghost"
+							class="border-t border-gray-700 mx-[3%]"
+							:ui="{
+								rounded: 'rounded-none',
+								padding: { sm: 'p-3' }
+							}"
+						>
+							<span class="truncate"
+								>{{ index + 1 }}.
+								{{
+									useNuxtApp().$langNamesPrint(item.langName)
+								}}</span
+							>
+
+							<template #trailing>
+								<UIcon
+									name="i-heroicons-chevron-right-20-solid"
+									class="w-5 h-5 ms-auto transform transition-transform duration-200"
+									:class="[open && 'rotate-90']"
+								/>
+							</template>
+						</UButton>
+					</template>
+					<template #item="{ item: langBox }">
+						<div class="mx-[3%]">
+							<UAccordion :items="langBox.codeBoxes">
+								<template #default="{ item, index, open }">
+									<UButton
+										color="green"
+										variant="ghost"
+										class="border border-gray-700 mx-[3%]"
+										:ui="{
+											rounded: 'rounded-none',
+											padding: { sm: 'p-3' }
+										}"
+									>
+										<span class="truncate"
+											>{{ index + 1 }}.
+											{{ item.title }}</span
+										>
+
+										<template #trailing>
+											<UIcon
+												name="i-heroicons-chevron-right-20-solid"
+												class="w-5 h-5 ms-auto transform transition-transform duration-200"
+												:class="[open && 'rotate-90']"
+											/>
+										</template>
+									</UButton>
+								</template>
+								<template #item="{ item }">
+									<Highlighter
+										:langName="langBox.langName"
+										:snipTitle="item.title"
+										:snipCode="item.code"
+									/>
+								</template>
+							</UAccordion>
+						</div>
+					</template>
+				</UAccordion>
 			</div>
 		</div>
 	</div>
