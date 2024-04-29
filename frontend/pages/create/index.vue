@@ -1,5 +1,6 @@
 <script lang="ts">
 import highlightjsVue from "@highlightjs/vue-plugin";
+import type { GQLFetch } from "types";
 
 export default {
 	components: {

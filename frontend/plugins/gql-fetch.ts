@@ -1,9 +1,6 @@
 import { ref } from "vue";
+import type { GQLFetch } from "types";
 
-type GQLFetch<T extends Record<string, any> = Record<string, any>> = Promise<{
-	data: T | null;
-	error: { status: number; message: string } | null;
-}>;
 export async function useGQLFetch<
 	T extends Record<string, any> = Record<string, any>
 >(

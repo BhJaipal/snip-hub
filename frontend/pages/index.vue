@@ -3,27 +3,8 @@ import hljs from "highlight.js";
 import "highlight.js/styles/atom-one-dark.css";
 import { definePageMeta } from "#imports";
 import { useGQLFetch } from "~/plugins/gql-fetch";
-import type { NavigationTree } from "types";
-let links: NavigationTree[] = [
-	{
-		label: "Pro",
-		to: "/pro",
-		children: [
-			{
-				label: "Routes",
-				to: "/",
-				children: [
-					{ label: "Home", to: "/" },
-					{ label: "About", to: "/about" },
-					{ label: "Create", to: "/create" },
-					{ label: "Form", to: "/form" },
-					{ label: "Test page", to: "/test" },
-					{ label: "Test 2 page", to: "/test2" }
-				]
-			}
-		]
-	}
-];
+import type { GQLFetch } from "types";
+
 let search = ref("");
 let query = `#graphql
 {
@@ -65,7 +46,10 @@ onMounted(async function () {
 	});
 
 	({ data: LangList.value, error: error.value } =
-		await useGQLFetch<_langList>("http://localhost:3300/", query));
+		await useGQLFetch<_langList>(
+			"http://localhost:3300/",
+			query
+		)) as GQLFetch<_langList>;
 
 	setTimeout(function () {
 		hljs.highlightAll();
@@ -184,7 +168,6 @@ onMounted(async function () {
 			</div>
 		</div>
 	</div>
-	<NavigationTree :links="links" :default-open="true"></NavigationTree>
 </template>
 <style scoped>
 @import url("./../app.css");

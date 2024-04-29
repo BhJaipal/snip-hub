@@ -2,6 +2,7 @@
 import useMyState from "../../composables/states";
 import { useGQLFetch } from "~/plugins/gql-fetch";
 import UAccordian from "../../node_modules/@nuxt/ui/dist/runtime/components/elements/Accordion.vue";
+import type { GQLFetch } from "types";
 const isSlideOverOpen = ref(false);
 const items: Array<{
 	label: string;
@@ -34,7 +35,7 @@ onMounted(async function () {
 	({ data: data.value, error: error.value } = await useGQLFetch<string[]>(
 		"http://localhost:3300/",
 		query
-	));
+	)) as GQLFetch<string[]>;
 	console.log(data.value, loading.value);
 });
 </script>
