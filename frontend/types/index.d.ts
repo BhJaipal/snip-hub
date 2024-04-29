@@ -13,7 +13,7 @@ export interface Link extends ULink {
 	label: string;
 	class?: string;
 	click?: Function;
-	to: string;
+	to?: string;
 }
 
 export interface NavigationLink extends Link {
