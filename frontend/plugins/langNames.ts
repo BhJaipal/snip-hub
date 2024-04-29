@@ -6,7 +6,8 @@ export const langNamesPrint = (lang: string) => {
 		javascript: "JavaScript",
 		typescript: "TYpeScript",
 		xml: "XML/HTML",
-		java: "Java"
+		java: "Java",
+		css: "CSS"
 	};
 	return langs[lang]
 		? langs[lang]

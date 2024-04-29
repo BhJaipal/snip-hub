@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { counter } from "../../composables/states";
+import useMyState from "../../composables/states";
 import { navigateTo } from "#imports";
+let counter = useMyState();
 watch(counter, () => {
 	console.log(counter.value);
 });

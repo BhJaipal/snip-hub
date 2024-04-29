@@ -1,1 +1,3 @@
-export const counter = useState("counter", () => 0);
+export default function useMyState() {
+	return useState("counter", () => 0);
+}

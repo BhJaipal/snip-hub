@@ -18,6 +18,7 @@ export default defineNuxtConfig({
 		"#imports": "./.nuxt/imports.d.ts",
 		composables: "./composables",
 		"~~": "./assets",
-		"~/plugins": "./plugins"
+		"~/plugins": "./plugins",
+		"#ui/types": "./node_modules/@nuxt/ui/dist/runtime/types/index.d.ts"
 	}
 });

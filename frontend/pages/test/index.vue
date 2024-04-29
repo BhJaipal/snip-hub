@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import { counter } from "../../composables/states";
-import { Icon } from "#components";
+import useMyState from "../../composables/states";
 import { useGQLFetch } from "~/plugins/gql-fetch";
 import UAccordian from "../../node_modules/@nuxt/ui/dist/runtime/components/elements/Accordion.vue";
+const isSlideOverOpen = ref(false);
 const items: Array<{
 	label: string;
 	icon: string;
@@ -18,13 +18,13 @@ const items: Array<{
 			"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed neque elit, tristique placerat feugiat ac, facilisis vitae arcu. Proin eget egestas augue. Praesent ut sem nec arcu pellentesque aliquet. Duis dapibus diam vel metus tempus vulputate."
 	}
 ];
+let counter = useMyState();
 
 let query = `
 	{
 		langNames
 	}
 `;
-const nuxtApp = useNuxtApp();
 
 let data = ref<string[] | null>([]);
 let loading = ref(false);
@@ -40,12 +40,18 @@ onMounted(async function () {
 </script>
 
 <template>
-	<Icon name="material-symbols:done" />
-	<Icon name="material-symbols:content-copy-outline-sharp" />
-	<Icon name="material-symbols:search-rounded" />
+	<div class="grid grid-cols-3 justify-items-center my-3">
+		<Icon name="material-symbols:done" />
+		<Icon name="material-symbols:content-copy-outline-sharp" />
+		<Icon name="material-symbols:search-rounded" />
+	</div>
 
-	<UAccordian :items="items" />
-	<UBadge variant="outline">Counter: {{ counter }}</UBadge>
+	<div class="flex justify-center">
+		<UAccordian :items="items" class="w-1/2" />
+	</div>
+	<div class="flex justify-center mb-5">
+		<UBadge variant="outline">Counter: {{ counter }}</UBadge>
+	</div>
 
 	<template v-if="error == null && data?.length == 0">
 		<div class="loading"></div>
@@ -54,12 +60,48 @@ onMounted(async function () {
 		{{ error }}
 	</template>
 	<template v-else>
-		<h1>LangNames</h1>
-		<ul>
-			<li v-for="(lang, index) in data" :key="index">
-				{{ lang }}
-			</li>
-		</ul>
+		<div class="flex justify-center">
+			<UButton label="Open" @click="isSlideOverOpen = true" />
+
+			<USlideover v-model="isSlideOverOpen">
+				<UCard
+					class="flex flex-col flex-1"
+					:ui="{
+						body: { base: 'flex-1' },
+						ring: '',
+						divide: 'divide-y divide-gray-100 dark:divide-gray-800'
+					}"
+				>
+					<template #header>
+						<Placeholder class="h-8">
+							<UButton
+								label="Lang Names"
+								class="w-full text-center"
+							/>
+						</Placeholder>
+					</template>
+
+					<Placeholder class="h-full">
+						<ul>
+							<li v-for="(lang, index) in data" :key="index">
+								<UBadge
+									size="lg"
+									color="green"
+									variant="outline"
+									class="ml-1 w-full my-2"
+								>
+									{{ lang }}
+								</UBadge>
+							</li>
+						</ul>
+					</Placeholder>
+
+					<template #footer>
+						<Placeholder class="h-8" />
+					</template>
+				</UCard>
+			</USlideover>
+		</div>
 	</template>
 </template>
 
