@@ -1,75 +1,47 @@
 <template>
-	<nav class="bg-[#181818] inset-0 h-20 w-full border-b-2 border-white">
-		<div
-			class="bg-[#181818] font-bold h-18 pt-5 flex py-2 text-white float-left text-2xl pl-2.5"
-		>
-			Navbar
-		</div>
-		<div class="flex justify-end py-3 bg-[#181818]">
-			<button
-				id="menu"
-				class="w-[50px] bg-black text-white font-bold flex-row flex-nowrap rounded-xl mr-5 border-2 h-[45px] mt-[5px]"
-				@click="toggle"
+	<UAccordion :items="router">
+		<template #default="{ item, open }">
+			<UButton
+				color="sky"
+				variant="solid"
+				class="border-t border-gray-700 w-full"
 			>
-				<i class="material-icons">menu</i>
-			</button>
-		</div>
-		<div class="flex flex-col w-full h-0 navbar-list">
-			<button
-				v-for="item in navigation"
-				v-bind:key="item.name"
-				class="hidden h-0 font-bold text-white cursor-pointer rounded-xl bg-slate-900 hover:bg-indigo-950 decoration-transparent navbar-nav"
+				<span class="truncate">{{ item.label }}</span>
+				<template #trailing>
+					<UIcon
+						name="i-heroicons-chevron-right-20-solid"
+						class="w-5 h-5 ms-auto transform transition-transform duration-200"
+						:class="[open && 'rotate-90']"
+					/>
+				</template>
+			</UButton>
+		</template>
+		<template #navbar>
+			<div
+				class="flex justify-between px-10 bg-sky-700 -mt-1 rounded-b-md py-1"
 			>
-				<NuxtLink class="underline-none" v-bind:to="item.href">
-					{{ item.name }}
-				</NuxtLink>
-			</button>
-		</div>
-	</nav>
+				<template v-for="(item, i) in navigation" :key="i">
+					<UButton
+						color="blue"
+						variant="soft"
+						:to="item.to"
+						:label="item.label"
+						class="w-fit px-5"
+					></UButton>
+				</template>
+			</div>
+		</template>
+	</UAccordion>
 </template>
 
 <script lang="ts" setup>
-let navigation = ref<{ name: string; href: string }[]>([
-	{ name: "Home", href: "/" },
-	{ name: "About", href: "/about" },
-	{ name: "Create", href: "/create" },
-	{ name: "Form", href: "/form" },
-	{ name: "Test page", href: "/test" },
-	{ name: "Test 2 page", href: "/test2" }
+let navigation = ref<{ label: string; to: string }[]>([
+	{ label: "Home", to: "/" },
+	{ label: "About", to: "/about" },
+	{ label: "Create", to: "/create" },
+	{ label: "Form", to: "/form" },
+	{ label: "Test page", to: "/test" },
+	{ label: "Test 2 page", to: "/test2" }
 ]);
-
-function toggle() {
-	if (
-		document
-			.getElementsByClassName("navbar-list")[0]
-			.classList.contains("h-0")
-	) {
-		document
-			.getElementsByClassName("navbar-list")[0]
-			.classList.replace("h-0", "h-{165px}");
-		document.querySelectorAll("button.navbar-nav").forEach((node) => {
-			node.classList.replace("h-0", "h-[55px]");
-			node.classList.replace("hidden", "block");
-		});
-		document
-			.getElementsByTagName("nav")[0]
-			.classList.replace("h-20", "h-50");
-	} else {
-		document
-			.getElementsByClassName("navbar-list")[0]
-			.classList.replace("h-{165px}", "h-0");
-		document.querySelectorAll("button.navbar-nav").forEach((node) => {
-			node.classList.replace("h-[55px]", "h-0");
-			node.classList.replace("block", "hidden");
-		});
-		document
-			.getElementsByTagName("nav")[0]
-			.classList.replace("h-50", "h-20");
-	}
-}
+let router = [{ label: "Snip Hub", slot: "navbar" }];
 </script>
-<style scoped>
-nav > div:nth-child(2) > button:nth-child(1) {
-	@apply bg-indigo-950;
-}
-</style>
