@@ -101,7 +101,7 @@ onMounted(async function () {
 			</div>
 			<div v-else>
 				<UAccordion :items="LangList">
-					<template #default="{ item, index, open }">
+					<template #default="{ item, open }">
 						<UButton
 							color="blue"
 							variant="ghost"
@@ -111,12 +111,11 @@ onMounted(async function () {
 								padding: { sm: 'p-3' }
 							}"
 						>
-							<span class="truncate"
-								>{{ index + 1 }}.
+							<span class="truncate">
 								{{
 									useNuxtApp().$langNamesPrint(item.langName)
-								}}</span
-							>
+								}}
+							</span>
 
 							<template #trailing>
 								<UIcon

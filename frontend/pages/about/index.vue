@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { definePageMeta } from "#imports";
-import tsLogo from "@/assets/ts-logo.png";
-import vite from "@/assets/vite.png";
-import vue from "@/assets/vue.png";
+import tsLogo from "~/assets/ts-logo.png";
+import vite from "~/assets/vite.png";
+import vue from "~/assets/vue.png";
 
 definePageMeta({
 	layout: "default"
@@ -39,7 +39,7 @@ let homeList = ref<pageModule[]>([
 		img: vite
 	},
 	{
-		name: "tailwindcss",
+		name: "TailwindCSS",
 		link: "tailwindcss.com",
 		img: "https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
 	},
@@ -62,56 +62,30 @@ let navigation = ref<{ name: string; href: string; active: boolean }[]>([
 
 		<h2>Modules used for this project</h2>
 
-		<ul class="module-list">
-			<li v-for="(module, index) in homeList" :key="index" class="item">
-				<a
-					v-bind:href="`https://${module.link}`"
-					target="_blank"
-					class="goto-sites"
-				>
-					<div class="my-5 module-div">
-						<div class="img">
-							<img class="logo" v-bind:src="module.img" />
-						</div>
-						<div class="name">
-							<h3>{{ module.name }}</h3>
-						</div>
-					</div>
-				</a>
+		<ul>
+			<li
+				v-for="(module, index) in homeList"
+				:key="index"
+				class="flex justify-center my-2.5"
+			>
+				<ULink :href="module.link" target="_blank">
+					<UCard :title="module.name">
+						<template #header>
+							<UButtonGroup>
+								<NuxtImg :src="module.img" class="w-10" />
+								<UBadge
+									class="ml-10"
+									color="yellow"
+									variant="outline"
+									size="lg"
+									>Name: {{ module.name }}</UBadge
+								>
+							</UButtonGroup>
+						</template>
+					</UCard>
+				</ULink>
 			</li>
 		</ul>
 	</div>
 </template>
 
-<style scoped>
-.item {
-	min-height: 5vh;
-	margin-left: 40vw;
-	text-align: right;
-}
-.item > a > .module-div > .name {
-	text-align: center;
-	width: 1vw;
-}
-.img {
-	width: auto;
-	height: 5vh;
-	float: right;
-	margin-right: 46vw;
-}
-.item > a > .module-div > .img > .logo {
-	box-sizing: border-box;
-	width: auto;
-	height: 5vh;
-}
-.item > a > .module-div > img[src="/"] {
-	display: none;
-}
-ul.module-list {
-	list-style-type: none;
-}
-.item > a {
-	text-decoration: none;
-	color: inherit;
-}
-</style>

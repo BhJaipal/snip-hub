@@ -9,9 +9,12 @@
 				<span class="truncate">{{ item.label }}</span>
 				<template #trailing>
 					<UIcon
-						name="i-heroicons-chevron-right-20-solid"
+						:name="
+							open
+								? 'i-heroicons-x-mark-solid'
+								: 'i-heroicons-bars-3-20-solid'
+						"
 						class="w-5 h-5 ms-auto transform transition-transform duration-200"
-						:class="[open && 'rotate-90']"
 					/>
 				</template>
 			</UButton>
