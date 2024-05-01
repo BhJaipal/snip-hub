@@ -1,9 +1,28 @@
 <script setup lang="ts">
 import { definePageMeta } from "#imports";
-import tsLogo from "~/assets/ts-logo.png";
-import vite from "~/assets/vite.png";
+import highlightjs from "~/assets/highlightjs.png";
 import vue from "~/assets/vue.png";
+import nitro from "~/assets/nitro.svg";
+import tsLogo from "~/assets/ts-logo.png";
+import tailwind from "~/assets/tailwind.svg";
+import nuxt from "/favicon.ico";
 
+let logos = [highlightjs, vue, tsLogo, tailwind, nuxt, nitro];
+interface pageModule {
+	name: string;
+	link: string;
+	img: string;
+	description: string;
+	title: string;
+}
+let homeList = ref<pageModule[]>([]);
+useAsyncData(async () => {
+	let data = await $fetch<Omit<pageModule, "img">[]>("/api/about");
+
+	data.forEach((module, index) => {
+		homeList.value.push({ ...module, img: logos[index] });
+	});
+});
 definePageMeta({
 	layout: "default"
 });
@@ -11,81 +30,62 @@ definePageMeta({
 useHead({
 	title: "About Page"
 });
-interface pageModule {
-	name: string;
-	link: string;
-	img: string;
-}
-
-let homeList = ref<pageModule[]>([
-	{
-		name: "Highlight.js",
-		link: "highlightjs.org",
-		img: "https://highlightjs.org/icon.png"
-	},
-	{
-		name: "Vue",
-		link: "vuejs.org",
-		img: vue
-	},
-	{
-		name: "TypeScript",
-		link: "typescriptlang.org",
-		img: tsLogo
-	},
-	{
-		name: "Vite",
-		link: "vitejs.dev",
-		img: vite
-	},
-	{
-		name: "TailwindCSS",
-		link: "tailwindcss.com",
-		img: "https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-	},
-	{
-		name: "NuxtJS",
-		link: "nuxt.com",
-		img: "/favicon.ico"
-	}
-]);
-let navigation = ref<{ name: string; href: string; active: boolean }[]>([
-	{ name: "Home", href: "/", active: false },
-	{ name: "About", href: "/about", active: true },
-	{ name: "Create", href: "/create", active: false }
-]);
 </script>
 
 <template>
 	<div class="text-center">
-		<h1>About Page</h1>
+		<page-header
+			title="About Page"
+			description="Modules used for this project"
+		/>
 
-		<h2>Modules used for this project</h2>
-
-		<ul>
+		<ul class="grid grid-cols-2 justify-items-center">
 			<li
 				v-for="(module, index) in homeList"
 				:key="index"
-				class="flex justify-center my-2.5"
+				class="my-2.5 max-w-[50%] flex justify-center"
 			>
-				<ULink :href="module.link" target="_blank">
-					<UCard :title="module.name">
-						<template #header>
-							<UButtonGroup>
-								<NuxtImg :src="module.img" class="w-10" />
-								<UBadge
-									class="ml-10"
-									color="yellow"
-									variant="outline"
-									size="lg"
-									>Name: {{ module.name }}</UBadge
-								>
-							</UButtonGroup>
-						</template>
-					</UCard>
-				</ULink>
+				<UCard :title="module.name">
+					<template #header>
+						<UButtonGroup>
+							<img :src="module.img" class="w-10 mr-5" />
+							<UBadge
+								class="ml-10"
+								color="yellow"
+								variant="outline"
+								size="lg"
+								>Name: {{ module.name }}</UBadge
+							>
+						</UButtonGroup>
+					</template>
+					<p class="text-left text-sm text-slate-400 break-words">
+						<span class="text-green-500 font-bold"> Title: </span>
+						{{ module.title }} <br />
+						<span class="text-green-500 font-bold">
+							Description:
+						</span>
+						{{ module.description ?? "" }}<br />
+						<span class="text-sky-500 font-bold"> Website:</span>
+						<UButton
+							variant="link"
+							:to="'https://' + module.link"
+							target="_blank"
+							color="blue"
+							>{{ module.link }}</UButton
+						>
+					</p>
+				</UCard>
 			</li>
 		</ul>
+		<hr class="border-gray-700" />
+		<page-header description="About Me" />
+		<div class="flex justify-center mt-5">
+			<UCard class="w-1/4">
+				<template #header>
+					<p class="text-blue-500">Name: Jaipal</p>
+				</template>
+			</UCard>
+		</div>
 	</div>
 </template>
 
