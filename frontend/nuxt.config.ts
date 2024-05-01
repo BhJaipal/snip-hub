@@ -14,11 +14,9 @@ export default defineNuxtConfig({
 	],
 	alias: {
 		server: "./server",
-		"#components": "./.nuxt/components.d.ts",
-		"#imports": "./.nuxt/imports.d.ts",
 		composables: "./composables",
+		"#components": "./.nuxt/components.d.ts",
 		"~~": "./assets",
-		"~/plugins": "./plugins",
-		"#ui/types": "./node_modules/@nuxt/ui/dist/runtime/types/index.d.ts"
+		"~/plugins": "./plugins"
 	}
 });

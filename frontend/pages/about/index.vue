@@ -80,6 +80,21 @@ useHead({
 		<hr class="border-gray-700" />
 		<page-header description="About Me" />
 		<div class="flex justify-center mt-5">
+			<v-card
+				title="About me"
+				subtitle="About me"
+				prepend-icon="i-heroicons-rocket-launch-solid"
+				append-icon="i-devicon-githubcodespaces"
+			>
+				<template #body>
+					<p class="text-blue-500">Name: Jaipal</p>
+				</template>
+				<template #actions>
+					<UButton>Click</UButton>
+				</template>
+			</v-card>
+		</div>
+		<div class="flex justify-center mt-5">
 			<UCard class="w-1/4">
 				<template #header>
 					<p class="text-blue-500">Name: Jaipal</p>

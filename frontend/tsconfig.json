@@ -8,7 +8,7 @@
 			"#imports": ["./.nuxt/imports.d.ts"],
 			"#components": ["./.nuxt/components.d.ts"],
 			"#app/nuxt": ["./node_modules/nuxt/dist/app/index.d.ts"],
-			"~/plugins": ["./plugins"]
+			"~/plugins/": ["./plugins/"]
 		},
 		"lib": ["DOM", "ESNext"]
 	}

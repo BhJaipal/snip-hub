@@ -111,6 +111,10 @@ onMounted(async function () {
 								padding: { sm: 'p-3' }
 							}"
 						>
+							<Icon
+								:name="useNuxtApp().$icons(item.langName)"
+								:size="20"
+							/>
 							<span class="truncate">
 								{{
 									useNuxtApp().$langNamesPrint(item.langName)
