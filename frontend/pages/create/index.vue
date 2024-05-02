@@ -11,6 +11,7 @@ export default {
 import hljs from "highlight.js";
 import "highlight.js/styles/vs2015.css";
 import { useGQLFetch } from "~/plugins/gql-fetch";
+import { icons } from "~/plugins/langNames";
 
 let langLabels = ref<Record<string, string>>({});
 useAsyncData(async () => {
@@ -37,16 +38,19 @@ let eKeyDefault = new KeyboardEvent("keydown", { key: "" });
 const state = reactive({ sent: false, success: false });
 
 let inputTitle = ref("");
-let langSelect = ref("");
+let langSelect = ref("typescript");
 let defaultSnip = ref(`let name: string = "Jaipal";`);
 
 let snipAccordian = ref([
 	{
-		icon: useNuxtApp().$icons(langSelect.value),
+		icon: icons(langSelect.value),
 		label: langSelect.value,
-		slot: "highlighter"
+		defaultOpen: true
 	}
 ]);
+watch(snipAccordian, () => {
+	console.log(snipAccordian.value);
+});
 async function sendDataBtn() {
 	let data: {
 		data: { id: string; message: string } | null;
@@ -184,10 +188,16 @@ function update(e = eKeyDefault) {
 			required
 		></textarea>
 		<div class="mt-5 text-black">
-			<UAccordion :items="snipAccordian">
-				<template #highlighter>
+			<UAccordion :items="snipAccordian" color="blue" size="xl">
+				<template #default>
+					<UButton color="indigo">
+						<Icon :name="icons(langSelect)" />
+						{{ langLabels[langSelect] }}
+					</UButton>
+				</template>
+				<template #item>
 					<div
-						class="flex flex-row float-left mb-0 bg-gray-200 overflow-none circle-box"
+						class="flex flex-row float-left bg-gray-200 overflow-none circle-box"
 					>
 						<div class="mt-2 bg-red-500 rounded-full circle"></div>
 						<div
@@ -223,7 +233,7 @@ function update(e = eKeyDefault) {
 		margin-top: -20px;
 	}
 	pre {
-		@apply pt-[5vh] mt-0 text-lg pl-1 h-36 w-[90vw] ml-[5vw] mr-[5vw] overflow-scroll;
+		@apply pt-[5vh] text-lg pl-1 h-36 w-[90vw] ml-[5vw] mr-[5vw] overflow-scroll -mt-5;
 	}
 	.code-title {
 		@apply ml-[5vw] w-[90vw] h-[5vh] my-[5vh] text-center;
@@ -265,7 +275,7 @@ function update(e = eKeyDefault) {
 		margin-top: -20px;
 	}
 	pre {
-		@apply pt-[5vh] mt-0 text-lg pl-1 h-36 w-[90vw] ml-[5vw] mr-[5vw] overflow-scroll;
+		@apply -mt-5 text-lg pl-1 h-36 w-[90vw] ml-[5vw] mr-[5vw] overflow-scroll;
 	}
 	.code-title {
 		@apply ml-[5vw] w-[90vw] h-[5vh] my-[5vh] text-center;
@@ -306,7 +316,7 @@ function update(e = eKeyDefault) {
 		margin-top: -20px;
 	}
 	pre {
-		@apply pt-[5vh] mt-0 text-lg pl-1 h-36 w-[90vw] ml-[5vw] mr-[5vw] overflow-scroll;
+		@apply -mt-5 text-lg pl-1 h-36 w-[90vw] ml-[5vw] mr-[5vw] overflow-scroll;
 	}
 	.code-title {
 		@apply ml-[5vw] w-[90vw] h-[5vh] my-[5vh] text-center text-lg;
@@ -347,7 +357,7 @@ function update(e = eKeyDefault) {
 		margin-top: -20px;
 	}
 	pre {
-		@apply pt-[5vh] mt-0 text-lg pl-1 h-36 w-[90vw] ml-[5vw] mr-[5vw] overflow-scroll;
+		@apply -mt-5 text-lg pl-1 h-36 w-[90vw] ml-[5vw] mr-[5vw] overflow-scroll;
 	}
 	.code-title {
 		@apply ml-[5vw] w-[90vw] h-[5vh] my-[5vh] text-center;
@@ -391,7 +401,7 @@ function update(e = eKeyDefault) {
 		@apply mt-5 mb-0 text-xl;
 	}
 	pre {
-		@apply pt-[5vh] mt-0 text-lg pl-1 h-80 w-[90vw];
+		@apply -mt-5 text-lg pl-1 h-80 w-[90vw];
 	}
 	code {
 		@apply text-lg;
@@ -438,7 +448,7 @@ function update(e = eKeyDefault) {
 		@apply mt-5 mb-0 text-xl ml-[40vw] mr-0;
 	}
 	pre {
-		@apply pt-[3vh] mt-0 pl-1 h-80 w-[90vw] text-base;
+		@apply pl-1 h-80 w-[90vw] text-base -mt-5;
 	}
 	code {
 		@apply h-80 w-[90vw] text-base;
