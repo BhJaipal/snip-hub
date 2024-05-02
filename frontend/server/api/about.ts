@@ -48,6 +48,8 @@ let homeList: pageModule[] = [
 			"Create web servers with everything you need and deploy them wherever you prefer."
 	}
 ];
+// How to use Nitro server APIs in muxt project?
+// server/api/file.ts
 export default defineEventHandler(() => {
-	return homeList;
+	return homeList; // your data here
 });

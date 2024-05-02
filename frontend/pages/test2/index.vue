@@ -1,10 +1,13 @@
 <script setup lang="ts">
-import useMyState from "../../composables/states";
 import { navigateTo } from "#imports";
+// In pages/ or components/ or layouts/
+// How to use composables and get state?
+import useMyState from "../../composables/states";
 let counter = useMyState();
 watch(counter, () => {
 	console.log(counter.value);
 });
+// How to use stores?
 const website = useWebsiteStore();
 await callOnce(website.fetch);
 console.log(website.data);

@@ -1,4 +1,7 @@
+// How to use stores in Nuxt
+// First install pinia module and import defineStore
 import { defineStore } from "pinia";
+// How to create a store with this?
 
 type Infos = {
 	name: string;
@@ -7,7 +10,7 @@ type Infos = {
 	npm: string;
 	website: string;
 };
-
+// Example:
 export const useWebsiteStore = defineStore("websiteStore", {
 	state: () => ({
 		data: {

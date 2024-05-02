@@ -14,7 +14,13 @@ import { useGQLFetch } from "~/plugins/gql-fetch";
 import { icons } from "~/plugins/langNames";
 
 let langLabels = ref<Record<string, string>>({});
+
+// How to use them?
+// In pages/ or components/ or layouts/
+// Nuxt Custom plugin use
+// Nitro server api use
 useAsyncData(async () => {
+	// $fetch<data-type>("/api/file-path");
 	let data = await $fetch<Record<string, string>>("/api/langLabels");
 	langLabels.value = data;
 });
@@ -45,6 +51,12 @@ let snipAccordian = ref([
 	{
 		icon: icons(langSelect.value),
 		label: langSelect.value,
+		defaultOpen: true
+	}
+]);
+let snipAccordian2 = ref([
+	{
+		label: inputTitle.value,
 		defaultOpen: true
 	}
 ]);
@@ -188,29 +200,48 @@ function update(e = eKeyDefault) {
 			required
 		></textarea>
 		<div class="mt-5 text-black">
-			<UAccordion :items="snipAccordian" color="blue" size="xl">
+			<UAccordion :items="snipAccordian" size="xl">
 				<template #default>
-					<UButton color="indigo">
+					<UButton color="emerald">
 						<Icon :name="icons(langSelect)" />
 						{{ langLabels[langSelect] }}
 					</UButton>
 				</template>
 				<template #item>
-					<div
-						class="flex flex-row float-left bg-gray-200 overflow-none circle-box"
-					>
-						<div class="mt-2 bg-red-500 rounded-full circle"></div>
-						<div
-							class="mt-2 bg-yellow-500 rounded-full circle"
-						></div>
-						<div
-							class="mt-2 bg-green-500 rounded-full circle"
-						></div>
-						<div class="overflow-y-scroll snip-title">
-							{{ inputTitle }}
-						</div>
-					</div>
-					<highlightjs :code="defaultSnip" :language="langSelect" />
+					<UAccordion :items="snipAccordian2" size="xl">
+						<template #default>
+							<UButton
+								:label="
+									inputTitle == '' ? 'Untitled' : inputTitle
+								"
+								color="green"
+								class="mx-[2.5%]"
+							/>
+						</template>
+						<template #item>
+							<div v-highlight class="highlighter px-[5%]">
+								<div class="w-full text-black">
+									<div
+										class="flex flex-row w-full mb-0 bg-gray-200 overflow-none circle-box"
+									>
+										<div
+											class="mt-2 bg-red-500 rounded-full circle"
+										></div>
+										<div
+											class="mt-2 bg-yellow-500 rounded-full circle"
+										></div>
+										<div
+											class="mt-2 bg-green-500 rounded-full circle"
+										></div>
+									</div>
+								</div>
+								<highlightjs
+									:code="defaultSnip"
+									:language="langSelect"
+								/>
+							</div>
+						</template>
+					</UAccordion>
 				</template>
 			</UAccordion>
 		</div>
@@ -229,17 +260,24 @@ function update(e = eKeyDefault) {
 	h1 {
 		@apply text-center;
 	}
-	code {
-		margin-top: -20px;
+	.highlighter {
+		@apply text-left flex flex-col justify-items-center;
 	}
-	pre {
-		@apply pt-[5vh] text-lg pl-1 h-36 w-[90vw] ml-[5vw] mr-[5vw] overflow-scroll -mt-5;
+
+	.highlighter > pre {
+		@apply w-full overflow-scroll text-xs pt-0 h-min;
+	}
+
+	.highlighter > pre > code {
+		font-size: 10px;
+		line-height: 12px;
+		@apply bg-slate-800 text-xs pt-0 mt-0 h-full pb-2 pl-2;
 	}
 	.code-title {
 		@apply ml-[5vw] w-[90vw] h-[5vh] my-[5vh] text-center;
 	}
 	.circle-box {
-		@apply w-[90vw] h-4 ml-[5vw];
+		@apply w-[90vw] h-4;
 	}
 	#code-input {
 		font-size: 15px;
@@ -271,17 +309,24 @@ function update(e = eKeyDefault) {
 	h1 {
 		@apply text-center;
 	}
-	code {
-		margin-top: -20px;
+	.highlighter {
+		@apply text-left;
 	}
-	pre {
-		@apply -mt-5 text-lg pl-1 h-36 w-[90vw] ml-[5vw] mr-[5vw] overflow-scroll;
+
+	.highlighter > pre {
+		font-size: 10px;
+		line-height: 12px;
+		@apply w-full overflow-scroll h-min;
+	}
+
+	.highlighter > pre > code {
+		@apply bg-slate-900 mt-0 pt-0;
 	}
 	.code-title {
 		@apply ml-[5vw] w-[90vw] h-[5vh] my-[5vh] text-center;
 	}
 	.circle-box {
-		@apply w-[90vw] h-6 ml-[5vw];
+		@apply w-[90vw] h-6;
 	}
 	#code-input {
 		@apply ml-[5vw] w-[90vw] h-[40vh] pl-2 text-white text-sm;
@@ -312,17 +357,22 @@ function update(e = eKeyDefault) {
 	h1 {
 		@apply text-center;
 	}
-	code {
-		margin-top: -20px;
+	.highlighter {
+		@apply text-left;
 	}
-	pre {
-		@apply -mt-5 text-lg pl-1 h-36 w-[90vw] ml-[5vw] mr-[5vw] overflow-scroll;
+
+	.highlighter > pre {
+		@apply text-lg overflow-scroll w-full pt-0 h-min;
+	}
+
+	.highlighter > pre > code {
+		@apply bg-slate-900 pt-0 mt-0;
 	}
 	.code-title {
 		@apply ml-[5vw] w-[90vw] h-[5vh] my-[5vh] text-center text-lg;
 	}
 	.circle-box {
-		@apply w-[90vw] h-6 ml-[5vw];
+		@apply w-[90vw] h-6;
 	}
 	#code-input {
 		@apply ml-[5vw] w-[90vw] h-[40vh] pl-2 text-white;
@@ -353,17 +403,22 @@ function update(e = eKeyDefault) {
 	h1 {
 		@apply text-center;
 	}
-	code {
-		margin-top: -20px;
+	.highlighter {
+		@apply text-left;
 	}
-	pre {
-		@apply -mt-5 text-lg pl-1 h-36 w-[90vw] ml-[5vw] mr-[5vw] overflow-scroll;
+
+	.highlighter > pre {
+		@apply text-lg overflow-scroll w-full h-min pt-0;
+	}
+
+	.highlighter > pre > code {
+		@apply bg-slate-900 mt-0 pt-0;
 	}
 	.code-title {
 		@apply ml-[5vw] w-[90vw] h-[5vh] my-[5vh] text-center;
 	}
 	.circle-box {
-		@apply w-[90vw] h-6 ml-[5vw];
+		@apply w-[90vw] h-6;
 	}
 	#code-input {
 		@apply ml-[5vw] w-[90vw] h-[40vh] pl-2 text-white;
@@ -392,19 +447,21 @@ function update(e = eKeyDefault) {
 }
 @media (min-width: 1100px) {
 	.circle-box {
-		@apply w-[90vw] h-10 ml-[5vw];
-	}
-	.snip-title {
-		@apply text-2xl font-bold pl-[25vw];
+		@apply w-[90vw] h-10;
 	}
 	p {
 		@apply mt-5 mb-0 text-xl;
 	}
-	pre {
-		@apply -mt-5 text-lg pl-1 h-80 w-[90vw];
+	.highlighter {
+		@apply text-left;
 	}
-	code {
-		@apply text-lg;
+
+	.highlighter > pre {
+		@apply text-lg overflow-scroll pt-0 h-min;
+	}
+
+	.highlighter > pre > code {
+		@apply bg-slate-900 mt-0 pt-0;
 	}
 	span {
 		@apply text-lg;
@@ -436,22 +493,24 @@ function update(e = eKeyDefault) {
 		@apply text-base;
 	}
 	.circle-box {
-		@apply w-[90vw] h-10 ml-[5vw];
+		@apply w-[90vw] h-10;
 	}
 	#code-input {
 		@apply ml-[5vw] w-[90vw] h-[40vh] pl-2 text-white text-base;
 	}
-	.snip-title {
-		@apply text-2xl font-bold pl-[35vw];
-	}
 	p {
 		@apply mt-5 mb-0 text-xl ml-[40vw] mr-0;
 	}
-	pre {
-		@apply pl-1 h-80 w-[90vw] text-base -mt-5;
+	.highlighter {
+		@apply text-left;
 	}
-	code {
-		@apply h-80 w-[90vw] text-base;
+
+	.highlighter > pre {
+		@apply text-lg w-full overflow-scroll pt-0 h-min;
+	}
+
+	.highlighter > pre > code {
+		@apply bg-slate-800 text-base mt-0 pt-0 h-full;
 	}
 	span {
 		@apply text-base;
