@@ -1,16 +1,63 @@
+const langLabels: Record<string, string> = {
+	actionscript: "ActionScript",
+	ada: "ADA",
+	armasm: "ARM Assembly",
+	asciidoc: "AsciiDoc",
+	bash: "Bash",
+	batch: "Batch",
+	c: "C",
+	cmake: "CMake",
+	clojure: "Clojure",
+	cpp: "C++",
+	csharp: "C#",
+	css: "CSS",
+	dart: "Dart",
+	django: "Django",
+	dockerfile: "Dockerfile",
+	elixei: "Elixir",
+	elm: "Elm",
+	erlang: "Erlang",
+	fortran: "Fortran",
+	go: "Go",
+	gradle: "Gradle",
+	graphql: "GraphQL",
+	groovy: "Groovy",
+	haml: "HAML",
+	handlebars: "Handlebars",
+	haskell: "Haskell",
+	html: "XML/HTML",
+	http: "HTTP",
+	java: "Java",
+	javascript: "JavaScript",
+	json: "JSON",
+	julia: "Julia",
+	kotlin: "Kotlin",
+	less: "Less",
+	lisp: "Lisp",
+	lua: "Lua",
+	makefile: "Makefile",
+	markdown: "Markdown",
+	nix: "Nix",
+	perl: "Perl",
+	php: "PHP",
+	python: "Python",
+	r: "R",
+	ruby: "Ruby",
+	rust: "Rust",
+	scala: "Scala",
+	scss: "SCSS",
+	sql: "SQL",
+	stylus: "Stylus",
+	swift: "Swift",
+	toml: "TOML",
+	typescript: "TYpeScript",
+	vim: "Vim",
+	xquery: "XQuery",
+	yaml: "YAML"
+};
 export const langNamesPrint = (lang: string) => {
-	let langs: Record<string, string> = {
-		c: "C",
-		cpp: "C++",
-		php: "PHP",
-		javascript: "JavaScript",
-		typescript: "TYpeScript",
-		xml: "XML/HTML",
-		java: "Java",
-		css: "CSS"
-	};
-	return langs[lang]
-		? langs[lang]
+	return langLabels[lang]
+		? langLabels[lang]
 		: lang.charAt(0).toUpperCase() + lang.slice(1);
 };
 export const icons = (lang: string) => {
@@ -40,6 +87,7 @@ export const icons = (lang: string) => {
 		groovy: "vscode-icons:file-type-groovy",
 		haml: "vscode-icons:file-type-haml",
 		handlebars: "vscode-icons:file-type-handlebars",
+		haskell: "vscode-icons-file-type-haskell",
 		html: "vscode-icons-file-type-html",
 		http: "vscode-icons-file-type-http",
 		java: "vscode-icons:file-type-jar",

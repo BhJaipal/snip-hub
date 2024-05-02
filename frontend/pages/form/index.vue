@@ -4,6 +4,10 @@ import type {
 	FormSubmitEvent,
 	FormErrorEvent
 } from "@nuxt/ui/dist/runtime/types";
+useSeoMeta({
+	title: "Form Page"
+});
+
 interface Person {
 	name: string;
 	age: number;

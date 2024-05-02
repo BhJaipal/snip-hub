@@ -8,6 +8,9 @@ watch(counter, () => {
 const website = useWebsiteStore();
 await callOnce(website.fetch);
 console.log(website.data);
+useSeoMeta({
+	title: "Test 2"
+});
 </script>
 
 <template>

@@ -1,6 +1,5 @@
 <script lang="ts">
 import highlightjsVue from "@highlightjs/vue-plugin";
-import type { GQLFetch } from "types";
 
 export default {
 	components: {
@@ -13,6 +12,11 @@ import hljs from "highlight.js";
 import "highlight.js/styles/vs2015.css";
 import { useGQLFetch } from "~/plugins/gql-fetch";
 
+let langLabels = ref<Record<string, string>>({});
+useAsyncData(async () => {
+	let data = await $fetch<Record<string, string>>("/api/langLabels");
+	langLabels.value = data;
+});
 let pairedVales: Record<string, string> = {
 	"{": "}",
 	'"': '"',
@@ -32,15 +36,17 @@ useHead({
 let eKeyDefault = new KeyboardEvent("keydown", { key: "" });
 const state = reactive({ sent: false, success: false });
 
-let hljsLangList = hljs.listLanguages();
-console.log(hljsLangList);
-
-let langNames = ref<Array<string>>(["typescript", "python", "c", "php", "cpp"]);
-
 let inputTitle = ref("");
 let langSelect = ref("");
 let defaultSnip = ref(`let name: string = "Jaipal";`);
 
+let snipAccordian = ref([
+	{
+		icon: useNuxtApp().$icons(langSelect.value),
+		label: langSelect.value,
+		slot: "highlighter"
+	}
+]);
 async function sendDataBtn() {
 	let data: {
 		data: { id: string; message: string } | null;
@@ -146,11 +152,14 @@ function update(e = eKeyDefault) {
 					class="text-white bg-slate-800"
 				>
 					<template
-						v-for="(langname, index) in langNames"
+						v-for="(label, langname, index) in langLabels"
 						:key="index"
 					>
-						<option :value="langname">
-							{{ langname }}
+						<option
+							:value="langname"
+							:selected="langname == 'typescript'"
+						>
+							{{ label }}
 						</option>
 					</template>
 				</select>
@@ -174,17 +183,27 @@ function update(e = eKeyDefault) {
 			v-on:keydown="update"
 			required
 		></textarea>
-		<div class="mt-2 text-black">
-			<div
-				class="flex flex-row float-left mb-0 bg-gray-200 overflow-none circle-box"
-			>
-				<div class="mt-2 bg-red-500 rounded-full circle"></div>
-				<div class="mt-2 bg-yellow-500 rounded-full circle"></div>
-				<div class="mt-2 bg-green-500 rounded-full circle"></div>
-				<div class="overflow-y-scroll snip-title">{{ inputTitle }}</div>
-			</div>
+		<div class="mt-5 text-black">
+			<UAccordion :items="snipAccordian">
+				<template #highlighter>
+					<div
+						class="flex flex-row float-left mb-0 bg-gray-200 overflow-none circle-box"
+					>
+						<div class="mt-2 bg-red-500 rounded-full circle"></div>
+						<div
+							class="mt-2 bg-yellow-500 rounded-full circle"
+						></div>
+						<div
+							class="mt-2 bg-green-500 rounded-full circle"
+						></div>
+						<div class="overflow-y-scroll snip-title">
+							{{ inputTitle }}
+						</div>
+					</div>
+					<highlightjs :code="defaultSnip" :language="langSelect" />
+				</template>
+			</UAccordion>
 		</div>
-		<highlightjs :code="defaultSnip" :language="langSelect" />
 		<button
 			type="submit"
 			id="send-data"
