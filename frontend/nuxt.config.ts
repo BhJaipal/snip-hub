@@ -4,19 +4,21 @@ export default defineNuxtConfig({
 		cssPath: "./app.css",
 		configPath: "./tailwind.config.js"
 	},
+	runtimeConfig: {
+		githubApiToken: process.env.GITHUB_API_TOKEN
+	},
 	devtools: { enabled: true },
 	modules: [
 		"nuxt-icon",
 		"@nuxt/image",
 		"@nuxt/ui",
 		"@nuxtjs/tailwindcss",
-		"@pinia/nuxt"
+		"@pinia/nuxt",
+		"@nuxt/content"
 	],
+	content: {},
 	alias: {
-		server: "./server",
-		composables: "./composables",
 		"#components": "./.nuxt/components.d.ts",
-		"~~": "./assets",
-		"~/plugins": "./plugins"
+		"~~": "./assets"
 	}
 });

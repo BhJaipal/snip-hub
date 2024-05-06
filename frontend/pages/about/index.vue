@@ -6,22 +6,24 @@ import nitro from "~/assets/nitro.svg";
 import tsLogo from "~/assets/ts-logo.png";
 import tailwind from "~/assets/tailwind.svg";
 import nuxt from "/favicon.ico";
+import { useGQLFetch } from "~/plugins/gql-fetch";
 
 let logos = [highlightjs, vue, tsLogo, tailwind, nuxt, nitro];
-interface pageModule {
-	name: string;
-	link: string;
-	img: string;
-	description: string;
-	title: string;
-}
-let homeList = ref<pageModule[]>([]);
+
+let myInfo = ref<Record<string, any> | null>(null);
+
+let homeList = ref<PageModule[]>([]);
 useAsyncData(async () => {
-	let data = await $fetch<Omit<pageModule, "img">[]>("/api/about");
+	let data = await $fetch<Omit<PageModule, "img">[]>("/api/about");
 
 	data.forEach((module, index) => {
 		homeList.value.push({ ...module, img: logos[index] });
 	});
+	let data2 = await $fetch<
+		Record<string, Record<string, Record<string, any>>>
+	>("/api/my-info");
+	myInfo.value = data2 ?? null;
+	console.log(data2);
 });
 definePageMeta({
 	layout: "default"
@@ -80,26 +82,14 @@ useHead({
 		<hr class="border-gray-700" />
 		<page-header description="About Me" />
 		<div class="flex justify-center mt-5">
-			<v-card
-				title="About me"
-				subtitle="About me"
-				prepend-icon="i-heroicons-rocket-launch-solid"
-				append-icon="i-devicon-githubcodespaces"
-			>
-				<template #body>
-					<p class="text-blue-500">Name: Jaipal</p>
-				</template>
-				<template #actions>
-					<UButton>Click</UButton>
-				</template>
-			</v-card>
-		</div>
-		<div class="flex justify-center mt-5">
-			<UCard class="w-1/4">
-				<template #header>
-					<p class="text-blue-500">Name: Jaipal</p>
-				</template>
-			</UCard>
+			<template v-if="myInfo != null">
+				<v-card
+					:title="myInfo.name"
+					:subtitle="myInfo.login"
+					:prepend-avatar="myInfo.avatarUrl"
+				>
+				</v-card>
+			</template>
 		</div>
 	</div>
 </template>

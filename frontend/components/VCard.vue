@@ -5,6 +5,7 @@ let props = defineProps<{
 	title?: string;
 	"prepend-icon"?: string;
 	"append-icon"?: string;
+	"prepend-avatar"?: string;
 	subtitle?: string;
 	text?: string;
 	loading?: boolean;
@@ -34,15 +35,18 @@ let ui = reactive({
 				<UProgress animation="carousel" />
 			</template>
 			<div class="flex flex-row">
-				<div v-if="prependIcon" class="mr-3 pt-3">
-					<Icon :name="prependIcon" :size="25" />
+				<div v-if="prependAvatar" class="mr-3 pt-3">
+					<NuxtImg :src="prependAvatar" class="rounded-full w-10" />
+				</div>
+				<div v-else-if="prependIcon" class="mr-3 pt-3">
+					<Icon :name="prependIcon" size="25" />
 				</div>
 				<div class="text-left">
 					<h4>{{ title }}</h4>
 					<p class="text-slate-400">{{ subtitle }}</p>
 				</div>
 				<div v-if="appendIcon" class="ml-3 pt-3">
-					<Icon :name="appendIcon" :size="25" />
+					<Icon :name="appendIcon" size="25" />
 				</div>
 			</div>
 		</template>

@@ -3,7 +3,6 @@ import hljs from "highlight.js";
 import "highlight.js/styles/atom-one-dark.css";
 import { definePageMeta } from "#imports";
 import { useGQLFetch } from "~/plugins/gql-fetch";
-import type { GQLFetch } from "types";
 
 let search = ref("");
 let query = `#graphql

@@ -1,22 +1,27 @@
 import { ref } from "vue";
-import type { GQLFetch } from "types";
+import { defineNuxtPlugin } from "#app/nuxt";
 
 export async function useGQLFetch<
 	T extends Record<string, any> = Record<string, any>
 >(
 	url: string,
 	query: string,
-	variables: Record<string, any> | null = null
-): GQLFetch<T> {
+	variables: Record<string, any> = {},
+	auth: boolean = false
+): Promise<GQLFetch<T>> {
 	let data = ref<T | null>(null);
+	let header: Record<string, string> = auth
+		? {
+				authorization: `Bearer ` + useRuntimeConfig().githubApiToken,
+				"Content-Type": "application/json"
+			}
+		: { "Content-Type": "application/json" };
 	let error = ref<{ status: number; message: string } | null>(null);
 	let res = await fetch(url, {
 		method: "POST",
-		headers: {
-			"Content-Type": "application/json"
-		},
+		headers: header,
 		body: JSON.stringify(
-			variables == null
+			JSON.stringify(variables) == "{}"
 				? { query }
 				: {
 						query: query,

@@ -1,11 +1,4 @@
-interface pageModule {
-	name: string;
-	link: string;
-	title?: string;
-	description?: string;
-}
-
-let homeList: pageModule[] = [
+let homeList: Omit<PageModule, "img">[] = [
 	{
 		name: "Highlight.js",
 		link: "highlightjs.org",
