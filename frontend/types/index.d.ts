@@ -11,5 +11,9 @@ declare global {
 		description: string;
 		title: string;
 	}
+	type LangListType = Array<{
+		langName: string;
+		codeBoxes: { title: string; code: string }[];
+	}>;
 }
 export {};

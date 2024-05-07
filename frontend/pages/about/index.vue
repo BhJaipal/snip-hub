@@ -6,7 +6,6 @@ import nitro from "~/assets/nitro.svg";
 import tsLogo from "~/assets/ts-logo.png";
 import tailwind from "~/assets/tailwind.svg";
 import nuxt from "/favicon.ico";
-import { useGQLFetch } from "~/plugins/gql-fetch";
 
 let logos = [highlightjs, vue, tsLogo, tailwind, nuxt, nitro];
 

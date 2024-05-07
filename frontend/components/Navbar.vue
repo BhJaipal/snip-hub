@@ -2,26 +2,34 @@
 	<UAccordion :items="router">
 		<template #default="{ item, open }">
 			<UButton
-				color="sky"
+				color="blue"
 				variant="solid"
 				class="border-t border-gray-700 w-full"
+				:ui="NavbarBtnUI"
 			>
 				<span class="truncate">{{ item.label }}</span>
 				<template #trailing>
-					<UIcon
+					<UToggle
+						on-icon="i-heroicons-sun"
+						off-icon="i-heroicons-moon"
+						v-model="mode"
+						size="lg"
+						:ui="toggleUI"
+					/>
+					<Icon
 						:name="
 							open
 								? 'i-heroicons-x-mark-solid'
 								: 'i-heroicons-bars-3-20-solid'
 						"
-						class="w-5 h-5 ms-auto transform transition-transform duration-200"
+						class="text-sky-500 font-bold w-5 h-5 ms-auto transform transition-transform duration-200"
 					/>
 				</template>
 			</UButton>
 		</template>
 		<template #navbar>
 			<div
-				class="flex justify-between px-10 bg-sky-700 -mt-1 rounded-b-md py-1"
+				class="flex justify-between px-10 bg-blue-900/50 -mt-1 rounded-b-md py-1"
 			>
 				<template v-for="(item, i) in navigation" :key="i">
 					<UButton
@@ -38,6 +46,22 @@
 </template>
 
 <script lang="ts" setup>
+let mode = ref(false);
+let toggleUI = {
+	active: "bg-blue-800 dark:bg-blue-800",
+	inactive: "bg-gray-800 dark:bg-gray-800",
+	icon: {
+		on: "text-gray-500 dark:text-gray-500",
+		off: "text-gray-500 dark:text-gray-500"
+	}
+};
+let NavbarBtnUI = {
+	color: {
+		blue: {
+			solid: "bg-blue-900/90 hover:bg-blue-900/75 text-sky-500 font-bold"
+		}
+	}
+};
 let navigation = ref<{ label: string; to: string }[]>([
 	{ label: "Home", to: "/" },
 	{ label: "About", to: "/about" },

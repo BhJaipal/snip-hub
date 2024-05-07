@@ -17,14 +17,12 @@ let query = `#graphql
 }
 `;
 
-type _langList = Array<{
-	langName: string;
-	codeBoxes: { title: string; code: string }[];
-}>;
+let iconFn = useNuxtApp().$icons as (lang: string) => string;
+let langNamesPrint = useNuxtApp().$langNamesPrint as (lang: string) => string;
 
 let empty = [{ langName: "", codeBoxes: [] }];
 let error = ref<null | { message: string; status: number }>(null);
-let LangList = ref<_langList | null>([]);
+let LangList = ref<LangListType | null>([]);
 
 useHead({
 	title: "Snip Hub Home Page"
@@ -45,10 +43,10 @@ onMounted(async function () {
 	});
 
 	({ data: LangList.value, error: error.value } =
-		await useGQLFetch<_langList>(
+		await useGQLFetch<LangListType>(
 			"http://localhost:3300/",
 			query
-		)) as GQLFetch<_langList>;
+		)) as GQLFetch<LangListType>;
 
 	setTimeout(function () {
 		hljs.highlightAll();
@@ -110,14 +108,9 @@ onMounted(async function () {
 								padding: { sm: 'p-3' }
 							}"
 						>
-							<Icon
-								:name="useNuxtApp().$icons(item.langName)"
-								:size="20"
-							/>
+							<Icon :name="iconFn(item.langName)" size="20" />
 							<span class="truncate">
-								{{
-									useNuxtApp().$langNamesPrint(item.langName)
-								}}
+								{{ langNamesPrint(item.langName) }}
 							</span>
 
 							<template #trailing>
