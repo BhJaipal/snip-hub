@@ -10,9 +10,9 @@ export default {
 <script setup lang="ts">
 import hljs from "highlight.js";
 import "highlight.js/styles/vs2015.css";
-import { useGQLFetch } from "~/plugins/gql-fetch";
-import { icons } from "~/plugins/langNames";
 
+let useGQLFetch = useNuxtApp().$useGQLFetch as UseGQLFetch;
+let iconFn = useNuxtApp().$icons as (lang: string) => string;
 let langLabels = ref<Record<string, string>>({});
 
 // How to use them?
@@ -49,7 +49,7 @@ let defaultSnip = ref(`let name: string = "Jaipal";`);
 
 let snipAccordian = ref([
 	{
-		icon: icons(langSelect.value),
+		icon: iconFn(langSelect.value),
 		label: langSelect.value,
 		defaultOpen: true
 	}
@@ -64,10 +64,7 @@ watch(snipAccordian, () => {
 	console.log(snipAccordian.value);
 });
 async function sendDataBtn() {
-	let data: {
-		data: { id: string; message: string } | null;
-		error: { title: string; message: string };
-	} = await useGQLFetch<{
+	let data = await useGQLFetch<{
 		id: string;
 		message: string;
 	}>(
@@ -93,7 +90,7 @@ async function sendDataBtn() {
 	if (!data.data) {
 		state.sent = true;
 		state.success = false;
-		if (data.error) alert(data.error.title + " " + data.error.message);
+		if (data.error) alert(data.error.status + " " + data.error.message);
 	} else {
 		alert("Data sent successfully");
 		state.sent = true;

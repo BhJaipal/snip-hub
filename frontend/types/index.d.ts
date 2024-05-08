@@ -15,5 +15,12 @@ declare global {
 		langName: string;
 		codeBoxes: { title: string; code: string }[];
 	}>;
+	type ArrayOrRecord = Record<string, any> | Array<any>;
+	type UseGQLFetch = <T extends ArrayOrRecord = ArrayOrRecord>(
+		url: string,
+		query: string,
+		variables: Record<string, any> = {},
+		auth: boolean = false
+	) => GQLFetch<T>;
 }
 export {};

@@ -2,7 +2,6 @@
 import hljs from "highlight.js";
 import "highlight.js/styles/atom-one-dark.css";
 import { definePageMeta } from "#imports";
-import { useGQLFetch } from "~/plugins/gql-fetch";
 
 let search = ref("");
 let query = `#graphql
@@ -17,6 +16,7 @@ let query = `#graphql
 }
 `;
 
+let useGQLFetch = useNuxtApp().$useGQLFetch as UseGQLFetch;
 let iconFn = useNuxtApp().$icons as (lang: string) => string;
 let langNamesPrint = useNuxtApp().$langNamesPrint as (lang: string) => string;
 
@@ -43,10 +43,7 @@ onMounted(async function () {
 	});
 
 	({ data: LangList.value, error: error.value } =
-		await useGQLFetch<LangListType>(
-			"http://localhost:3300/",
-			query
-		)) as GQLFetch<LangListType>;
+		await useGQLFetch<LangListType>("http://localhost:3300/", query));
 
 	setTimeout(function () {
 		hljs.highlightAll();

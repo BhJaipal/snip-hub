@@ -1,8 +1,6 @@
 <script lang="ts" setup>
 import useMyState from "../../composables/states";
-import { useGQLFetch } from "~/plugins/gql-fetch";
 import UAccordian from "../../node_modules/@nuxt/ui/dist/runtime/components/elements/Accordion.vue";
-import type { GQLFetch } from "types";
 const isSlideOverOpen = ref(false);
 const items: Array<{
 	label: string;
@@ -19,6 +17,8 @@ const items: Array<{
 			"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed neque elit, tristique placerat feugiat ac, facilisis vitae arcu. Proin eget egestas augue. Praesent ut sem nec arcu pellentesque aliquet. Duis dapibus diam vel metus tempus vulputate."
 	}
 ];
+
+let useGQLFetch = useNuxtApp().$useGQLFetch as UseGQLFetch;
 useSeoMeta({
 	title: "Test 1"
 });
@@ -38,7 +38,7 @@ onMounted(async function () {
 	({ data: data.value, error: error.value } = await useGQLFetch<string[]>(
 		"http://localhost:3300/",
 		query
-	)) as GQLFetch<string[]>;
+	));
 	console.log(data.value, loading.value);
 });
 </script>

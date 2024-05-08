@@ -8,7 +8,7 @@ export async function useGQLFetch<
 	query: string,
 	variables: Record<string, any> = {},
 	auth: boolean = false
-): Promise<GQLFetch<T>> {
+): GQLFetch<T> {
 	let data = ref<T | null>(null);
 	let header: Record<string, string> = auth
 		? {
