@@ -10,6 +10,8 @@
 			"#app/nuxt": ["./node_modules/nuxt/dist/app/index.d.ts"],
 			"~/plugins/": ["./plugins/"]
 		},
-		"lib": ["DOM", "ESNext"]
+		"strict": true,
+		"lib": ["DOM", "ESNext"],
+		"target": "ES2023"
 	}
 }

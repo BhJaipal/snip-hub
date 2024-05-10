@@ -15,7 +15,6 @@ let query = `#graphql
 	}
 }
 `;
-
 let useGQLFetch = useNuxtApp().$useGQLFetch as UseGQLFetch;
 let iconFn = useNuxtApp().$icons as (lang: string) => string;
 let langNamesPrint = useNuxtApp().$langNamesPrint as (lang: string) => string;
