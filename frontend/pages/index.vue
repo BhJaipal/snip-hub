@@ -30,10 +30,6 @@ function goto() {
 	navigateTo("/search/" + search.value);
 }
 
-definePageMeta({
-	layout: "default"
-});
-
 onMounted(async function () {
 	let search = document.querySelector<HTMLInputElement>("#search");
 	if (search == null) return;

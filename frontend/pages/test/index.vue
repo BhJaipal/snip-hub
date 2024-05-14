@@ -39,7 +39,6 @@ onMounted(async function () {
 		"http://localhost:3300/",
 		query
 	));
-	console.log(data.value, loading.value);
 });
 </script>
 

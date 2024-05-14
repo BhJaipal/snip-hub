@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { definePageMeta } from "#imports";
 import highlightjs from "~/assets/highlightjs.png";
 import vue from "~/assets/vue.png";
 import nitro from "~/assets/nitro.svg";
@@ -23,9 +22,6 @@ useAsyncData(async () => {
 	>("/api/my-info");
 	myInfo.value = data2 ?? null;
 	console.log(data2);
-});
-definePageMeta({
-	layout: "default"
 });
 
 useHead({

@@ -53,9 +53,7 @@
 let mode = ref(false);
 watch(mode, () => {
 	if (!mode.value) {
-		document.body.parentElement?.classList.add("dark");
 	} else {
-		document.body.parentElement?.classList.remove("dark");
 	}
 });
 let toggleUI = {

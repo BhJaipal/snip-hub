@@ -4,7 +4,8 @@ import "./../../app.css";
 import hljs from "highlight.js";
 import "highlight.js/styles/vs2015.css";
 
-import { useGQLFetch } from "~/plugins/gql-fetch";
+let langNamesPrint = useNuxtApp().$langNamesPrint as (lang: string) => string;
+let useGQLFetch = useNuxtApp().$useGQLFetch as UseGQLFetch;
 
 let route = useRoute();
 let title: string = route.params.title;
@@ -27,12 +28,12 @@ const nuxtApp = useNuxtApp();
 
 onMounted(async function () {
 	if (nuxtApp.$useGQLFetch == undefined) return;
-	({ data: titleFind.value, error: error.value } = await useGQLFetch<{
-		titleFind: {
+	({ data: titleFind.value, error: error.value } = await useGQLFetch<
+		{
 			langName: string;
 			codeBoxes: { title: string; code: string }[];
-		}[];
-	}>(
+		}[]
+	>(
 		"http://localhost:3300/",
 		`#graphql
 			{
@@ -93,9 +94,7 @@ onMounted(async function () {
 					>
 						<span class="truncate"
 							>{{ index + 1 }}.
-							{{
-								useNuxtApp().$langNamesPrint(item.langName)
-							}}</span
+							{{ langNamesPrint(item.langName) }}</span
 						>
 
 						<template #trailing>

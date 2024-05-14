@@ -33,9 +33,6 @@ let pairedVales: Record<string, string> = {
 	"<": ">",
 	"`": "`"
 };
-definePageMeta({
-	layout: "default"
-});
 
 useHead({
 	title: "Create Page"
@@ -200,7 +197,7 @@ function update(e = eKeyDefault) {
 			<UAccordion :items="snipAccordian" size="xl">
 				<template #default>
 					<UButton color="emerald">
-						<Icon :name="icons(langSelect)" />
+						<Icon :name="iconFn(langSelect)" />
 						{{ langLabels[langSelect] }}
 					</UButton>
 				</template>
