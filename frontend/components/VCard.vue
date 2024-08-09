@@ -3,9 +3,9 @@ import { UCard } from "#components";
 let props = defineProps<{
 	color?: string;
 	title?: string;
-	"prepend-icon"?: string;
-	"append-icon"?: string;
-	"prepend-avatar"?: string;
+	prependIcon?: string;
+	appendIcon?: string;
+	prependAvatar?: string;
 	subtitle?: string;
 	text?: string;
 	loading?: boolean;

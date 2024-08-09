@@ -8,7 +8,7 @@ import nuxt from "/favicon.ico";
 
 let logos = [highlightjs, vue, tsLogo, tailwind, nuxt, nitro];
 
-let myInfo = ref<Record<string, any> | null>(null);
+let myInfo = ref<MyInfoFromGit | null>(null);
 
 let homeList = ref<PageModule[]>([]);
 useAsyncData(async () => {
@@ -20,7 +20,7 @@ useAsyncData(async () => {
 	let data2 = await $fetch<
 		Record<string, Record<string, Record<string, any>>>
 	>("/api/my-info");
-	myInfo.value = data2 ?? null;
+	myInfo.value = (data2 as unknown as MyInfoFromGit) ?? null;
 	console.log(data2);
 });
 
@@ -76,14 +76,23 @@ useHead({
 		</ul>
 		<hr class="border-gray-700" />
 		<page-header description="About Me" />
-		<div class="flex justify-center mt-5">
+		<div
+			class="flex justify-center mt-5 flex-col justify-items-center items-center"
+		>
 			<template v-if="myInfo != null">
 				<v-card
 					:title="myInfo.name"
 					:subtitle="myInfo.login"
 					:prepend-avatar="myInfo.avatarUrl"
+					:text="myInfo.bio"
 				>
 				</v-card>
+				<br />
+				<div class="my-5 grid grid-cols-2 gap-10">
+					<div v-for="(repo, i) in myInfo.pinnedItems.nodes" :key="i">
+						<v-card :title="repo.name" :text="repo.description" />
+					</div>
+				</div>
 			</template>
 		</div>
 	</div>

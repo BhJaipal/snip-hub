@@ -22,5 +22,17 @@ declare global {
 		variables: Record<string, any> = {},
 		auth: boolean = false
 	) => GQLFetch<T>;
+	type MyInfoFromGit = {
+		avatarUrl: string;
+		bio: string;
+		name: string;
+		login: string;
+		pinnedItems: {
+			nodes: {
+				name: string;
+				description: string;
+			}[];
+		};
+	};
 }
 export {};

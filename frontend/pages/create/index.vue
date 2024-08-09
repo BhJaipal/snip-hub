@@ -60,6 +60,11 @@ let snipAccordian2 = ref([
 watch(snipAccordian, () => {
 	console.log(snipAccordian.value);
 });
+
+let submitEnabled = computed(
+	() => !!(inputTitle.value && langSelect.value && defaultSnip.value)
+);
+
 async function sendDataBtn() {
 	let data = await useGQLFetch<{
 		id: string;
@@ -243,6 +248,7 @@ function update(e = eKeyDefault) {
 			type="submit"
 			id="send-data"
 			class="hover:bg-blue-800 bg-sky-700"
+			:disabled="!submitEnabled"
 		>
 			Submit
 		</button>

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
+import type { AccordionItem } from "@nuxt/ui/dist/runtime/types";
 import hljs from "highlight.js";
 import "highlight.js/styles/atom-one-dark.css";
-import { definePageMeta } from "#imports";
 
 let search = ref("");
 let query = `#graphql
@@ -89,7 +89,7 @@ onMounted(async function () {
 				</div>
 			</div>
 			<div v-else>
-				<UAccordion :items="LangList">
+				<UAccordion :items="LangList as unknown as AccordionItem[]">
 					<template #default="{ item, open }">
 						<UButton
 							color="blue"
