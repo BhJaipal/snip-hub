@@ -3,6 +3,7 @@ import { ref, onMounted } from "vue";
 import "./../../app.css";
 import hljs from "highlight.js";
 import "highlight.js/styles/vs2015.css";
+import type { AccordionItem } from "@nuxt/ui/dist/runtime/types";
 
 let langNamesPrint = useNuxtApp().$langNamesPrint as (lang: string) => string;
 let useGQLFetch = useNuxtApp().$useGQLFetch as UseGQLFetch;
@@ -26,25 +27,31 @@ let empty = {
 };
 const nuxtApp = useNuxtApp();
 
+let langListItems = computed<AccordionItem[]>(() => {
+	let out: AccordionItem[] = [];
+	if (titleFind.value == null) return [];
+	for (let langName of titleFind.value) {
+		out.push({
+			label: langName.langName,
+			content: langName.codeBoxes as unknown as string
+		});
+	}
+	return out;
+});
+
 onMounted(async function () {
-	if (nuxtApp.$useGQLFetch == undefined) return;
-	({ data: titleFind.value, error: error.value } = await useGQLFetch<
-		{
-			langName: string;
-			codeBoxes: { title: string; code: string }[];
-		}[]
-	>(
-		"http://localhost:3300/",
-		`#graphql
-			{
-				titleFind(title: "${title}") {
-					langName,
-					codeBoxes {
-						title, code
-					}
-				}
-			}`
-	));
+	let res = await fetch("http://localhost:3300/title-find/" + title);
+	let out: {
+		error: null | { message: string; status: number };
+		titleFind: LangListType;
+	} = await res.json();
+
+	if (out.error) {
+		error.value = out.error;
+		return;
+	} else {
+		titleFind.value = out.titleFind;
+	}
 
 	setTimeout(function () {
 		hljs.highlightAll();
@@ -81,7 +88,7 @@ onMounted(async function () {
 			No Snippet found related to "{{ title }}"
 		</div>
 		<div v-else>
-			<UAccordion :items="titleFind">
+			<UAccordion :items="langListItems">
 				<template #default="{ item, index, open }">
 					<UButton
 						color="blue"
@@ -94,7 +101,7 @@ onMounted(async function () {
 					>
 						<span class="truncate"
 							>{{ index + 1 }}.
-							{{ langNamesPrint(item.langName) }}</span
+							{{ langNamesPrint(item.label) }}</span
 						>
 
 						<template #trailing>
@@ -108,7 +115,7 @@ onMounted(async function () {
 				</template>
 				<template #item="{ item: langBox }">
 					<div class="mx-[3%]">
-						<UAccordion :items="langBox.codeBoxes">
+						<UAccordion :items="langBox.content">
 							<template #default="{ item, index, open }">
 								<UButton
 									color="green"

@@ -4,18 +4,6 @@ import hljs from "highlight.js";
 import "highlight.js/styles/atom-one-dark.css";
 
 let search = ref("");
-let query = `#graphql
-{
-	langList {
-		langName
-		codeBoxes {
-			title
-			code
-		}
-	}
-}
-`;
-let useGQLFetch = useNuxtApp().$useGQLFetch as UseGQLFetch;
 let iconFn = useNuxtApp().$icons as (lang: string) => string;
 let langNamesPrint = useNuxtApp().$langNamesPrint as (lang: string) => string;
 
@@ -23,8 +11,26 @@ let empty = [{ langName: "", codeBoxes: [] }];
 let error = ref<null | { message: string; status: number }>(null);
 let LangList = ref<LangListType | null>([]);
 
+let langListItems = computed<AccordionItem[]>(() => {
+	let out: AccordionItem[] = [];
+	if (LangList.value == null) return [];
+	for (let langName of LangList.value) {
+		out.push({
+			label: langName.langName,
+			content: langName.codeBoxes as unknown as string
+		});
+	}
+	return out;
+});
+
 useHead({
-	title: "Snip Hub Home Page"
+	title: "Snip Hub Home Page",
+	meta: [
+		{
+			name: "content-security-policy",
+			content: "data http: https:; content-src http: https:"
+		}
+	]
 });
 function goto() {
 	navigateTo("/search/" + search.value);
@@ -37,8 +43,18 @@ onMounted(async function () {
 		event.key == "Enter" && goto();
 	});
 
-	({ data: LangList.value, error: error.value } =
-		await useGQLFetch<LangListType>("http://localhost:3300/", query));
+	let res = await fetch("http://localhost:3300");
+	let out: {
+		error: null | { message: string; status: number };
+		langList: LangListType;
+	} = await res.json();
+
+	if (out.error) {
+		error.value = out.error;
+		return;
+	} else {
+		LangList.value = out.langList;
+	}
 
 	setTimeout(function () {
 		hljs.highlightAll();
@@ -89,7 +105,7 @@ onMounted(async function () {
 				</div>
 			</div>
 			<div v-else>
-				<UAccordion :items="LangList as unknown as AccordionItem[]">
+				<UAccordion :items="langListItems">
 					<template #default="{ item, open }">
 						<UButton
 							color="blue"
@@ -100,9 +116,9 @@ onMounted(async function () {
 								padding: { sm: 'p-3' }
 							}"
 						>
-							<Icon :name="iconFn(item.langName)" size="20" />
+							<Icon :name="iconFn(item.label)" size="20" />
 							<span class="truncate">
-								{{ langNamesPrint(item.langName) }}
+								{{ langNamesPrint(item.label) }}
 							</span>
 
 							<template #trailing>
@@ -116,7 +132,7 @@ onMounted(async function () {
 					</template>
 					<template #item="{ item: langBox }">
 						<div class="mx-[3%]">
-							<UAccordion :items="langBox.codeBoxes">
+							<UAccordion :items="langBox.content">
 								<template #default="{ item, index, open }">
 									<UButton
 										color="green"

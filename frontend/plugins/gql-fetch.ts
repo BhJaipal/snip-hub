@@ -10,12 +10,19 @@ export async function useGQLFetch<
 	auth: boolean = false
 ): GQLFetch<T> {
 	let data = ref<T | null>(null);
+	query = query.replace(/(?<=\w)\s+(?=\w)/g, ", ");
+	query = query.replace(/(?<=\w)\s+(?=(\{|\}))/g, " ");
+	query = query.replace(/(?<=(\{|\}))\s+(?=(\{|\}))/g, " ");
+	query = query.replace(/(?<=(\{|\}))\s+(?=\w)/g, " ");
 	let header: Record<string, string> = auth
 		? {
 				authorization: `Bearer ` + useRuntimeConfig().githubApiToken,
 				"Content-Type": "application/json"
 			}
-		: { "Content-Type": "application/json" };
+		: {
+				"Content-Type": "application/json"
+			};
+
 	let error = ref<{ status: number; message: string } | null>(null);
 	let res = await fetch(url, {
 		method: "POST",
@@ -30,12 +37,14 @@ export async function useGQLFetch<
 		)
 	});
 	let out: { data: { [k: string]: T } } = await res.json();
+
 	if (res.status >= 400 && !res.ok) {
 		error.value = { status: res.status, message: res.statusText };
 		data.value = null;
 		return { data: null, error: error.value };
 	}
 	data = ref(out.data[Object.keys(out.data)[0]]);
+
 	return { data: data.value as T | null, error: null };
 }
 export default defineNuxtPlugin((nuxtApp) => {

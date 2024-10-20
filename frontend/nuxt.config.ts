@@ -1,4 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import { networkInterfaces } from "os";
 export default defineNuxtConfig({
 	tailwindcss: {
 		cssPath: "./app.css",
@@ -16,6 +17,11 @@ export default defineNuxtConfig({
 		"@pinia/nuxt",
 		"@nuxt/content"
 	],
+	routeRules: {
+		"/": {
+			cors: false
+		}
+	},
 	content: {},
 	alias: {
 		"#components": "./.nuxt/components.d.ts",

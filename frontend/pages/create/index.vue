@@ -65,6 +65,8 @@ let submitEnabled = computed(
 	() => !!(inputTitle.value && langSelect.value && defaultSnip.value)
 );
 
+
+
 async function sendDataBtn() {
 	let data = await useGQLFetch<{
 		id: string;
